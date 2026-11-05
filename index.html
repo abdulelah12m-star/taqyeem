@@ -624,7 +624,7 @@ function mosqueInfo(){
 function mosqueCode(){
   const i = mosqueInfo();
   if(!i.region) return "";
-  return "M"+i.region+"-"+(i.no ? String(i.no).padStart(3,"0") : "NEW");
+  return "MJ"+i.region+"-"+(i.no ? String(i.no).padStart(3,"0") : "NEW");
 }
 
 /* ---------------- الإحصاءات ---------------- */
