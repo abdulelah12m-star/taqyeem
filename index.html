@@ -94,6 +94,9 @@ main{max-width:760px;margin:0 auto;padding:16px 14px 120px}
 .imp .i-u.on{background:var(--warn);border-color:var(--warn);color:#fff}
 .imp .i-l.on{background:#C9A227;border-color:#C9A227;color:#fff}
 .imp .need{color:var(--bad);font-size:.72rem;font-weight:700}
+.qty{display:flex;align-items:center;gap:10px;margin-top:10px}
+.qty label{font-size:.82rem;font-weight:700;color:var(--navy-2)}
+.qty select{width:96px;padding:8px 10px;border:1px solid #DCCFC0;border-radius:10px;background:#fff;font-weight:600}
 .note{width:100%;margin-top:10px;padding:9px 11px;border:1px solid #DCCFC0;border-radius:10px;min-height:44px;resize:vertical;background:#FFFDFB;font-size:.85rem}
 .photos{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
 .ph{position:relative;width:66px;height:66px;border-radius:10px;background-size:cover;background-position:center;border:1px solid var(--line)}
@@ -420,23 +423,23 @@ const HALL_PAGES = [
     [11,"مدخل الإمام","نظافة، سلامة الأقفال والمفصلات والدهان، وجود مصد أتربة","جدار القبلة"],
     [12,"محراب ثابت","نظافة، سلامة الإنارة","جدار القبلة"],
     [13,"محراب متحرك","نظافة، سلامة من التكسر","جدار القبلة"],
-    [14,"غرفة الإمام","نظافة، سلامة الإنارة","جدار القبلة"],
+    [14,"غرفة الإمام","نظافة، سلامة الإنارة، سلامة التكييف","جدار القبلة"],
     [15,"مجلس الإمام","نظافة، سلامة الإنارة","جدار القبلة"],
     [16,"دورة المياه في المقدمة","نظافة، سلامة الإنارة، سلامة الوحدات الصحية، عدم وجود تسرب","جدار القبلة"],
-    [17,"غرفة الجنازات","نظافة، سلامة الإنارة، كفاية التكييف","جدار القبلة"],
+    [17,"غرفة الجنائز","نظافة، سلامة الإنارة، كفاية التكييف","جدار القبلة"],
     [18,"غرفة الصوتيات والتحكم","التهوية الجيدة","جدار القبلة"],
     [19,"غرفة إدارة المسجد والحلقات","نظافة، سلامة الإنارة","جدار القبلة"],
     [20,"الفرش (السجاد)","نظافة، ترتيب توزيع السجاد لاستمرارية الصفوف","جدار القبلة"],
   ]},
   { t:"الأثاث (١)", items:[
-    [21,"مساند الجلوس (ركاية)","نظافة، سلامة من التمزق أو النتوءات","الأثاث"],
-    [22,"مسند أرضي","نظافة، سلامة من التمزق أو النتوءات","الأثاث"],
+    [21,"مساند الجلوس العلوية (ركاية)","نظافة، سلامة من التمزق أو النتوءات","الأثاث"],
+    [22,"مسند أرضي (خلف الظهر)","نظافة، سلامة من التمزق أو النتوءات","الأثاث"],
     [23,"كراسي الجلوس للصلاة","سلامتها","الأثاث"],
     [24,"كرسي المنبر","سلامته","الأثاث"],
     [25,"حامل أوراق في المنبر","سلامته","الأثاث"],
     [26,"دواليب الكراسي المطوية","نظافة، سلامة من التكسر","الأثاث"],
     [27,"دواليب المصاحف","نظافة، سلامة من التكسر، جودة توزيعها","الأثاث"],
-    [28,"كراسي المصاحف","نظافة، سلامة من التكسر، جودة توزيعها","الأثاث"],
+    [28,"حوامل المصاحف","نظافة، سلامة من التكسر، جودة توزيعها","الأثاث"],
     [29,"دواليب الكتب والمطويات","نظافة، سلامة من التكسر، جودة توزيعها","الأثاث"],
     [30,"لوحة الإعلانات","وجودها في مكان واضح، وجود باب زجاجي لمنع تعليق لوحات مخالفة","الأثاث"],
     [31,"دواليب للسجادات الصغيرة","نظافة، سلامة من التكسر، جودة توزيعها","الأثاث"],
@@ -457,7 +460,7 @@ const HALL_PAGES = [
     [44,"الكتابات والحليات والزخارف","سلامتها من الأخطاء، عدم وجودها في القبلة","الأثاث"],
     [45,"منضدة للتمر","نظافة، وجودها في مكان مناسب، عدم تلويث المكان","الأثاث"],
     [46,"مشارب المياه","نظافة، وجودها في مكان مناسب، عدم تلويث المكان","الأثاث"],
-    [47,"سترة","نظافة، سلامة من التكسر، جودة توزيعها","الأثاث"],
+    [47,"سترة الصلاة","نظافة، سلامة من التكسر، جودة توزيعها","الأثاث"],
     [48,"مكتب المحاضر","نظافة، سلامة من التكسر، وجوده في مكان مناسب","الأثاث"],
     [49,"كرسي المحاضر","سلامته","الأثاث"],
   ]},
@@ -484,7 +487,7 @@ const HALL_PAGES = [
     [65,"سماعات","جودة العمل، سلامتها، حسن التوزيع","الصوتيات"],
     [66,"لواقط صوت","جودة العمل، سلامتها، حسن التوزيع","الصوتيات"],
     [67,"حاملات لواقط صوت","جودة العمل، سلامتها، حسن التوزيع","الصوتيات"],
-    [68,"جهاز تكبير الصوت","جودة العمل، سلامته، جودة التهوية","الصوتيات"],
+    [68,"جهاز تضخيم الصوت (Amplifier)","جودة العمل، سلامته، جودة التهوية","الصوتيات"],
   ]},
   { t:"الإضاءة والنوافذ", items:[
     [69,"إضاءة طبيعية – نوافذ ثابتة","النظافة، السلامة من التكسر، جودة الإغلاق","الإضاءة والنوافذ"],
@@ -777,6 +780,7 @@ function pageHTML(st){
     ${st.note?`<div class="hint">${esc(st.note)}</div>`:""}
     ${st.els.map(cardHTML).join("")}`;
 }
+const QTY_OPTS = Array.from({length:100},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join("");
 function isOpen(el){
   if(el.k in openState) return openState[el.k];
   const s = elStats(el);
@@ -809,6 +813,7 @@ function cardHTML(el){
         ${!it.a?`<button class="okall" data-act="allok" data-k="${el.k}">✓ الكل جاهز</button>`:""}
       </div>
       ${crits}
+      ${!it.a?`<div class="qty"><label>عددها</label><select data-qty="${el.k}"><option value="">—</option>${QTY_OPTS.replace(`value="${it.q}"`,`value="${it.q}" selected`)}</select></div>`:""}
       <textarea class="note" data-note="${el.k}" placeholder="ملاحظة (اختياري)">${esc(it.note)}</textarea>
       <div class="photos">${phs}
         ${(it.ph||[]).length<4?`<label class="addph">📷 إضافة صورة<input type="file" accept="image/*" multiple data-photo="${el.k}"></label>`:""}
@@ -939,6 +944,7 @@ document.addEventListener("change", async e=>{
   else if(t.dataset.pick){ const k=t.dataset.pick;
     if(t.value==="__new"){ state.meta[k+"New"]=true; state.meta[k]=""; } else { state.meta[k+"New"]=false; state.meta[k]=t.value; }
     save(); render(); if(t.value==="__new"){ const i=document.querySelector(`[data-addlist="${k}"]`); if(i) i.focus(); } }
+  else if(t.dataset.qty){ item(t.dataset.qty).q = t.value; save(); }
   else if(t.dataset.addlist){ addToList(t.dataset.addlist, t.value); }
   else if(t.dataset.photo){
     const k=t.dataset.photo, it=item(k), files=[...t.files].slice(0, 4-it.ph.length);
@@ -1009,9 +1015,9 @@ function statusLabel(c){ return !c||!c.s ? "لم يُقيَّم" : c.s==="r" ? "
 function detailRows(){
   const rows=[];
   ELS.forEach(el=>{ const it=peek(el.k)||{a:false,c:{},note:""};
-    const phc = (it.ph||[]).length || "";
-    if(it.a){ rows.push({ el, crit:"—", status:"غير موجود", impact:"", note:it.note||"", phc }); return; }
-    el.crit.forEach((c,i)=>{ const v=it.c[i]; rows.push({ el, crit:c, status:statusLabel(v), impact: v&&v.s==="n" ? IMPACT[v.i||"none"].label : "", note: i===0 ? (it.note||"") : "", phc: i===0 ? phc : "" }); });
+    const phc = (it.ph||[]).length || "", qty = it.q ? +it.q : "";
+    if(it.a){ rows.push({ el, crit:"—", status:"غير موجود", impact:"", note:it.note||"", phc, qty:"" }); return; }
+    el.crit.forEach((c,i)=>{ const v=it.c[i]; rows.push({ el, crit:c, status:statusLabel(v), impact: v&&v.s==="n" ? IMPACT[v.i||"none"].label : "", note: i===0 ? (it.note||"") : "", phc: i===0 ? phc : "", qty: i===0 ? qty : "" }); });
   });
   return rows;
 }
@@ -1032,16 +1038,16 @@ function exportXLSX(){
   per.forEach(p=>s2.push([p.main,p.els,p.absent,p.total,p.done,p.r,p.n,p.x,p.b,p.u,p.l,p.readiness==null?"":p.readiness,p.completion]));
   s2.push(["الإجمالي",tot.els,tot.absent,tot.total,tot.done,tot.r,tot.n,tot.x,tot.b,tot.u,tot.l,tot.readiness==null?"":tot.readiness,tot.completion]);
   const ws2=X.utils.aoa_to_sheet(s2); ws2["!cols"]=[{wch:24},...Array(12).fill({wch:13})]; X.utils.book_append_sheet(wb, ws2, "الأقسام");
-  const s3=[["م","الأثر","القسم","الصفحة","رقم العنصر","العنصر","البند غير الجاهز","الملاحظة","الإجراء المطلوب","المسؤول","موعد الإنجاز","الحالة"]];
+  const s3=[["م","الأثر","القسم","الصفحة","رقم العنصر","العنصر","العدد","البند غير الجاهز","الملاحظة","الإجراء المطلوب","المسؤول","موعد الإنجاز","الحالة"]];
   let n=1;
-  findings.forEach(({el})=>{ const it=peek(el.k); el.crit.forEach((c,i)=>{ const v=it.c[i]; if(v&&v.s==="n") s3.push([n++,IMPACT[v.i||"none"].label,el.main,el.title,+el.no,el.name,c,it.note||"","","","","مفتوحة"]); }); });
-  const ws3=X.utils.aoa_to_sheet(s3); ws3["!cols"]=[{wch:5},{wch:17},{wch:20},{wch:20},{wch:9},{wch:28},{wch:30},{wch:40},{wch:30},{wch:16},{wch:14},{wch:10}];
-  ws3["!autofilter"]={ ref:"A1:L"+Math.max(1,s3.length) };
+  findings.forEach(({el})=>{ const it=peek(el.k); el.crit.forEach((c,i)=>{ const v=it.c[i]; if(v&&v.s==="n") s3.push([n++,IMPACT[v.i||"none"].label,el.main,el.title,+el.no,el.name,it.q?+it.q:"",c,it.note||"","","","","مفتوحة"]); }); });
+  const ws3=X.utils.aoa_to_sheet(s3); ws3["!cols"]=[{wch:5},{wch:17},{wch:20},{wch:20},{wch:9},{wch:28},{wch:7},{wch:30},{wch:40},{wch:30},{wch:16},{wch:14},{wch:10}];
+  ws3["!autofilter"]={ ref:"A1:M"+Math.max(1,s3.length) };
   X.utils.book_append_sheet(wb, ws3, "الملاحظات للمتابعة");
-  const s4=[["القسم","الصفحة","رقم العنصر","العنصر","العنصر الأولي","البند","الحالة","الأثر","ملاحظة العنصر","عدد الصور"]];
-  detailRows().forEach(r=>s4.push([r.el.main,r.el.title,+r.el.no,r.el.name,r.el.sub,r.crit,r.status,r.impact,r.note,r.phc]));
-  const ws4=X.utils.aoa_to_sheet(s4); ws4["!cols"]=[{wch:20},{wch:22},{wch:9},{wch:28},{wch:16},{wch:32},{wch:11},{wch:17},{wch:40},{wch:9}];
-  ws4["!autofilter"]={ ref:"A1:J"+s4.length };
+  const s4=[["القسم","الصفحة","رقم العنصر","العنصر","العنصر الأولي","العدد","البند","الحالة","الأثر","ملاحظة العنصر","عدد الصور"]];
+  detailRows().forEach(r=>s4.push([r.el.main,r.el.title,+r.el.no,r.el.name,r.el.sub,r.qty,r.crit,r.status,r.impact,r.note,r.phc]));
+  const ws4=X.utils.aoa_to_sheet(s4); ws4["!cols"]=[{wch:20},{wch:22},{wch:9},{wch:28},{wch:16},{wch:7},{wch:32},{wch:11},{wch:17},{wch:40},{wch:9}];
+  ws4["!autofilter"]={ ref:"A1:K"+s4.length };
   X.utils.book_append_sheet(wb, ws4, "التقييم التفصيلي");
   const out=X.write(wb,{ bookType:"xlsx", type:"array" });
   state.exp.xlsx=true; save();
@@ -1057,7 +1063,7 @@ async function sendSheets(){
     meta:state.meta, kpis:{ readiness:tot.readiness, completion:tot.completion, total:tot.total, done:tot.done, ready:tot.r, notReady:tot.n, na:tot.x, blocking:tot.b, urgent:tot.u, later:tot.l, unspecified:tot.none, absent:tot.absent },
     decision:{ value:d.value?DECISIONS[d.value].label:"", reason:d.reason, signer:d.signer||state.meta.evaluator, signerTitle:d.signerTitle },
     sections: per.map(p=>({ main:p.main, total:p.total, done:p.done, ready:p.r, notReady:p.n, blocking:p.b, readiness:p.readiness })),
-    rows: detailRows().map(r=>({ main:r.el.main, page:r.el.title, no:r.el.no, element:r.el.name, criterion:r.crit, status:r.status, impact:r.impact, note:r.note })) };
+    rows: detailRows().map(r=>({ main:r.el.main, page:r.el.title, no:r.el.no, element:r.el.name, qty:r.qty, criterion:r.crit, status:r.status, impact:r.impact, note:r.note })) };
   busy(true,"جاري الإرسال…");
   try{
     await fetch(SHEETS_URL, { method:"POST", mode:"no-cors", headers:{ "Content-Type":"text/plain;charset=utf-8" }, body:JSON.stringify(payload) });
@@ -1095,7 +1101,7 @@ function reportBlocks(){
     const list=findings.filter(f=>f.s.sev===g); if(!list.length) return;
     add(`<div class="rp-h3" style="background:${IMPACT[g].color}">${IMPACT[g].label} — ${list.length} عنصر</div>`, true);
     list.forEach(({el})=>{ const it=peek(el.k);
-      add(`<div class="rp-find ${g==="b"?"":g}"><div class="fh"><span class="rp-tag ${g==="b"?"":g}">${IMPACT[g].short}</span><b>${esc(el.no)}. ${esc(el.name)}</b><span class="where">${esc(el.main)} › ${esc(el.title)}</span></div>
+      add(`<div class="rp-find ${g==="b"?"":g}"><div class="fh"><span class="rp-tag ${g==="b"?"":g}">${IMPACT[g].short}</span><b>${esc(el.no)}. ${esc(el.name)}</b>${it.q?`<span class="where">العدد: ${esc(it.q)}</span>`:""}<span class="where">${esc(el.main)} › ${esc(el.title)}</span></div>
         <ul>${el.crit.map((c,i)=>{ const v=it.c[i]; return v&&v.s==="n" ? `<li>${esc(c)} <span style="color:${IMPACT[v.i||"none"].color};font-weight:700">(${IMPACT[v.i||"none"].label})</span></li>` : ""; }).join("")}</ul>
         ${it.note?`<div class="rp-note">${esc(it.note)}</div>`:""}
         ${it.ph&&it.ph.length?`<div class="rp-phs">${it.ph.map(p=>`<div class="rp-ph" style="background-image:url('${p}')"></div>`).join("")}</div>`:""}</div>`); });
@@ -1114,7 +1120,7 @@ function reportBlocks(){
   STEPS.forEach(st=>{ if(st.type!=="page") return;
     add(`<div class="rp-h3">${esc(st.main)}${st.main!==st.title?" · "+esc(st.title):""}</div>`, true);
     st.els.forEach(el=>{ const it=peek(el.k);
-      add(`<div class="rp-row"><div class="no">${esc(el.no)}</div><div class="nm">${esc(el.name)}${el.sub&&el.sub!==el.name?`<small>${esc(el.sub)}</small>`:""}</div><div class="cr">${rpChips(el)}</div>${it&&it.note?`<div class="rn">ملاحظة: ${esc(it.note)}</div>`:""}</div>`); });
+      add(`<div class="rp-row"><div class="no">${esc(el.no)}</div><div class="nm">${esc(el.name)}${el.sub&&el.sub!==el.name?`<small>${esc(el.sub)}</small>`:""}${it&&it.q&&!it.a?`<small style="color:#8B5A3C;font-weight:700">العدد: ${esc(it.q)}</small>`:""}</div><div class="cr">${rpChips(el)}</div>${it&&it.note?`<div class="rn">ملاحظة: ${esc(it.note)}</div>`:""}</div>`); });
   });
   return B;
 }
