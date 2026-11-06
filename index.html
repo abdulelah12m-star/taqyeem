@@ -94,9 +94,9 @@ main{max-width:760px;margin:0 auto;padding:16px 14px 120px}
 .imp .i-u.on{background:var(--warn);border-color:var(--warn);color:#fff}
 .imp .i-l.on{background:#C9A227;border-color:#C9A227;color:#fff}
 .imp .need{color:var(--bad);font-size:.72rem;font-weight:700}
-.qty{display:flex;align-items:center;gap:10px;margin-top:10px}
-.qty label{font-size:.82rem;font-weight:700;color:var(--navy-2)}
-.qty select{width:96px;padding:8px 10px;border:1px solid #DCCFC0;border-radius:10px;background:#fff;font-weight:600}
+.qty{display:grid;grid-template-columns:84px 1fr 1fr;gap:8px;margin-top:10px}
+.qty label{display:block;font-size:.78rem;font-weight:700;color:var(--navy-2);margin-bottom:4px}
+.qty select,.qty input{width:100%;padding:8px 10px;border:1px solid #DCCFC0;border-radius:10px;background:#fff;font-weight:600;min-width:0}
 .note{width:100%;margin-top:10px;padding:9px 11px;border:1px solid #DCCFC0;border-radius:10px;min-height:44px;resize:vertical;background:#FFFDFB;font-size:.85rem}
 .photos{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
 .ph{position:relative;width:66px;height:66px;border-radius:10px;background-size:cover;background-position:center;border:1px solid var(--line)}
@@ -813,7 +813,11 @@ function cardHTML(el){
         ${!it.a?`<button class="okall" data-act="allok" data-k="${el.k}">✓ الكل جاهز</button>`:""}
       </div>
       ${crits}
-      ${!it.a?`<div class="qty"><label>عددها</label><select data-qty="${el.k}"><option value="">—</option>${QTY_OPTS.replace(`value="${it.q}"`,`value="${it.q}" selected`)}</select></div>`:""}
+      ${!it.a?`<div class="qty">
+        <div><label>عددها</label><select data-qty="${el.k}"><option value="">—</option>${QTY_OPTS.replace(`value="${it.q}"`,`value="${it.q}" selected`)}</select></div>
+        <div><label>النوع</label><input data-ty="${el.k}" value="${esc(it.ty)}"></div>
+        <div><label>الماركة</label><input data-br="${el.k}" value="${esc(it.br)}"></div>
+      </div>`:""}
       <textarea class="note" data-note="${el.k}" placeholder="ملاحظة (اختياري)">${esc(it.note)}</textarea>
       <div class="photos">${phs}
         ${(it.ph||[]).length<4?`<label class="addph">📷 إضافة صورة<input type="file" accept="image/*" multiple data-photo="${el.k}"></label>`:""}
@@ -956,6 +960,8 @@ document.addEventListener("change", async e=>{
 document.addEventListener("input", e=>{
   const t=e.target;
   if(t.dataset.note){ item(t.dataset.note).note=t.value; save(); }
+  else if(t.dataset.ty){ item(t.dataset.ty).ty=t.value; save(); }
+  else if(t.dataset.br){ item(t.dataset.br).br=t.value; save(); }
   else if(t.dataset.m && t.dataset.m!=="mosque" && t.dataset.m!=="region"){
     if(t.dataset.m==="latlng"){ const [a,b]=t.value.split(/[,،\s]+/).filter(Boolean); state.meta.lat=a||""; state.meta.lng=b||""; }
     else state.meta[t.dataset.m]=t.value;
@@ -1015,9 +1021,9 @@ function statusLabel(c){ return !c||!c.s ? "لم يُقيَّم" : c.s==="r" ? "
 function detailRows(){
   const rows=[];
   ELS.forEach(el=>{ const it=peek(el.k)||{a:false,c:{},note:""};
-    const phc = (it.ph||[]).length || "", qty = it.q ? +it.q : "";
-    if(it.a){ rows.push({ el, crit:"—", status:"غير موجود", impact:"", note:it.note||"", phc, qty:"" }); return; }
-    el.crit.forEach((c,i)=>{ const v=it.c[i]; rows.push({ el, crit:c, status:statusLabel(v), impact: v&&v.s==="n" ? IMPACT[v.i||"none"].label : "", note: i===0 ? (it.note||"") : "", phc: i===0 ? phc : "", qty: i===0 ? qty : "" }); });
+    const phc = (it.ph||[]).length || "", qty = it.q ? +it.q : "", ty = it.ty||"", br = it.br||"";
+    if(it.a){ rows.push({ el, crit:"—", status:"غير موجود", impact:"", note:it.note||"", phc, qty:"", ty:"", br:"" }); return; }
+    el.crit.forEach((c,i)=>{ const v=it.c[i]; rows.push({ el, crit:c, status:statusLabel(v), impact: v&&v.s==="n" ? IMPACT[v.i||"none"].label : "", note: i===0 ? (it.note||"") : "", phc: i===0 ? phc : "", qty: i===0 ? qty : "", ty: i===0 ? ty : "", br: i===0 ? br : "" }); });
   });
   return rows;
 }
@@ -1038,16 +1044,16 @@ function exportXLSX(){
   per.forEach(p=>s2.push([p.main,p.els,p.absent,p.total,p.done,p.r,p.n,p.x,p.b,p.u,p.l,p.readiness==null?"":p.readiness,p.completion]));
   s2.push(["الإجمالي",tot.els,tot.absent,tot.total,tot.done,tot.r,tot.n,tot.x,tot.b,tot.u,tot.l,tot.readiness==null?"":tot.readiness,tot.completion]);
   const ws2=X.utils.aoa_to_sheet(s2); ws2["!cols"]=[{wch:24},...Array(12).fill({wch:13})]; X.utils.book_append_sheet(wb, ws2, "الأقسام");
-  const s3=[["م","الأثر","القسم","الصفحة","رقم العنصر","العنصر","العدد","البند غير الجاهز","الملاحظة","الإجراء المطلوب","المسؤول","موعد الإنجاز","الحالة"]];
+  const s3=[["م","الأثر","القسم","الصفحة","رقم العنصر","العنصر","العدد","النوع","الماركة","البند غير الجاهز","الملاحظة","الإجراء المطلوب","المسؤول","موعد الإنجاز","الحالة"]];
   let n=1;
-  findings.forEach(({el})=>{ const it=peek(el.k); el.crit.forEach((c,i)=>{ const v=it.c[i]; if(v&&v.s==="n") s3.push([n++,IMPACT[v.i||"none"].label,el.main,el.title,+el.no,el.name,it.q?+it.q:"",c,it.note||"","","","","مفتوحة"]); }); });
-  const ws3=X.utils.aoa_to_sheet(s3); ws3["!cols"]=[{wch:5},{wch:17},{wch:20},{wch:20},{wch:9},{wch:28},{wch:7},{wch:30},{wch:40},{wch:30},{wch:16},{wch:14},{wch:10}];
-  ws3["!autofilter"]={ ref:"A1:M"+Math.max(1,s3.length) };
+  findings.forEach(({el})=>{ const it=peek(el.k); el.crit.forEach((c,i)=>{ const v=it.c[i]; if(v&&v.s==="n") s3.push([n++,IMPACT[v.i||"none"].label,el.main,el.title,+el.no,el.name,it.q?+it.q:"",it.ty||"",it.br||"",c,it.note||"","","","","مفتوحة"]); }); });
+  const ws3=X.utils.aoa_to_sheet(s3); ws3["!cols"]=[{wch:5},{wch:17},{wch:20},{wch:20},{wch:9},{wch:28},{wch:7},{wch:16},{wch:16},{wch:30},{wch:40},{wch:30},{wch:16},{wch:14},{wch:10}];
+  ws3["!autofilter"]={ ref:"A1:O"+Math.max(1,s3.length) };
   X.utils.book_append_sheet(wb, ws3, "الملاحظات للمتابعة");
-  const s4=[["القسم","الصفحة","رقم العنصر","العنصر","العنصر الأولي","العدد","البند","الحالة","الأثر","ملاحظة العنصر","عدد الصور"]];
-  detailRows().forEach(r=>s4.push([r.el.main,r.el.title,+r.el.no,r.el.name,r.el.sub,r.qty,r.crit,r.status,r.impact,r.note,r.phc]));
-  const ws4=X.utils.aoa_to_sheet(s4); ws4["!cols"]=[{wch:20},{wch:22},{wch:9},{wch:28},{wch:16},{wch:7},{wch:32},{wch:11},{wch:17},{wch:40},{wch:9}];
-  ws4["!autofilter"]={ ref:"A1:K"+s4.length };
+  const s4=[["القسم","الصفحة","رقم العنصر","العنصر","العنصر الأولي","العدد","النوع","الماركة","البند","الحالة","الأثر","ملاحظة العنصر","عدد الصور"]];
+  detailRows().forEach(r=>s4.push([r.el.main,r.el.title,+r.el.no,r.el.name,r.el.sub,r.qty,r.ty,r.br,r.crit,r.status,r.impact,r.note,r.phc]));
+  const ws4=X.utils.aoa_to_sheet(s4); ws4["!cols"]=[{wch:20},{wch:22},{wch:9},{wch:28},{wch:16},{wch:7},{wch:16},{wch:16},{wch:32},{wch:11},{wch:17},{wch:40},{wch:9}];
+  ws4["!autofilter"]={ ref:"A1:M"+s4.length };
   X.utils.book_append_sheet(wb, ws4, "التقييم التفصيلي");
   const out=X.write(wb,{ bookType:"xlsx", type:"array" });
   state.exp.xlsx=true; save();
@@ -1063,7 +1069,7 @@ async function sendSheets(){
     meta:state.meta, kpis:{ readiness:tot.readiness, completion:tot.completion, total:tot.total, done:tot.done, ready:tot.r, notReady:tot.n, na:tot.x, blocking:tot.b, urgent:tot.u, later:tot.l, unspecified:tot.none, absent:tot.absent },
     decision:{ value:d.value?DECISIONS[d.value].label:"", reason:d.reason, signer:d.signer||state.meta.evaluator, signerTitle:d.signerTitle },
     sections: per.map(p=>({ main:p.main, total:p.total, done:p.done, ready:p.r, notReady:p.n, blocking:p.b, readiness:p.readiness })),
-    rows: detailRows().map(r=>({ main:r.el.main, page:r.el.title, no:r.el.no, element:r.el.name, qty:r.qty, criterion:r.crit, status:r.status, impact:r.impact, note:r.note })) };
+    rows: detailRows().map(r=>({ main:r.el.main, page:r.el.title, no:r.el.no, element:r.el.name, qty:r.qty, type:r.ty, brand:r.br, criterion:r.crit, status:r.status, impact:r.impact, note:r.note })) };
   busy(true,"جاري الإرسال…");
   try{
     await fetch(SHEETS_URL, { method:"POST", mode:"no-cors", headers:{ "Content-Type":"text/plain;charset=utf-8" }, body:JSON.stringify(payload) });
@@ -1072,6 +1078,7 @@ async function sendSheets(){
 }
 
 /* ---------------- PDF ---------------- */
+function specs(it){ return [it.q?"العدد: "+esc(it.q):"", it.ty?"النوع: "+esc(it.ty):"", it.br?"الماركة: "+esc(it.br):""].filter(Boolean).join(" · "); }
 function rpChips(el){
   const it=peek(el.k)||{a:false,c:{}};
   if(it.a) return `<span class="ck x">غير موجود في المسجد</span>`;
@@ -1101,7 +1108,7 @@ function reportBlocks(){
     const list=findings.filter(f=>f.s.sev===g); if(!list.length) return;
     add(`<div class="rp-h3" style="background:${IMPACT[g].color}">${IMPACT[g].label} — ${list.length} عنصر</div>`, true);
     list.forEach(({el})=>{ const it=peek(el.k);
-      add(`<div class="rp-find ${g==="b"?"":g}"><div class="fh"><span class="rp-tag ${g==="b"?"":g}">${IMPACT[g].short}</span><b>${esc(el.no)}. ${esc(el.name)}</b>${it.q?`<span class="where">العدد: ${esc(it.q)}</span>`:""}<span class="where">${esc(el.main)} › ${esc(el.title)}</span></div>
+      add(`<div class="rp-find ${g==="b"?"":g}"><div class="fh"><span class="rp-tag ${g==="b"?"":g}">${IMPACT[g].short}</span><b>${esc(el.no)}. ${esc(el.name)}</b>${it.q||it.ty||it.br?`<span class="where">${specs(it)}</span>`:""}<span class="where">${esc(el.main)} › ${esc(el.title)}</span></div>
         <ul>${el.crit.map((c,i)=>{ const v=it.c[i]; return v&&v.s==="n" ? `<li>${esc(c)} <span style="color:${IMPACT[v.i||"none"].color};font-weight:700">(${IMPACT[v.i||"none"].label})</span></li>` : ""; }).join("")}</ul>
         ${it.note?`<div class="rp-note">${esc(it.note)}</div>`:""}
         ${it.ph&&it.ph.length?`<div class="rp-phs">${it.ph.map(p=>`<div class="rp-ph" style="background-image:url('${p}')"></div>`).join("")}</div>`:""}</div>`); });
@@ -1120,7 +1127,7 @@ function reportBlocks(){
   STEPS.forEach(st=>{ if(st.type!=="page") return;
     add(`<div class="rp-h3">${esc(st.main)}${st.main!==st.title?" · "+esc(st.title):""}</div>`, true);
     st.els.forEach(el=>{ const it=peek(el.k);
-      add(`<div class="rp-row"><div class="no">${esc(el.no)}</div><div class="nm">${esc(el.name)}${el.sub&&el.sub!==el.name?`<small>${esc(el.sub)}</small>`:""}${it&&it.q&&!it.a?`<small style="color:#8B5A3C;font-weight:700">العدد: ${esc(it.q)}</small>`:""}</div><div class="cr">${rpChips(el)}</div>${it&&it.note?`<div class="rn">ملاحظة: ${esc(it.note)}</div>`:""}</div>`); });
+      add(`<div class="rp-row"><div class="no">${esc(el.no)}</div><div class="nm">${esc(el.name)}${el.sub&&el.sub!==el.name?`<small>${esc(el.sub)}</small>`:""}${it&&!it.a&&(it.q||it.ty||it.br)?`<small style="color:#8B5A3C;font-weight:700">${specs(it)}</small>`:""}</div><div class="cr">${rpChips(el)}</div>${it&&it.note?`<div class="rn">ملاحظة: ${esc(it.note)}</div>`:""}</div>`); });
   });
   return B;
 }
