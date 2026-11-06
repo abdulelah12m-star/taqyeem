@@ -112,6 +112,7 @@ main{max-width:760px;margin:0 auto;padding:16px 14px 120px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
 @media (max-width:520px){.grid2{grid-template-columns:1fr}}
 input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--brown);outline-offset:1px}
+.hijri{font-size:.78rem;color:var(--brown);font-weight:600;margin-top:4px}
 .codechip{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;border-radius:10px;padding:8px 13px;font-weight:700;font-size:.95rem;direction:ltr}
 .codechip small{color:var(--gold);font-weight:600;font-size:.72rem}
 .geo{display:flex;gap:8px}
@@ -312,32 +313,57 @@ const ORG = "مؤسسة الأمير متعب بن عبدالعزيز -رحمه 
 
 const REGION_NAMES = { W:"الغربية", C:"الوسطى", S:"الجنوبية", E:"الشرقية", N:"الشمالية" };
 const MOSQUES = [
-  { no:"1",  name:"جامع الملك عبدالعزيز – حي العدل", city:"مكة المكرمة", region:"W" },
-  { no:"2",  name:"جامع الأميرة شهيدة", city:"مكة المكرمة", region:"W" },
-  { no:"3",  name:"جامع الأمير متعب العزيزية", city:"مكة المكرمة", region:"W" },
-  { no:"4",  name:"جامع الأمير متعب – وادي نعمان", city:"مكة المكرمة", region:"W" },
-  { no:"5",  name:"جامع الأمير متعب بحي الثغر", city:"جدة", region:"W" },
-  { no:"6",  name:"جامع الأمير متعب بالحوايا", city:"الطائف", region:"W" },
-  { no:"7",  name:"جامع الأمير متعب بحي الملز الغربي", city:"الرياض", region:"C" },
-  { no:"8",  name:"مسجد الأمير متعب التخصصي", city:"الرياض", region:"C" },
-  { no:"9",  name:"جامع الأمير متعب بحي الفاروق", city:"الرياض", region:"C" },
-  { no:"10", name:"جامع الأمير متعب طريق علي بن أبي طالب", city:"الرياض", region:"C" },
-  { no:"11", name:"جامع الأمير متعب بحي الملز الشرقي", city:"الرياض", region:"C" },
-  { no:"12", name:"جامع الأمير متعب بقصور آل مقبل", city:"قصور آل مقبل", region:"C" },
-  { no:"13", name:"جامع الأمير متعب بالخرج – مزرعة الأمير", city:"الخرج", region:"C" },
-  { no:"14", name:"مسجد الأمير متعب – مركز العمانية", city:"رماح", region:"C" },
-  { no:"15", name:"جامع الأمير متعب الدرعية", city:"الدرعية", region:"C" },
-  { no:"16", name:"مسجد الأمير متعب حي الصفا – رقم ١", city:"الرياض", region:"C" },
-  { no:"17", name:"مسجد الأمير متعب حي الصفا – رقم ٢", city:"الرياض", region:"C" },
-  { no:"18", name:"مسجد الأمير متعب حي الصفا – رقم ٣", city:"الرياض", region:"C" },
-  { no:"19", name:"مسجد الأمير متعب حي الصفا – رقم ٤", city:"الرياض", region:"C" },
-  { no:"20", name:"مسجد الأمير متعب حي الصفا – رقم ٥", city:"الرياض", region:"C" },
-  { no:"21", name:"جامع الأمير متعب بالبديع", city:"الأفلاج", region:"C" },
-  { no:"22", name:"مسجد الأمير متعب الربيعية", city:"بريدة", region:"C" },
-  { no:"23", name:"مسجد الأمير متعب الأمواه", city:"الأمواه", region:"S" },
-  { no:"24", name:"مسجد الأمير متعب – هجرة الفرايد", city:"حرض", region:"E" },
-  { no:"25", name:"مسجد الأمير متعب - هجرة الراشدية", city:"حرض", region:"E" },
+  { no:"1",  name:"جامع الملك عبدالعزيز – حي العدل", city:"مكة المكرمة", region:"W", district:"حي العدل" },
+  { no:"2",  name:"جامع الأميرة شهيدة", city:"مكة المكرمة", region:"W", district:"" },
+  { no:"3",  name:"جامع الأمير متعب العزيزية", city:"مكة المكرمة", region:"W", district:"العزيزية" },
+  { no:"4",  name:"جامع الأمير متعب – وادي نعمان", city:"مكة المكرمة", region:"W", district:"وادي نعمان" },
+  { no:"5",  name:"جامع الأمير متعب بحي الثغر", city:"جدة", region:"W", district:"حي الثغر" },
+  { no:"6",  name:"جامع الأمير متعب بالحوايا", city:"الطائف", region:"W", district:"الحوايا" },
+  { no:"7",  name:"جامع الأمير متعب بحي الملز الغربي", city:"الرياض", region:"C", district:"حي الملز الغربي" },
+  { no:"8",  name:"مسجد الأمير متعب التخصصي", city:"الرياض", region:"C", district:"التخصصي" },
+  { no:"9",  name:"جامع الأمير متعب بحي الفاروق", city:"الرياض", region:"C", district:"حي الفاروق" },
+  { no:"10", name:"جامع الأمير متعب طريق علي بن أبي طالب", city:"الرياض", region:"C", district:"طريق علي بن أبي طالب" },
+  { no:"11", name:"جامع الأمير متعب بحي الملز الشرقي", city:"الرياض", region:"C", district:"حي الملز الشرقي" },
+  { no:"12", name:"جامع الأمير متعب بقصور آل مقبل", city:"قصور آل مقبل", region:"C", district:"قصور آل مقبل" },
+  { no:"13", name:"جامع الأمير متعب بالخرج – مزرعة الأمير", city:"الخرج", region:"C", district:"مزرعة الأمير" },
+  { no:"14", name:"مسجد الأمير متعب – مركز العمانية", city:"رماح", region:"C", district:"مركز العمانية" },
+  { no:"15", name:"جامع الأمير متعب الدرعية", city:"الدرعية", region:"C", district:"الدرعية" },
+  { no:"16", name:"مسجد الأمير متعب حي الصفا – رقم ١", city:"الرياض", region:"C", district:"حي الصفا" },
+  { no:"17", name:"مسجد الأمير متعب حي الصفا – رقم ٢", city:"الرياض", region:"C", district:"حي الصفا" },
+  { no:"18", name:"مسجد الأمير متعب حي الصفا – رقم ٣", city:"الرياض", region:"C", district:"حي الصفا" },
+  { no:"19", name:"مسجد الأمير متعب حي الصفا – رقم ٤", city:"الرياض", region:"C", district:"حي الصفا" },
+  { no:"20", name:"مسجد الأمير متعب حي الصفا – رقم ٥", city:"الرياض", region:"C", district:"حي الصفا" },
+  { no:"21", name:"جامع الأمير متعب بالبديع", city:"الأفلاج", region:"C", district:"البديع" },
+  { no:"22", name:"مسجد الأمير متعب الربيعية", city:"بريدة", region:"C", district:"الربيعية" },
+  { no:"23", name:"مسجد الأمير متعب الأمواه", city:"الأمواه", region:"S", district:"الأمواه" },
+  { no:"24", name:"مسجد الأمير متعب – هجرة الفرايد", city:"حرض", region:"E", district:"هجرة الفرايد" },
+  { no:"25", name:"مسجد الأمير متعب - هجرة الراشدية", city:"حرض", region:"E", district:"هجرة الراشدية" },
 ];
+
+const BASE_LISTS = {
+  contractor:["شركة عبدالعزيز وعبدالرحمن ابناء محمد الدوسري"],
+  supervisor:["شعف الابداع للاستشارات الهندسية"],
+};
+const LISTS_KEY = "mosque-readiness-lists-v1";
+function getList(key){
+  let extra=[]; try{ extra = (JSON.parse(localStorage.getItem(LISTS_KEY)||"{}")[key])||[]; }catch(e){}
+  return [...new Set([...BASE_LISTS[key], ...extra])];
+}
+function addToList(key, val){
+  val=(val||"").trim(); if(!val || BASE_LISTS[key].includes(val)) return;
+  try{ const all=JSON.parse(localStorage.getItem(LISTS_KEY)||"{}"); all[key]=[...new Set([...(all[key]||[]), val])]; localStorage.setItem(LISTS_KEY, JSON.stringify(all)); }catch(e){}
+}
+function hijri(d){
+  if(!d) return "";
+  try{ return new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-latn",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"}).format(new Date(d+"T00:00:00Z")); }catch(e){ return ""; }
+}
+function dateBoth(d){ const h=hijri(d); return d ? d+" م"+(h?" — "+h:"") : ""; }
+function pickHTML(key,label,newLabel,placeholder){
+  const m=state.meta, list=getList(key), isNew = m[key+"New"] || (m[key] && !list.includes(m[key]));
+  return `<div class="field"><label>${label}</label>
+    <select data-pick="${key}"><option value="">— اختر —</option>${list.map(x=>`<option value="${esc(x)}" ${!isNew&&m[key]===x?"selected":""}>${esc(x)}</option>`).join("")}<option value="__new" ${isNew?"selected":""}>＋ ${newLabel}</option></select>
+    ${isNew?`<input data-m="${key}" data-addlist="${key}" value="${esc(m[key])}" placeholder="${placeholder}" style="margin-top:8px">`:""}</div>`;
+}
 
 const IMPACT = {
   b:{ label:"يمنع الافتتاح", short:"مانع", rank:3, color:"#A23E32" },
@@ -570,7 +596,7 @@ const MAINS = [...new Set(STEPS.filter(s=>s.type==="page").map(s=>s.main))];
 function freshState(){
   return { v:1, id:"EV-"+Date.now().toString(36).toUpperCase(), created:new Date().toISOString(), updated:null, step:0,
     meta:{ mosque:"", name:"", city:"", region:"", district:"", date:new Date().toLocaleDateString("en-CA"),
-      evaluator:"", evaluatorOrg:"", contractor:"", supervisor:"", lat:"", lng:"", notes:"" },
+      evaluator:"م. عبدالإله الشهراني", evaluatorOrg:"مؤسسة الأمير متعب بن عبدالعزيز الأهلية", contractor:"", contractorNew:false, supervisor:"", supervisorNew:false, lat:"", lng:"", notes:"" },
     items:{}, decision:{ value:"", reason:"", signer:"", signerTitle:"" },
     exp:{ pdf:false, xlsx:false, sheets:false } };
 }
@@ -610,6 +636,8 @@ function loadSaved(){
     const d = JSON.parse(raw); if(!d || d.v!==1) return;
     const base = freshState();
     state = Object.assign(base, d, { meta:Object.assign(base.meta,d.meta||{}), decision:Object.assign(base.decision,d.decision||{}), exp:Object.assign(base.exp,d.exp||{}) });
+    if(!state.meta.evaluator) state.meta.evaluator = base.meta.evaluator;
+    if(!state.meta.evaluatorOrg) state.meta.evaluatorOrg = base.meta.evaluatorOrg;
     restored = true;
   }catch(e){}
 }
@@ -717,20 +745,19 @@ function infoHTML(){
       <div class="field"><label>المنطقة (للترميز) <span class="req">*</span></label><select data-m="region"><option value="">— اختر —</option>${regionOpts}</select></div>
     </div>`:""}
     <div class="grid2">
-      <div class="field"><label>الحي / الموقع</label><input data-m="district" value="${esc(m.district)}" placeholder="اختياري"></div>
+      <div class="field"><label>الحي / الموقع</label><input data-m="district" value="${esc(m.district)}" placeholder="${m.mosque==="new"?"مثال: حي الملز":"يُعبّأ تلقائيًا من اسم المسجد"}"></div>
       <div class="field"><label>الإحداثيات</label><div class="geo"><input data-m="latlng" value="${esc(m.lat&&m.lng? m.lat+", "+m.lng:"")}" placeholder="24.71, 46.67" dir="ltr"><button data-act="geo">📍 موقعي</button></div></div>
     </div>
     ${code ? `<div class="codechip">${esc(code)} <small>رمز المسجد</small></div>`:""}
   </div>
   <div class="card"><h3>بيانات التقييم</h3>
     <div class="grid2">
-      <div class="field"><label>تاريخ التقييم <span class="req">*</span></label><input type="date" data-m="date" value="${esc(m.date)}"></div>
+      <div class="field"><label>تاريخ التقييم <span class="req">*</span></label><input type="date" data-m="date" value="${esc(m.date)}"><div class="hijri" id="hijriOut">${esc(hijri(m.date))}</div></div>
       <div class="field"><label>اسم المقيّم <span class="req">*</span></label><input data-m="evaluator" value="${esc(m.evaluator)}"></div>
       <div class="field"><label>جهة المقيّم</label><input data-m="evaluatorOrg" value="${esc(m.evaluatorOrg)}"></div>
-      <div class="field"><label>المقاول المنفّذ</label><input data-m="contractor" value="${esc(m.contractor)}"></div>
-      <div class="field"><label>الاستشاري / المشرف</label><input data-m="supervisor" value="${esc(m.supervisor)}"></div>
+      ${pickHTML("contractor","المقاول المنفّذ","مقاول جديد","اسم المقاول")}
+      ${pickHTML("supervisor","الاستشاري / المشرف","مكتب جديد","اسم المكتب الاستشاري")}
     </div>
-    <div class="field"><label>ملاحظات عامة</label><textarea data-m="notes" placeholder="أي ملاحظة عامة عن الزيارة">${esc(m.notes)}</textarea></div>
   </div>
   <div class="card"><h3>كيف يعمل التقييم</h3>
     <div class="mapbox">
@@ -905,7 +932,14 @@ document.addEventListener("change", async e=>{
   const t=e.target;
   if(t.matches("[data-nav]")) go(+t.value);
   else if(t.dataset.absent){ const k=t.dataset.absent; item(k).a=t.checked; openState[k]=!t.checked; save(); rerenderCard(k); }
-  else if(t.dataset.m==="mosque" || t.dataset.m==="region"){ state.meta[t.dataset.m]=t.value; save(); render(); }
+  else if(t.dataset.m==="mosque" || t.dataset.m==="region"){
+    state.meta[t.dataset.m]=t.value;
+    if(t.dataset.m==="mosque"){ const x=MOSQUES.find(q=>q.no===t.value); state.meta.district = x ? x.district : ""; }
+    save(); render(); }
+  else if(t.dataset.pick){ const k=t.dataset.pick;
+    if(t.value==="__new"){ state.meta[k+"New"]=true; state.meta[k]=""; } else { state.meta[k+"New"]=false; state.meta[k]=t.value; }
+    save(); render(); if(t.value==="__new"){ const i=document.querySelector(`[data-addlist="${k}"]`); if(i) i.focus(); } }
+  else if(t.dataset.addlist){ addToList(t.dataset.addlist, t.value); }
   else if(t.dataset.photo){
     const k=t.dataset.photo, it=item(k), files=[...t.files].slice(0, 4-it.ph.length);
     for(const f of files){ try{ it.ph.push(await compressImage(f)); }catch(err){ toast("تعذّرت قراءة الصورة", true); } }
@@ -919,6 +953,7 @@ document.addEventListener("input", e=>{
   else if(t.dataset.m && t.dataset.m!=="mosque" && t.dataset.m!=="region"){
     if(t.dataset.m==="latlng"){ const [a,b]=t.value.split(/[,،\s]+/).filter(Boolean); state.meta.lat=a||""; state.meta.lng=b||""; }
     else state.meta[t.dataset.m]=t.value;
+    if(t.dataset.m==="date"){ const h=$("#hijriOut"); if(h) h.textContent = hijri(t.value); }
     save();
   }
   else if(t.dataset.d){ state.decision[t.dataset.d]=t.value; save(); }
@@ -986,8 +1021,8 @@ function exportXLSX(){
   const { per, tot, findings } = computeAll(), m=state.meta, info=mosqueInfo(), d=state.decision;
   const s1=[["تقرير تقييم جاهزية المسجد للافتتاح"],[ORG],[],
     ["المسجد",info.name],["رمز المسجد",mosqueCode()],["المدينة",info.city||""],["المنطقة",REGION_NAMES[info.region]||""],["الحي / الموقع",m.district],
-    ["الإحداثيات",m.lat&&m.lng?m.lat+", "+m.lng:""],["تاريخ التقييم",m.date],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],
-    ["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor],["ملاحظات عامة",m.notes],[],
+    ["الإحداثيات",m.lat&&m.lng?m.lat+", "+m.lng:""],["تاريخ التقييم (ميلادي)",m.date],["تاريخ التقييم (هجري)",hijri(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],
+    ["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor],[],
     ["نسبة الجاهزية %",tot.readiness==null?"":tot.readiness],["اكتمال التقييم %",tot.completion||0],["البنود المُقيَّمة",tot.done+" من "+tot.total],
     ["جاهز",tot.r],["غير جاهز",tot.n],["لا ينطبق",tot.x],["يمنع الافتتاح",tot.b],["عاجل بعد الافتتاح",tot.u],["تحسين لاحق",tot.l],["أثر غير محدد",tot.none],["عناصر غير موجودة",tot.absent],[],
     ["قرار الجاهزية",d.value?DECISIONS[d.value].label:"لم يُعتمد بعد"],["مبررات القرار",d.reason],["المعتمد",d.signer||m.evaluator],["الصفة",d.signerTitle],["رقم التقييم",state.id]];
@@ -1073,8 +1108,7 @@ function reportBlocks(){
   add(`<div class="rp-h2">قرار الجاهزية والاعتماد</div>`, true);
   add(`<div class="rp-dec ${d.value?DECISIONS[d.value].cls:"d-none"}">${d.value?DECISIONS[d.value].label:"لم يُعتمد القرار بعد (مسودة)"}</div>
     ${d.reason?`<div class="rp-note" style="font-size:12px;margin-top:8px"><b>المبررات والاشتراطات:</b> ${esc(d.reason)}</div>`:""}
-    ${m.notes?`<div class="rp-note" style="font-size:12px"><b>ملاحظات عامة:</b> ${esc(m.notes)}</div>`:""}
-    <div class="rp-sign" style="margin-top:12px"><div><span>المعتمد</span>${esc(d.signer||m.evaluator)}</div><div><span>الصفة</span>${esc(d.signerTitle)}</div><div><span>التوقيع</span></div><div><span>التاريخ</span>${esc(m.date)}</div></div>`);
+    <div class="rp-sign" style="margin-top:12px"><div><span>المعتمد</span>${esc(d.signer||m.evaluator)}</div><div><span>الصفة</span>${esc(d.signerTitle)}</div><div><span>التوقيع</span></div><div><span>التاريخ</span>${esc(m.date)} م<br>${esc(hijri(m.date))}</div></div>`);
   add(`<div class="rp-h2">ملحق: التقييم التفصيلي لجميع العناصر</div>`, true);
   add(`<div style="display:flex;gap:6px;flex-wrap:wrap;font-size:10.5px;color:#6B7A7D"><span class="ck r">✓ جاهز</span><span class="ck n">✗ غير جاهز · الأثر</span><span class="ck x">— لا ينطبق</span><span class="ck">○ لم يُقيَّم</span></div>`);
   STEPS.forEach(st=>{ if(st.type!=="page") return;
@@ -1086,7 +1120,7 @@ function reportBlocks(){
 }
 function coverHTML(){
   const { tot } = computeAll(), info=mosqueInfo(), m=state.meta, d=state.decision;
-  const meta=[["المدينة / المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" — ")],["الحي / الموقع",m.district],["تاريخ التقييم",m.date],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor],["الإحداثيات",m.lat&&m.lng?m.lat+", "+m.lng:""]];
+  const meta=[["المدينة / المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" — ")],["الحي / الموقع",m.district],["تاريخ التقييم",dateBoth(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor],["الإحداثيات",m.lat&&m.lng?m.lat+", "+m.lng:""]];
   return `<div class="rp-page"><div class="cv-top"><img src="${LOGO}"><div class="cv-label">تقرير تقييم</div>
     <div class="cv-title">جاهزية المسجد للافتتاح</div><div class="cv-mosque">${esc(info.name)}</div>${mosqueCode()?`<div class="cv-code">${esc(mosqueCode())}</div>`:""}</div>
     <div class="cv-band"></div><div class="cv-body">
