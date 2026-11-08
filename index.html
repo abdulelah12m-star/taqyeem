@@ -284,6 +284,7 @@ pre.code{direction:ltr;text-align:left;background:#FDF3EE;border-radius:10px;pad
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
 <div class="pattern"></div>
@@ -761,6 +762,8 @@ function infoHTML(){
       ${pickHTML("contractor","المقاول المنفّذ","مقاول جديد","اسم المقاول")}
       ${pickHTML("supervisor","الاستشاري / المشرف","مكتب جديد","اسم المكتب الاستشاري")}
     </div>
+    <label class="sw" style="margin-top:4px"><input type="checkbox" data-autosave ${autoSaveOn()?"checked":""}> حفظ الصور الملتقطة تلقائيًا في الجوال</label>
+    <p class="indicator" style="margin-top:4px">${IS_IOS?"في iPhone: بعد التصوير يظهر زر «حفظ في الصور» بضغطة واحدة.":"في Android: كل صورة تُلتقط تُحفظ مباشرة في مجلد التنزيلات (Downloads) وتظهر في الاستديو."}</p>
   </div>
   <div class="card"><h3>كيف يعمل التقييم</h3>
     <div class="mapbox">
@@ -881,6 +884,7 @@ function summaryHTML(){
         <button class="xbtn" data-act="xlsx"><span class="ic">📊</span>ملف Excel<small>لمتابعة الملاحظات ومعالجتها</small>${state.exp.xlsx?`<span class="done">✓ صُدِّر</span>`:""}</button>
         <button class="xbtn" data-act="sheets"><span class="ic">☁️</span>إرسال إلى Google Sheets<small>${SHEETS_URL?"نسخة مركزية لكل التقييمات":"لم يُضبط الرابط بعد"}</small>${state.exp.sheets?`<span class="done">✓ أُرسل</span>`:""}</button>
         <button class="xbtn" data-act="backup"><span class="ic">💾</span>نسخة احتياطية<small>ملف يحفظ التقييم كاملًا بالصور</small></button>
+        <button class="xbtn" data-act="photos" style="grid-column:1/-1"><span class="ic">📷</span>تنزيل جميع الصور<small>ملف مضغوط مرتّب حسب القسم والعنصر</small></button>
       </div>
       <div class="tools">
         <label>📂 استيراد نسخة احتياطية<input type="file" accept=".json,application/json" data-import></label>
@@ -931,6 +935,9 @@ document.addEventListener("click", async e=>{
     case "xlsx": exportXLSX(); break;
     case "sheets": sendSheets(); break;
     case "backup": exportBackup(); break;
+    case "photos": downloadAllPhotos(); break;
+    case "ios-save": iosSave(); break;
+    case "ios-skip": pendingSaves=[]; closeSheet(); break;
     case "new": confirmNew(); break;
     case "new-backup": exportBackup(); break;
     case "new-yes": try{ localStorage.removeItem(STORE_KEY); }catch(_){} state=freshState(); restored=false; for(const x in openState) delete openState[x]; closeSheet(); render(); window.scrollTo(0,0); toast("بدأ تقييم جديد"); break;
@@ -951,11 +958,13 @@ document.addEventListener("change", async e=>{
   else if(t.dataset.qty){ item(t.dataset.qty).q = t.value; save(); }
   else if(t.dataset.addlist){ addToList(t.dataset.addlist, t.value); }
   else if(t.dataset.photo){
-    const k=t.dataset.photo, it=item(k), files=[...t.files].slice(0, 4-it.ph.length);
-    for(const f of files){ try{ it.ph.push(await compressImage(f)); }catch(err){ toast("تعذّرت قراءة الصورة", true); } }
+    const k=t.dataset.photo, it=item(k), files=[...t.files].slice(0, 4-it.ph.length), fresh=[];
+    for(const f of files){ try{ it.ph.push(await compressImage(f)); if(Date.now()-(f.lastModified||0) < 3*60*1000) fresh.push(new File([f], photoName(ELMAP[k], it.ph.length, f), { type:f.type||"image/jpeg" })); }catch(err){ toast("تعذّرت قراءة الصورة", true); } }
     openState[k]=true; save(); rerenderCard(k);
+    if(fresh.length && autoSaveOn()) saveToDevice(fresh);
   }
   else if(t.matches("[data-import]")) importBackup(t.files[0]);
+  else if(t.matches("[data-autosave]")){ try{ localStorage.setItem(AUTOSAVE_KEY, t.checked?"1":"0"); }catch(_){} toast(t.checked?"حفظ الصور في الجوال: مفعّل":"حفظ الصور في الجوال: متوقف"); }
 });
 document.addEventListener("input", e=>{
   const t=e.target;
@@ -980,6 +989,44 @@ function confirmNew(){
 }
 
 /* ---------------- الصور ---------------- */
+const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+const AUTOSAVE_KEY = "mosque-readiness-autosave";
+function autoSaveOn(){ try{ return localStorage.getItem(AUTOSAVE_KEY)!=="0"; }catch(_){ return true; } }
+const safeName = s => String(s||"").replace(/[\\/:*?"<>|]+/g,"-").replace(/\s+/g," ").trim();
+function photoName(el, n, f){
+  const ext = ((f&&f.name||"").match(/\.(jpe?g|png|heic|heif|webp)$/i)||[".jpg"])[0].toLowerCase();
+  return safeName(`${mosqueCode()||"مسجد"}_${el.main}_${el.no}-${el.name}_${n}`)+ext;
+}
+let pendingSaves=[];
+function saveToDevice(files){
+  if(IS_IOS){
+    pendingSaves = pendingSaves.concat(files);
+    let can=false; try{ can = !!(navigator.canShare && navigator.canShare({ files:pendingSaves })); }catch(_){}
+    openSheet(`<h3>حفظ ${pendingSaves.length===1?"الصورة":"الصور ("+pendingSaves.length+")"} في الجوال</h3>
+      <p>${can?"اضغط الزر ثم اختر «حفظ الصورة» / Save Image.":"اضغط مطولًا على الرابط ثم اختر الحفظ."}</p>
+      <div class="mbtns">${can?`<button class="mbtn primary" data-act="ios-save">📥 حفظ في الصور</button>`:pendingSaves.map(f=>`<a class="mbtn" href="${URL.createObjectURL(f)}" download="${esc(f.name)}">${esc(f.name)}</a>`).join("")}
+      <button class="mbtn" data-act="ios-skip">لاحقًا</button></div>`);
+    return;
+  }
+  files.forEach((f,i)=>setTimeout(()=>{ const a=document.createElement("a"); a.href=URL.createObjectURL(f); a.download=f.name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 4000); }, i*400));
+  toast(files.length===1?"حُفظت الصورة في الجوال (التنزيلات) ✓":`حُفظت ${files.length} صور في الجوال (التنزيلات) ✓`);
+}
+async function iosSave(){
+  const files=pendingSaves; pendingSaves=[];
+  try{ await navigator.share({ files }); closeSheet(); toast("تم ✓"); }catch(e){ if(e && e.name==="AbortError"){ pendingSaves=files; } else { closeSheet(); toast("تعذّر الحفظ", true); } }
+}
+async function downloadAllPhotos(){
+  const list=[]; ELS.forEach(el=>{ const it=peek(el.k); if(it&&it.ph) it.ph.forEach((p,i)=>list.push({ el, p, n:i+1 })); });
+  if(!list.length){ toast("لا توجد صور في هذا التقييم", true); return; }
+  if(!window.JSZip){ toast("تعذّر تحميل مكتبة الضغط — تحقق من الاتصال", true); return; }
+  busy(true,"جاري تجهيز الصور…");
+  try{
+    const zip=new JSZip(), root=safeName(`صور_${mosqueCode()||"مسجد"}_${state.meta.date||""}`);
+    list.forEach(({el,p,n})=>zip.folder(root).folder(safeName(el.main)).file(safeName(`${el.no}-${el.name}_${n}`)+".jpg", p.split(",")[1], { base64:true }));
+    const blob=await zip.generateAsync({ type:"blob" }); busy(false);
+    deliver(blob, root+".zip", `ملف الصور (${list.length} صورة)`);
+  }catch(e){ busy(false); toast("تعذّر تجهيز الصور", true); }
+}
 function compressImage(file, max=900, q=0.6){
   return new Promise((res,rej)=>{
     const url=URL.createObjectURL(file), img=new Image();
