@@ -625,25 +625,48 @@ $("#overlay").addEventListener("click", e=>{ if(e.target.id==="overlay") closeSh
 /* ---------------- الحفظ التلقائي ---------------- */
 let saveTimer=null;
 function save(){ clearTimeout(saveTimer); saveTimer=setTimeout(saveNow, 350); }
-function saveNow(){
-  state.updated = new Date().toISOString();
-  try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); savedBadge("محفوظ تلقائيًا ✓"); return; }catch(e){}
-  try{
-    const lite = JSON.parse(JSON.stringify(state)); Object.values(lite.items).forEach(i=>i.ph=[]);
-    localStorage.setItem(STORE_KEY, JSON.stringify(lite));
-    savedBadge("امتلأت ذاكرة المتصفح: حُفظت البيانات دون الصور — احفظ نسخة احتياطية", "warn");
-  }catch(e2){ savedBadge("تعذّر الحفظ التلقائي — احفظ نسخة احتياطية الآن", "err"); }
+/* الصور تُحفظ في IndexedDB (سعة كبيرة)، والبيانات النصية في localStorage أيضًا كنسخة ثانية */
+const IDB_NAME="mosque-readiness-db", IDB_STORE="kv";
+let idbP=null;
+function idb(){
+  if(idbP) return idbP;
+  idbP = new Promise((res,rej)=>{ try{ const r=indexedDB.open(IDB_NAME,1); r.onupgradeneeded=()=>r.result.createObjectStore(IDB_STORE); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); }catch(e){ rej(e); } });
+  return idbP;
 }
-function loadSaved(){
-  try{
-    const raw = localStorage.getItem(STORE_KEY); if(!raw) return;
-    const d = JSON.parse(raw); if(!d || d.v!==1) return;
-    const base = freshState();
-    state = Object.assign(base, d, { meta:Object.assign(base.meta,d.meta||{}), decision:Object.assign(base.decision,d.decision||{}), exp:Object.assign(base.exp,d.exp||{}) });
-    if(!state.meta.evaluator) state.meta.evaluator = base.meta.evaluator;
-    if(!state.meta.evaluatorOrg) state.meta.evaluatorOrg = base.meta.evaluatorOrg;
-    restored = true;
-  }catch(e){}
+async function idbPut(k,v){ const db=await idb(); return new Promise((res,rej)=>{ const t=db.transaction(IDB_STORE,"readwrite"); t.objectStore(IDB_STORE).put(v,k); t.oncomplete=()=>res(); t.onerror=()=>rej(t.error); t.onabort=()=>rej(t.error); }); }
+async function idbGet(k){ const db=await idb(); return new Promise((res,rej)=>{ const r=db.transaction(IDB_STORE,"readonly").objectStore(IDB_STORE).get(k); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); }); }
+async function idbDel(k){ const db=await idb(); return new Promise(res=>{ const t=db.transaction(IDB_STORE,"readwrite"); t.objectStore(IDB_STORE).delete(k); t.oncomplete=()=>res(); t.onerror=()=>res(); }); }
+function photoCount(st){ let n=0; Object.values((st&&st.items)||{}).forEach(i=>n+=(i.ph||[]).length); return n; }
+let storeReady=false;
+async function saveNow(){
+  if(!storeReady) return;
+  state.updated = new Date().toISOString();
+  const snap = JSON.parse(JSON.stringify(state));
+  let lsOk=false, idbOk=false;
+  try{ const lite=JSON.parse(JSON.stringify(snap)); Object.values(lite.items).forEach(i=>i.ph=[]); localStorage.setItem(STORE_KEY, JSON.stringify(lite)); lsOk=true; }catch(e){}
+  try{ await idbPut("state", snap); idbOk=true; }catch(e){}
+  if(idbOk) savedBadge("محفوظ تلقائيًا ✓");
+  else if(lsOk) savedBadge(photoCount(snap)?"حُفظت البيانات، وتعذّر حفظ الصور — نزّلها الآن من «تنزيل جميع الصور»":"محفوظ تلقائيًا ✓", photoCount(snap)?"warn":"");
+  else savedBadge("تعذّر الحفظ التلقائي — احفظ نسخة احتياطية الآن", "err");
+}
+function adopt(d){
+  const base = freshState();
+  state = Object.assign(base, d, { meta:Object.assign(base.meta,d.meta||{}), decision:Object.assign(base.decision,d.decision||{}), exp:Object.assign(base.exp,d.exp||{}) });
+  if(!state.meta.evaluator) state.meta.evaluator = base.meta.evaluator;
+  if(!state.meta.evaluatorOrg) state.meta.evaluatorOrg = base.meta.evaluatorOrg;
+  restored = true;
+}
+async function loadSaved(){
+  let ls=null, db=null;
+  try{ const raw=localStorage.getItem(STORE_KEY); if(raw){ const d=JSON.parse(raw); if(d&&d.v===1) ls=d; } }catch(e){}
+  try{ const d=await idbGet("state"); if(d&&d.v===1) db=d; }catch(e){}
+  let pick = db && (!ls || (db.updated||"")>=(ls.updated||"")) ? db : ls;
+  if(pick && db && pick===ls && db.id===ls.id){
+    Object.entries(db.items||{}).forEach(([k,it])=>{ if(it.ph&&it.ph.length){ const t=pick.items[k]||(pick.items[k]={a:false,c:{},note:"",ph:[]}); if(!t.ph||!t.ph.length) t.ph=it.ph; } });
+  }
+  if(pick) adopt(pick);
+  storeReady=true;
+  if(ls && photoCount(ls)) saveNow();   /* ترحيل الصور القديمة من localStorage إلى IndexedDB */
 }
 
 /* ---------------- المسجد والرمز ---------------- */
@@ -940,7 +963,7 @@ document.addEventListener("click", async e=>{
     case "ios-skip": pendingSaves=[]; closeSheet(); break;
     case "new": confirmNew(); break;
     case "new-backup": exportBackup(); break;
-    case "new-yes": try{ localStorage.removeItem(STORE_KEY); }catch(_){} state=freshState(); restored=false; for(const x in openState) delete openState[x]; closeSheet(); render(); window.scrollTo(0,0); toast("بدأ تقييم جديد"); break;
+    case "new-yes": try{ localStorage.removeItem(STORE_KEY); }catch(_){} idbDel("state").catch(()=>{}); state=freshState(); restored=false; for(const x in openState) delete openState[x]; closeSheet(); render(); window.scrollTo(0,0); toast("بدأ تقييم جديد"); break;
     case "share": shareCurrent(); break;
   }
 });
@@ -1236,8 +1259,8 @@ async function exportPDF(){
 }
 
 /* ---------------- تشغيل ---------------- */
-loadSaved();
 render();
+loadSaved().then(()=>{ if(restored) render(); });
 </script>
 </body>
 </html>
