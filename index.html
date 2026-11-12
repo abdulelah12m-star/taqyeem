@@ -268,6 +268,9 @@ pre.code{direction:ltr;text-align:left;background:#FDF3EE;border-radius:10px;pad
 .rp-meta span{display:block;font-size:9.5px;color:#6B7A7D}
 .rp-dec{border-radius:12px;padding:14px 18px;color:#fff;font-size:18px;font-weight:700;text-align:center}
 .rp-dec.d-ready{background:#3E7A55}.rp-dec.d-cond{background:#B7791F}.rp-dec.d-not{background:#A23E32}.rp-dec.d-none{background:#8A8F91}
+.rp-qr{display:flex;align-items:center;gap:16px;margin-top:18px;border:1px solid #E9D9C8;border-radius:10px;padding:10px 14px;background:#FBF6F0}
+.rp-qr img{width:104px;height:104px;image-rendering:pixelated;background:#fff;border-radius:6px}
+.rp-qr b{display:block;font-size:13px;color:#141110}.rp-qr span{font-size:10.5px;color:#6B7A7D}
 .rp-sign{display:flex;gap:14px}
 .rp-sign div{flex:1;border:1px dashed #CDBFAE;border-radius:8px;padding:10px 12px;min-height:74px;font-size:11px}
 .rp-sign span{display:block;font-size:9.5px;color:#6B7A7D;margin-bottom:4px}
@@ -285,6 +288,7 @@ pre.code{direction:ltr;text-align:left;background:#FDF3EE;border-radius:10px;pad
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 </head>
 <body>
 <div class="pattern"></div>
@@ -356,6 +360,19 @@ function getList(key){
 function addToList(key, val){
   val=(val||"").trim(); if(!val || BASE_LISTS[key].includes(val)) return;
   try{ const all=JSON.parse(localStorage.getItem(LISTS_KEY)||"{}"); all[key]=[...new Set([...(all[key]||[]), val])]; localStorage.setItem(LISTS_KEY, JSON.stringify(all)); }catch(e){}
+}
+function coordsFrom(u){
+  u=String(u||""); let m=u.match(/@(-?\d{1,3}\.\d+),\s*(-?\d{1,3}\.\d+)/)||u.match(/[?&](?:q|query|ll|destination)=(-?\d{1,3}\.\d+)(?:,|%2C)\s*(-?\d{1,3}\.\d+)/i)||u.match(/!3d(-?\d{1,3}\.\d+)!4d(-?\d{1,3}\.\d+)/)||u.match(/^\s*(-?\d{1,3}\.\d+)\s*[,،]\s*(-?\d{1,3}\.\d+)\s*$/);
+  return m ? [m[1], m[2]] : null;
+}
+function mapLink(){
+  const m=state.meta, u=(m.mapUrl||"").trim();
+  if(u){ if(/^-?\d{1,3}\.\d+\s*[,،]\s*-?\d{1,3}\.\d+$/.test(u)){ const c=coordsFrom(u); return `https://www.google.com/maps?q=${c[0]},${c[1]}`; } return u; }
+  return m.lat&&m.lng ? `https://www.google.com/maps?q=${m.lat},${m.lng}` : "";
+}
+function qrData(text){
+  if(!text || !window.qrcode) return "";
+  try{ const q=qrcode(0,"M"); q.addData(text); q.make(); return q.createDataURL(8,2); }catch(e){ return ""; }
 }
 function hijri(d){
   if(!d) return "";
@@ -779,7 +796,7 @@ function infoHTML(){
     </div>`:""}
     <div class="grid2">
       <div class="field"><label>الحي / الموقع</label><input data-m="district" value="${esc(m.district)}" placeholder="${m.mosque==="new"?"مثال: حي الملز":"يُعبّأ تلقائيًا من اسم المسجد"}"></div>
-      <div class="field"><label>الإحداثيات</label><div class="geo"><input data-m="latlng" value="${esc(m.lat&&m.lng? m.lat+", "+m.lng:"")}" placeholder="24.71, 46.67" dir="ltr"><button data-act="geo">📍 موقعي</button></div></div>
+      <div class="field" style="grid-column:1/-1"><label>رابط الموقع (Google Maps)</label><div class="geo"><input data-m="mapUrl" value="${esc(mapLink())}" placeholder="الصق رابط الموقع من خرائط Google" dir="ltr" inputmode="url"><button data-act="geo">📍 موقعي</button></div>${mapLink()?`<p class="indicator" style="margin-top:4px">يظهر في التقرير كباركود (QR) يفتح الموقع مباشرة.</p>`:""}</div>
     </div>
     ${code ? `<div class="codechip">${esc(code)} <small>رمز المسجد</small></div>`:""}
   </div>
@@ -957,7 +974,7 @@ document.addEventListener("click", async e=>{
     case "geo":
       if(!navigator.geolocation){ toast("الجهاز لا يدعم تحديد الموقع", true); return; }
       t.textContent="…";
-      navigator.geolocation.getCurrentPosition(p=>{ state.meta.lat=p.coords.latitude.toFixed(6); state.meta.lng=p.coords.longitude.toFixed(6); save(); render(); toast("تم تحديد الموقع ✓"); },
+      navigator.geolocation.getCurrentPosition(p=>{ state.meta.lat=p.coords.latitude.toFixed(6); state.meta.lng=p.coords.longitude.toFixed(6); state.meta.mapUrl=`https://www.google.com/maps?q=${state.meta.lat},${state.meta.lng}`; save(); render(); toast("تم تحديد الموقع ✓"); },
         ()=>{ t.textContent="📍 موقعي"; toast("تعذّر تحديد الموقع — تأكد من السماح بالوصول", true); }, { enableHighAccuracy:true, timeout:15000 });
       break;
     case "pdf": exportPDF(); break;
@@ -1001,7 +1018,7 @@ document.addEventListener("input", e=>{
   else if(t.dataset.ty){ item(t.dataset.ty).ty=t.value; save(); }
   else if(t.dataset.br){ item(t.dataset.br).br=t.value; save(); }
   else if(t.dataset.m && t.dataset.m!=="mosque" && t.dataset.m!=="region"){
-    if(t.dataset.m==="latlng"){ const [a,b]=t.value.split(/[,،\s]+/).filter(Boolean); state.meta.lat=a||""; state.meta.lng=b||""; }
+    if(t.dataset.m==="mapUrl"){ state.meta.mapUrl=t.value.trim(); const c=coordsFrom(state.meta.mapUrl); state.meta.lat=c?c[0]:""; state.meta.lng=c?c[1]:""; }
     else state.meta[t.dataset.m]=t.value;
     if(t.dataset.m==="date"){ const h=$("#hijriOut"); if(h) h.textContent = hijri(t.value); }
     save();
@@ -1109,7 +1126,7 @@ function exportXLSX(){
   const { per, tot, findings } = computeAll(), m=state.meta, info=mosqueInfo(), d=state.decision;
   const s1=[["تقرير تقييم جاهزية المسجد"],[ORG],[],
     ["المسجد",info.name],["رمز المسجد",mosqueCode()],["المدينة",info.city||""],["المنطقة",REGION_NAMES[info.region]||""],["الحي / الموقع",m.district],
-    ["الإحداثيات",m.lat&&m.lng?m.lat+", "+m.lng:""],["تاريخ التقييم (ميلادي)",m.date],["تاريخ التقييم (هجري)",hijri(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],
+    ["رابط الموقع",mapLink()],["الإحداثيات",m.lat&&m.lng?m.lat+", "+m.lng:""],["تاريخ التقييم (ميلادي)",m.date],["تاريخ التقييم (هجري)",hijri(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],
     ["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor],[],
     ["نسبة الجاهزية %",tot.readiness==null?"":tot.readiness],["اكتمال التقييم %",tot.completion||0],["البنود المُقيَّمة",tot.done+" من "+tot.total],
     ["جاهز",tot.r],["غير جاهز",tot.n],["لا ينطبق",tot.x],["يمنع الافتتاح",tot.b],["عاجل بعد الافتتاح",tot.u],["تحسين لاحق",tot.l],["أثر غير محدد",tot.none],["عناصر غير موجودة",tot.absent],[],
@@ -1141,7 +1158,7 @@ function exportXLSX(){
 async function sendSheets(){
   if(!SHEETS_URL){ openSheet(`<h3>رابط Google Sheets غير مضبوط</h3><p>انشر سكربت Apps Script المرفق كـ Web App، ثم ضع رابطه في أول سطر بالإعدادات داخل ملف الصفحة:</p><pre class="code">const SHEETS_URL = "https://script.google.com/macros/s/…/exec";</pre><div class="mbtns"><button class="mbtn" data-act="close">حسنًا</button></div>`); return; }
   const { per, tot } = computeAll(), info=mosqueInfo(), d=state.decision;
-  const payload = { id:state.id, sentAt:new Date().toISOString(), mosque:info.name, code:mosqueCode(), city:info.city||"", region:REGION_NAMES[info.region]||"",
+  const payload = { id:state.id, sentAt:new Date().toISOString(), mapUrl:mapLink(), mosque:info.name, code:mosqueCode(), city:info.city||"", region:REGION_NAMES[info.region]||"",
     meta:state.meta, kpis:{ readiness:tot.readiness, completion:tot.completion, total:tot.total, done:tot.done, ready:tot.r, notReady:tot.n, na:tot.x, blocking:tot.b, urgent:tot.u, later:tot.l, unspecified:tot.none, absent:tot.absent },
     decision:{ value:d.value?DECISIONS[d.value].label:"", reason:d.reason, signer:d.signer||state.meta.evaluator, signerTitle:d.signerTitle },
     sections: per.map(p=>({ main:p.main, total:p.total, done:p.done, ready:p.r, notReady:p.n, blocking:p.b, readiness:p.readiness })),
@@ -1209,7 +1226,8 @@ function reportBlocks(){
 }
 function coverHTML(){
   const { tot } = computeAll(), info=mosqueInfo(), m=state.meta, d=state.decision;
-  const meta=[["المدينة / المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" — ")],["الحي / الموقع",m.district],["تاريخ التقييم",dateBoth(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor],["الإحداثيات",m.lat&&m.lng?m.lat+", "+m.lng:""]];
+  const meta=[["المدينة / المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" — ")],["الحي / الموقع",m.district],["تاريخ التقييم",dateBoth(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor]];
+  const qr=qrData(mapLink());
   return `<div class="rp-page"><div class="cv-top"><img src="${LOGO}"><div class="cv-label">تقرير تقييم</div>
     <div class="cv-title">جاهزية المسجد</div><div class="cv-mosque">${esc(info.name)}</div>${mosqueCode()?`<div class="cv-code">${esc(mosqueCode())}</div>`:""}</div>
     <div class="cv-band"></div><div class="cv-body">
@@ -1220,6 +1238,7 @@ function coverHTML(){
       <div class="rp-kpi red"><div class="v">${tot.b}</div><div class="l">بنود تمنع الافتتاح</div></div>
       <div class="rp-kpi"><div class="v">${tot.n}</div><div class="l">إجمالي غير الجاهز</div></div>
       <div class="rp-kpi"><div class="v">${tot.completion||0}%</div><div class="l">اكتمال التقييم</div></div></div>
+    ${qr?`<div class="rp-qr"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الباركود بكاميرا الجوال لفتح الموقع على خرائط Google</span></div></div>`:""}
     </div><div class="rp-foot"><span>${ORG}</span><span>وفق عناصر برنامج طومان للمسجد · رقم التقييم ${esc(state.id)}</span></div></div>`;
 }
 async function exportPDF(){
