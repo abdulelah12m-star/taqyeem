@@ -283,12 +283,95 @@ pre.code{direction:ltr;text-align:left;background:#FDF3EE;border-radius:10px;pad
 .cv-code{display:inline-block;margin-top:14px;background:#E8985F;color:#141110;font-weight:700;font-size:15px;border-radius:8px;padding:4px 14px;direction:ltr}
 .cv-band{height:10px;background:#E8985F}
 .cv-body{padding:30px 56px 0}
+/* ============ SLIDES (PDF 16:9) ============ */
+.sl{width:1280px;height:720px;position:relative;overflow:hidden;background:#fff;font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;direction:rtl;color:#1B2A2E;font-size:15px;line-height:1.6;margin-bottom:20px}
+.sl-measure{width:1168px;font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;direction:rtl;color:#1B2A2E;font-size:15px;line-height:1.6}
+.sl-hd{position:absolute;top:0;left:0;right:0;height:80px;background:#211D1A;display:flex;align-items:center;justify-content:space-between;padding:0 56px;color:#fff}
+.sl-hd .t{font-size:25px;font-weight:700;line-height:1.3}
+.sl-hd .t small{display:block;font-size:12.5px;color:#E8985F;font-weight:600;margin-top:2px}
+.sl-hd img{height:42px}
+.sl-gold{position:absolute;top:80px;left:0;right:0;height:5px;background:#E8985F}
+.sl-bd{position:absolute;top:112px;left:56px;right:56px;bottom:62px}
+.sl-ft{position:absolute;bottom:0;left:0;right:0;height:46px;border-top:1px solid #E9D9C8;display:flex;justify-content:space-between;align-items:center;padding:0 56px;font-size:12px;color:#6B7A7D}
+/* cover */
+.slc-r{position:absolute;top:0;bottom:0;right:0;width:780px;background:#211D1A;color:#fff;padding:64px 70px 0}
+.slc-r img{height:74px}
+.slc-k{margin-top:70px;font-size:17px;color:#E8985F;font-weight:700}
+.slc-t{font-size:58px;font-weight:700;line-height:1.25;margin-top:6px}
+.slc-m{font-size:28px;font-weight:600;color:#F6DEC7;margin-top:22px;line-height:1.4}
+.slc-c{display:inline-block;margin-top:16px;background:#E8985F;color:#141110;font-weight:700;font-size:18px;border-radius:8px;padding:4px 16px;direction:ltr}
+.slc-band{position:absolute;top:0;bottom:0;right:780px;width:12px;background:#E8985F}
+.slc-l{position:absolute;top:0;bottom:0;left:0;width:488px;background:#FBF6F0;padding:52px 44px 0}
+.slc-meta div{border-bottom:1px solid #E9D9C8;padding:7px 0;font-size:14px;line-height:1.5}
+.slc-meta span{display:block;font-size:11px;color:#6B7A7D}
+.slc-dec{margin-top:20px;border-radius:12px;padding:12px 16px;color:#fff;font-size:20px;font-weight:700;text-align:center}
+.slc-qr{display:flex;align-items:center;gap:14px;margin-top:16px}
+.slc-qr img{width:96px;height:96px;image-rendering:pixelated;background:#fff;border-radius:6px;border:1px solid #E9D9C8}
+.slc-qr b{display:block;font-size:13px}.slc-qr span{font-size:11px;color:#6B7A7D}
+/* summary */
+.sls{display:flex;gap:24px;height:100%}
+.sls-k{flex:none;width:400px;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
+.sk{border:1px solid #E9D9C8;border-radius:14px;padding:14px 16px;background:#FBF6F0}
+.sk .v{font-size:34px;font-weight:700;line-height:1.15;color:#141110}
+.sk .l{font-size:12.5px;color:#6B7A7D;margin-top:2px}
+.sk.dark{background:#211D1A;border-color:#211D1A}.sk.dark .v{color:#E8985F}.sk.dark .l{color:#E9D8C6}
+.sk.red .v{color:#A23E32}
+.sk.wide{grid-column:1/-1}
+.sl-dec{border-radius:12px;padding:14px 18px;color:#fff;font-size:21px;font-weight:700;text-align:center}
+.d-ready{background:#3E7A55}.d-cond{background:#B7791F}.d-not{background:#A23E32}.d-none{background:#8A8F91}
+.sls-t{flex:1;min-width:0}
+.st{border:1px solid #E9D9C8;border-radius:10px;overflow:hidden}
+.st-r{display:flex;align-items:center;min-height:44px;border-bottom:1px solid #EFE5DA;font-size:14px}
+.st-r:last-child{border-bottom:none}
+.st-r.h{background:#211D1A;color:#fff;font-weight:700;font-size:13px;min-height:40px}
+.st-r.tot{background:#FBF6F0;font-weight:700}
+.st-r > div{padding:6px 12px}
+.st-r .c1{flex:2.2;font-weight:700}.st-r .cn{flex:1;text-align:center}
+.st-r .cb{flex:2.4;display:flex;align-items:center;gap:10px}
+.sbar{flex:1;height:9px;background:#EEE5DB;border-radius:6px;overflow:hidden}.sbar i{display:block;height:100%}
+/* findings */
+.sf-grid{display:flex;gap:20px;align-items:flex-start}
+.sf-col{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px}
+.sf{border:1px solid #E9D9C8;border-right:6px solid #A23E32;border-radius:10px;padding:12px 16px;background:#fff}
+.sf .fh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sf .fh b{font-size:16px}
+.sf .where{font-size:12px;color:#6B7A7D}
+.sf ul{margin:6px 0 0;padding:0;list-style:none;font-size:14px}
+.sf li:before{content:"– ";color:#8A8F91}
+.sf .nt{font-size:13px;background:#FBF6F0;border-radius:6px;padding:5px 10px;margin-top:6px;color:#4A3B30}
+.sf .sp{font-size:12px;color:#8B5A3C;font-weight:600;margin-top:4px}
+.tg{font-size:11.5px;font-weight:700;color:#fff;border-radius:12px;padding:1px 10px}
+/* photos */
+.sp-grid{display:flex;gap:22px;height:100%}
+.sp-grid > div{flex:1;min-width:0;display:flex;flex-direction:column}
+.sp-grid .im{flex:1;border-radius:10px;background-size:cover;background-position:center;background-color:#F2ECE6}
+.sp-grid .cap{font-size:13.5px;line-height:1.6;padding:10px 4px 0;min-height:70px}
+.sp-grid .cap b{color:#8B5A3C;margin-left:6px}
+/* decision */
+.sd-reason{margin-top:18px;background:#FBF6F0;border-radius:12px;padding:16px 20px;font-size:16px;line-height:1.9}
+.sd-sign{display:flex;gap:16px;margin-top:22px}
+.sd-sign div{flex:1;border:1px dashed #CDBFAE;border-radius:10px;padding:12px 16px;min-height:110px;font-size:15px}
+.sd-sign span{display:block;font-size:12px;color:#6B7A7D;margin-bottom:6px}
+/* appendix */
+.sa-bar{background:#8B5A3C;color:#fff;font-weight:700;font-size:15px;border-radius:7px;padding:6px 14px}
+.sa-row{display:flex;gap:12px;padding:7px 2px;border-bottom:1px solid #EFE5DA;align-items:flex-start}
+.sa-row .no{flex:none;width:30px;height:24px;border-radius:6px;background:#211D1A;color:#fff;font-size:12px;font-weight:700;text-align:center;line-height:24px}
+.sa-row .nm{flex:none;width:170px;font-weight:700;font-size:14px;line-height:1.45}
+.sa-row .nm small{display:block;font-weight:500;color:#6B7A7D;font-size:11.5px}
+.sa-row .cr{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:5px}
+.sa-row .cr .ck{font-size:11px}
+.sl-blk{padding-bottom:12px}
+/* end */
+.sle{background:#211D1A}
+.sle img{position:absolute;top:44%;left:50%;height:96px;transform:translate(-50%,-50%)}
+.sle div{position:absolute;top:62%;left:0;right:0;text-align:center;color:#E9D8C6;font-size:16px}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
 </head>
 <body>
 <div class="pattern"></div>
@@ -625,7 +708,7 @@ function freshState(){
     meta:{ mosque:"", name:"", city:"", region:"", district:"", date:new Date().toLocaleDateString("en-CA"),
       evaluator:"م. عبدالإله الشهراني", evaluatorOrg:"مؤسسة الأمير متعب بن عبدالعزيز الأهلية", contractor:"", contractorNew:false, supervisor:"", supervisorNew:false, lat:"", lng:"", notes:"" },
     items:{}, decision:{ value:"", reason:"", signer:"", signerTitle:"" },
-    exp:{ pdf:false, xlsx:false, sheets:false } };
+    exp:{ pdf:false, pptx:false, xlsx:false, sheets:false } };
 }
 let state = freshState();
 let restored = false;
@@ -926,7 +1009,8 @@ function summaryHTML(){
     </div>
     <div class="card"><h3>المخرجات</h3>
       <div class="exports">
-        <button class="xbtn primary" data-act="pdf"><span class="ic">📄</span>تقرير PDF<small>تقرير متكامل للعرض والاعتماد</small>${state.exp.pdf?`<span class="done">✓ صُدِّر</span>`:""}</button>
+        <button class="xbtn primary" data-act="pdf"><span class="ic">📄</span>عرض PDF<small>شرائح 16:9 جاهزة للعرض والاعتماد</small>${state.exp.pdf?`<span class="done">✓ صُدِّر</span>`:""}</button>
+        <button class="xbtn" data-act="pptx"><span class="ic">🖥️</span>ملف PowerPoint<small>شرائح قابلة للتعديل</small>${state.exp.pptx?`<span class="done">✓ صُدِّر</span>`:""}</button>
         <button class="xbtn" data-act="xlsx"><span class="ic">📊</span>ملف Excel<small>لمتابعة الملاحظات ومعالجتها</small>${state.exp.xlsx?`<span class="done">✓ صُدِّر</span>`:""}</button>
         <button class="xbtn" data-act="sheets"><span class="ic">☁️</span>إرسال إلى Google Sheets<small>${SHEETS_URL?"نسخة مركزية لكل التقييمات":"لم يُضبط الرابط بعد"}</small>${state.exp.sheets?`<span class="done">✓ أُرسل</span>`:""}</button>
         <button class="xbtn" data-act="backup"><span class="ic">💾</span>نسخة احتياطية<small>ملف يحفظ التقييم كاملًا بالصور</small></button>
@@ -978,6 +1062,7 @@ document.addEventListener("click", async e=>{
         ()=>{ t.textContent="📍 موقعي"; toast("تعذّر تحديد الموقع — تأكد من السماح بالوصول", true); }, { enableHighAccuracy:true, timeout:15000 });
       break;
     case "pdf": exportPDF(); break;
+    case "pptx": exportPPTX(); break;
     case "xlsx": exportXLSX(); break;
     case "sheets": sendSheets(); break;
     case "backup": exportBackup(); break;
@@ -1241,46 +1326,206 @@ function coverHTML(){
     ${qr?`<div class="rp-qr"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الباركود بكاميرا الجوال لفتح الموقع على خرائط Google</span></div></div>`:""}
     </div><div class="rp-foot"><span>${ORG}</span><span>وفق عناصر برنامج طومان للمسجد · رقم التقييم ${esc(state.id)}</span></div></div>`;
 }
+/* ---------------- SLIDES (PDF 16:9 + PowerPoint) ---------------- */
+const SLW=1280, SLH=720, SL_BODY=720-112-62;
+function slHead(title){ const info=mosqueInfo(); return `<div class="sl-hd"><div class="t">${title}<small>${esc(info.name)}${mosqueCode()?" · "+esc(mosqueCode()):""}</small></div><img src="${LOGO}"></div><div class="sl-gold"></div>`; }
+function slFoot(n,total){ return `<div class="sl-ft"><span>${ORG}</span><span>${n} / ${total}</span></div>`; }
+function slSlide(title, body){ return { title, body }; }
+function measureH(host, htmlArr, width){
+  host.innerHTML = `<div class="sl-measure" style="width:${width}px">${htmlArr.map(h=>`<div class="sl-blk">${h}</div>`).join("")}</div>`;
+  return [...host.firstChild.children].map(n=>n.getBoundingClientRect().height);
+}
+function findingCard(el, g){
+  const it=peek(el.k);
+  const bad=el.crit.map((c,i)=>{ const v=it.c[i]; return v&&v.s==="n" ? `<li>${esc(c)} <span style="color:${IMPACT[v.i||"none"].color};font-weight:700">(${IMPACT[v.i||"none"].label})</span></li>` : ""; }).join("");
+  return `<div class="sf" style="border-right-color:${IMPACT[g].color}"><div class="fh"><span class="tg" style="background:${IMPACT[g].color}">${IMPACT[g].short}</span><b>${esc(el.no)}. ${esc(el.name)}</b><span class="where">${esc(el.main)} › ${esc(el.title)}</span></div>
+    <ul>${bad}</ul>${specs(it)?`<div class="sp">${specs(it)}</div>`:""}${it.note?`<div class="nt">${esc(it.note)}</div>`:""}</div>`;
+}
+function buildSlides(host){
+  const { per, tot, findings } = computeAll(), d=state.decision, m=state.meta, info=mosqueInfo();
+  const S=[]; const decCls=d.value?DECISIONS[d.value].cls:"d-none", decTxt=d.value?DECISIONS[d.value].label:"لم يُعتمد القرار بعد (مسودة)";
+  /* cover */
+  const meta=[["المدينة / المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" — ")],["الحي / الموقع",m.district],["تاريخ التقييم",dateBoth(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor]];
+  const qr=qrData(mapLink());
+  S.push({ raw:`<div class="sl"><div class="slc-r"><img src="${LOGO}"><div class="slc-k">تقرير تقييم</div><div class="slc-t">جاهزية المسجد</div><div class="slc-m">${esc(info.name)}</div>${mosqueCode()?`<div class="slc-c">${esc(mosqueCode())}</div>`:""}</div><div class="slc-band"></div>
+    <div class="slc-l"><div class="slc-meta">${meta.map(([l,v])=>`<div><span>${l}</span>${esc(v||"—")}</div>`).join("")}</div>
+    <div class="slc-dec ${decCls}">${decTxt}</div>
+    ${qr?`<div class="slc-qr"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الباركود لفتح الموقع على خرائط Google</span></div></div>`:""}</div></div>` });
+  /* summary */
+  S.push(slSlide("ملخص النتائج", `<div class="sls"><div class="sls-k">
+      <div class="sk dark"><div class="v">${tot.readiness==null?"—":tot.readiness+"%"}</div><div class="l">نسبة الجاهزية</div></div>
+      <div class="sk"><div class="v">${tot.completion||0}%</div><div class="l">اكتمال التقييم (${tot.done}/${tot.total})</div></div>
+      <div class="sk red"><div class="v">${tot.b}</div><div class="l">بنود تمنع الافتتاح</div></div>
+      <div class="sk"><div class="v">${tot.u} <span style="font-size:20px;color:#6B7A7D">/ ${tot.l}</span></div><div class="l">عاجل / تحسين لاحق</div></div>
+      <div class="sk wide" style="padding:0;border:none;background:none"><div class="sl-dec ${decCls}">${decTxt}</div></div></div>
+    <div class="sls-t"><div class="st"><div class="st-r h"><div class="c1">القسم</div><div class="cn">المُقيَّم</div><div class="cn">غير جاهز</div><div class="cn">مانع</div><div class="cb">نسبة الجاهزية</div></div>
+      ${per.map(p=>`<div class="st-r"><div class="c1">${esc(p.main)}</div><div class="cn">${p.done}/${p.total}</div><div class="cn">${p.n}</div><div class="cn" style="${p.b?"color:#A23E32;font-weight:700":""}">${p.b}</div><div class="cb"><div class="sbar"><i style="width:${p.readiness||0}%;background:${barColor(p.readiness)}"></i></div><b style="width:46px;color:${barColor(p.readiness)}">${p.readiness==null?"—":p.readiness+"%"}</b></div></div>`).join("")}
+      <div class="st-r tot"><div class="c1">الإجمالي</div><div class="cn">${tot.done}/${tot.total}</div><div class="cn">${tot.n}</div><div class="cn">${tot.b}</div><div class="cb"><b>${tot.readiness==null?"—":tot.readiness+"%"}</b></div></div></div></div></div>`));
+  /* findings: 2-column card slides per impact group */
+  ["b","u","l","none"].forEach(g=>{
+    const list=findings.filter(f=>f.s.sev===g); if(!list.length) return;
+    const cards=list.map(({el})=>findingCard(el,g)), hs=measureH(host, cards, 574);
+    let cols=[[],[]], ch=[0,0], pages=[];
+    cards.forEach((c,i)=>{ const h=hs[i]; let k=ch[0]<=ch[1]?0:1;
+      if(ch[k]+h>SL_BODY){ k=1-k; if(ch[k]+h>SL_BODY){ pages.push(cols); cols=[[],[]]; ch=[0,0]; k=0; } }
+      cols[k].push(c); ch[k]+=h; });
+    if(cols[0].length||cols[1].length) pages.push(cols);
+    pages.forEach((pc,pi)=>S.push(slSlide(`الملاحظات: ${IMPACT[g].label} (${list.length})${pages.length>1?` — ${pi+1}/${pages.length}`:""}`,
+      `<div class="sf-grid"><div class="sf-col">${pc[0].join("")}</div><div class="sf-col">${pc[1].join("")}</div></div>`)));
+  });
+  if(!findings.length) S.push(slSlide("الملاحظات", `<div class="sd-reason">لم تُرصد بنود غير جاهزة في هذا التقييم.</div>`));
+  /* photos: 3 per slide */
+  const phs=[]; STEPS.forEach(st=>{ if(st.type!=="page") return; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>phs.push({p,el,it})); }); });
+  for(let i=0;i<phs.length;i+=3){
+    const grp=phs.slice(i,i+3);
+    S.push(slSlide(`الشواهد المصوّرة${phs.length>3?` — ${Math.floor(i/3)+1}/${Math.ceil(phs.length/3)}`:""}`, `<div class="sp-grid">${grp.map((x,j)=>`<div><div class="im" style="background-image:url('${x.p}')"></div><div class="cap"><b>صورة (${i+j+1})</b>${esc(x.el.no)}. ${esc(x.el.name)} — ${esc(x.el.main)}${x.it.note?`<br><span style="color:#6B7A7D">${esc(x.it.note)}</span>`:""}</div></div>`).join("")}${grp.length<3?"<div></div>".repeat(3-grp.length):""}</div>`));
+  }
+  /* decision */
+  S.push(slSlide("قرار الجاهزية والاعتماد", `<div class="sl-dec ${decCls}" style="font-size:30px;padding:22px">${decTxt}</div>
+    ${d.reason?`<div class="sd-reason"><b>المبررات والاشتراطات:</b> ${esc(d.reason)}</div>`:""}
+    <div class="sd-sign"><div><span>المعتمد</span>${esc(d.signer||m.evaluator)}</div><div><span>الصفة</span>${esc(d.signerTitle)}</div><div><span>التوقيع</span></div><div><span>التاريخ</span>${esc(m.date)} م<br>${esc(hijri(m.date))}</div></div>`));
+  /* appendix */
+  const blocks=[];
+  STEPS.forEach(st=>{ if(st.type!=="page") return;
+    blocks.push({ main:st.main, html:`<div class="sa-bar">${esc(st.main)}${st.main!==st.title?" · "+esc(st.title):""}</div>`, keep:true });
+    st.els.forEach(el=>{ const it=peek(el.k);
+      blocks.push({ main:st.main, html:`<div class="sa-row"><div class="no">${esc(el.no)}</div><div class="nm">${esc(el.name)}${it&&!it.a&&(it.q||it.ty||it.br)?`<small style="color:#8B5A3C">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</div><div class="cr">${rpChips(el)}</div></div>` }); });
+  });
+  const hs=measureH(host, blocks.map(b=>b.html), 574);
+  const cols=[]; let cur=[], h=0;
+  blocks.forEach((b,i)=>{
+    if(h+hs[i]>SL_BODY && cur.length){ let carry=[]; while(cur.length && blocks[cur[cur.length-1]].keep) carry.unshift(cur.pop()); if(!cur.length){ cur=carry; carry=[]; } cols.push(cur); cur=carry; h=carry.reduce((s,j)=>s+hs[j],0); }
+    cur.push(i); h+=hs[i];
+  });
+  if(cur.length) cols.push(cur);
+  const npg=Math.ceil(cols.length/2), colHTML=c=>c?c.map(i=>`<div class="sl-blk">${blocks[i].html}</div>`).join(""):"";
+  for(let k=0;k<cols.length;k+=2) S.push(slSlide(`ملحق: التقييم التفصيلي — ${k/2+1}/${npg}`, `<div class="sf-grid"><div class="sf-col" style="gap:0">${colHTML(cols[k])}</div><div class="sf-col" style="gap:0">${colHTML(cols[k+1])}</div></div>`));
+  /* end */
+  S.push({ raw:`<div class="sl sle"><img src="${LOGO}"><div>${ORG}</div></div>` });
+  host.innerHTML="";
+  return S.map((s,i)=> s.raw ? s.raw : `<div class="sl">${slHead(s.title)}<div class="sl-bd">${s.body}</div>${slFoot(i+1,S.length)}</div>`);
+}
 async function exportPDF(){
   if(!window.html2canvas || !window.jspdf){ toast("تعذّر تحميل مكتبات التقرير — تحقق من الاتصال", true); return; }
-  busy(true, "جاري إعداد التقرير…");
+  busy(true, "جاري إعداد العرض…");
   const host=$("#pdfHost");
   try{
     if(document.fonts && document.fonts.ready) await document.fonts.ready;
     window.scrollTo(0,0);
-    const blocks=reportBlocks(), info=mosqueInfo();
-    host.innerHTML = `<div class="rp-measure">${blocks.map(b=>`<div class="rp-block">${b.html}</div>`).join("")}</div>`;
-    const nodes=[...host.firstChild.children], hs=nodes.map(n=>n.getBoundingClientRect().height);
-    const AVAIL = 1123 - 58 - 4 - 24 - 46 - 14;
-    const pages=[]; let cur=[], h=0;
-    blocks.forEach((b,i)=>{
-      if(h+hs[i] > AVAIL && cur.length){
-        let carry=[]; while(cur.length && blocks[cur[cur.length-1]].keep) carry.unshift(cur.pop());
-        if(!cur.length){ cur=carry; carry=[]; }
-        pages.push(cur); cur=carry; h=carry.reduce((s,j)=>s+hs[j],0);
-      }
-      cur.push(i); h+=hs[i];
-    });
-    if(cur.length) pages.push(cur);
-    const total = pages.length + 1;
-    const top = `<div class="rp-top"><div class="t">تقرير تقييم جاهزية المسجد<small>${esc(info.name)} · ${esc(mosqueCode())}</small></div><img src="${LOGO}"></div><div class="rp-gold"></div>`;
-    host.innerHTML = coverHTML() + pages.map((pg,pi)=>`<div class="rp-page">${top}<div class="rp-body">${pg.map(i=>`<div class="rp-block">${blocks[i].html}</div>`).join("")}</div>
-      <div class="rp-foot"><span>${ORG}</span><span>صفحة ${pi+2} من ${total}</span></div></div>`).join("");
-    const pageEls=[...host.querySelectorAll(".rp-page")];
-    const { jsPDF } = window.jspdf; const pdf=new jsPDF({ orientation:"p", unit:"mm", format:"a4", compress:true });
-    for(let i=0;i<pageEls.length;i++){
-      busy(true, `جاري إنشاء الصفحة ${i+1} من ${pageEls.length}…`);
+    host.style.width=SLW+"px";
+    const slides=buildSlides(host);
+    host.innerHTML=slides.join("");
+    const els=[...host.querySelectorAll(".sl")];
+    const { jsPDF } = window.jspdf; const pdf=new jsPDF({ orientation:"l", unit:"mm", format:[338.67,190.5], compress:true });
+    for(let i=0;i<els.length;i++){
+      busy(true, `جاري إنشاء الشريحة ${i+1} من ${els.length}…`);
       await new Promise(r=>setTimeout(r,20));
-      const cv=await html2canvas(pageEls[i], { scale:3, useCORS:true, backgroundColor:"#ffffff", logging:false, scrollX:0, scrollY:0, windowWidth:900 });
-      if(i) pdf.addPage();
-      pdf.addImage(cv.toDataURL("image/jpeg",0.95), "JPEG", 0, 0, 210, 297, undefined, "MEDIUM");
+      const cv=await html2canvas(els[i], { scale:2.5, useCORS:true, backgroundColor:"#ffffff", logging:false, scrollX:0, scrollY:0, windowWidth:1400 });
+      if(i) pdf.addPage([338.67,190.5],"l");
+      pdf.addImage(cv.toDataURL("image/jpeg",0.95), "JPEG", 0, 0, 338.67, 190.5, undefined, "MEDIUM");
     }
     const blob=pdf.output("blob");
-    host.innerHTML=""; busy(false);
+    host.innerHTML=""; host.style.width=""; busy(false);
     state.exp.pdf=true; save();
     if(STEPS[state.step].type==="summary") render();
-    deliver(blob, baseName()+".pdf", "تقرير PDF");
-  }catch(err){ console.error(err); host.innerHTML=""; busy(false); toast("حدث خطأ أثناء إنشاء التقرير", true); }
+    deliver(blob, baseName()+".pdf", "عرض PDF");
+  }catch(err){ console.error(err); host.innerHTML=""; host.style.width=""; busy(false); toast("حدث خطأ أثناء إنشاء العرض", true); }
+}
+/* ---- PowerPoint (editable) ---- */
+async function exportPPTX(){
+  if(!window.PptxGenJS){ toast("تعذّر تحميل مكتبة PowerPoint — تحقق من الاتصال", true); return; }
+  busy(true, "جاري إعداد ملف PowerPoint…");
+  try{
+    const { per, tot, findings } = computeAll(), d=state.decision, m=state.meta, info=mosqueInfo();
+    const P=new PptxGenJS(); P.layout="LAYOUT_WIDE"; P.rtlMode=true; P.title="تقرير تقييم جاهزية المسجد"; P.author=m.evaluator||"";
+    const F="Arial", DARK="211D1A", GOLD="E8985F", BROWN="8B5A3C", SAND="FBF6F0", LINE="E9D9C8", MUTED="6B7A7D";
+    const T=(o)=>Object.assign({ fontFace:F, rtlMode:true, align:"right", color:"1B2A2E", margin:0 }, o);
+    const decTxt=d.value?DECISIONS[d.value].label:"لم يُعتمد القرار بعد (مسودة)";
+    const decCol={ready:"3E7A55",cond:"B7791F",not:"A23E32"}[d.value]||"8A8F91";
+    const sub=`${info.name}${mosqueCode()?" · "+mosqueCode():""}`;
+    let n=0; const total=[];
+    P.defineSlideMaster({ title:"MAIN", background:{ color:"FFFFFF" }, objects:[
+      { rect:{ x:0, y:0, w:13.333, h:0.85, fill:{ color:DARK } } },
+      { rect:{ x:0, y:0.85, w:13.333, h:0.05, fill:{ color:GOLD } } },
+      { image:{ x:0.55, y:0.18, w:1.5, h:0.5, data:LOGO, sizing:{ type:"contain", w:1.5, h:0.5 } } },
+      { line:{ x:0.55, y:7.0, w:12.23, h:0, line:{ color:LINE, width:0.75 } } },
+      { text:{ text:ORG, options:T({ x:6.5, y:7.05, w:6.28, h:0.35, fontSize:10, color:MUTED }) } },
+    ], slideNumber:{ x:0.55, y:7.05, w:1, h:0.35, fontFace:F, fontSize:10, color:MUTED } });
+    const add=(title)=>{ const s=P.addSlide({ masterName:"MAIN" });
+      s.addText([{ text:title, options:{ fontSize:20, bold:true, color:"FFFFFF", breakLine:true } },{ text:sub, options:{ fontSize:10, color:GOLD } }], T({ x:2.3, y:0.1, w:10.48, h:0.68, valign:"middle" }));
+      return s; };
+    /* cover */
+    { const s=P.addSlide(); s.background={ color:SAND };
+      s.addShape(P.ShapeType.rect,{ x:5.2, y:0, w:8.133, h:7.5, fill:{ color:DARK } });
+      s.addShape(P.ShapeType.rect,{ x:5.08, y:0, w:0.12, h:7.5, fill:{ color:GOLD } });
+      s.addImage({ data:LOGO, x:10.3, y:0.6, w:2.4, h:0.8, sizing:{ type:"contain", w:2.4, h:0.8 } });
+      s.addText("تقرير تقييم", T({ x:5.8, y:2.0, w:6.9, h:0.4, fontSize:16, bold:true, color:GOLD }));
+      s.addText("جاهزية المسجد", T({ x:5.8, y:2.4, w:6.9, h:0.9, fontSize:44, bold:true, color:"FFFFFF" }));
+      s.addText(info.name, T({ x:5.8, y:3.45, w:6.9, h:0.9, fontSize:22, color:"F6DEC7" }));
+      if(mosqueCode()) s.addText(mosqueCode(), { x:10.9, y:4.5, w:1.8, h:0.42, fontFace:F, fontSize:15, bold:true, color:"141110", fill:{ color:GOLD }, align:"center", valign:"middle" });
+      const meta=[["المدينة / المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" — ")],["الحي / الموقع",m.district],["تاريخ التقييم",dateBoth(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor]];
+      s.addText(meta.flatMap(([l,v])=>[{ text:l, options:{ fontSize:9, color:MUTED, breakLine:true } },{ text:v||"—", options:{ fontSize:12, color:"1B2A2E", breakLine:true, paraSpaceAfter:6 } }]), T({ x:0.45, y:0.45, w:4.3, h:4.6, valign:"top" }));
+      s.addText(decTxt, { x:0.45, y:5.2, w:4.3, h:0.55, fontFace:F, rtlMode:true, fontSize:16, bold:true, color:"FFFFFF", fill:{ color:decCol }, align:"center", valign:"middle" });
+      const qr=qrData(mapLink());
+      if(qr){ s.addImage({ data:qr, x:3.65, y:5.95, w:1.1, h:1.1 }); s.addText([{ text:"موقع المسجد", options:{ bold:true, fontSize:11, breakLine:true } },{ text:"امسح الباركود لفتح الموقع", options:{ fontSize:9, color:MUTED } }], T({ x:0.45, y:6.05, w:3.05, h:0.9 })); }
+    }
+    /* summary */
+    { const s=add("ملخص النتائج");
+      const k=[[tot.readiness==null?"—":tot.readiness+"%","نسبة الجاهزية",DARK,GOLD],[`${tot.completion||0}%`,"اكتمال التقييم",SAND,"141110"],[String(tot.b),"بنود تمنع الافتتاح",SAND,"A23E32"],[`${tot.u} / ${tot.l}`,"عاجل / لاحق",SAND,"141110"]];
+      k.forEach(([v,l,bg,c],i)=>{ const x=12.78-1.95-(i%2)*2.05, y=1.2+Math.floor(i/2)*1.35;
+        s.addShape(P.ShapeType.roundRect,{ x, y, w:1.95, h:1.2, fill:{ color:bg }, line:{ color:bg===DARK?DARK:LINE }, rectRadius:0.12 });
+        s.addText([{ text:v, options:{ fontSize:26, bold:true, color:c, breakLine:true } },{ text:l, options:{ fontSize:10, color:bg===DARK?"E9D8C6":MUTED } }], T({ x:x+0.15, y:y+0.1, w:1.65, h:1.0, valign:"middle" })); });
+      s.addText(decTxt, { x:8.78, y:3.98, w:4.0, h:0.6, fontFace:F, rtlMode:true, fontSize:16, bold:true, color:"FFFFFF", fill:{ color:decCol }, align:"center", valign:"middle" });
+      const hdr=["نسبة الجاهزية","مانع","غير جاهز","المُقيَّم","القسم"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } }));
+      const rows=per.map(p=>[p.readiness==null?"—":p.readiness+"%", String(p.b), String(p.n), `${p.done}/${p.total}`, p.main].map((t,ci)=>({ text:t, options:{ bold:ci===4||ci===0, color: ci===1&&p.b ? "A23E32" : (ci===0 ? barColor(p.readiness).slice(1) : "1B2A2E") } })));
+      rows.push([tot.readiness==null?"—":tot.readiness+"%", String(tot.b), String(tot.n), `${tot.done}/${tot.total}`, "الإجمالي"].map(t=>({ text:t, options:{ bold:true, fill:{ color:SAND } } })));
+      s.addTable([hdr, ...rows], { x:0.55, y:1.2, w:8.0, colW:[1.4,0.9,1.1,1.3,3.3], fontFace:F, fontSize:11, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 }, rowH:0.4 });
+    }
+    /* findings table (auto pages) */
+    if(findings.length){
+      const hdr=["الملاحظة","البند غير الجاهز","القسم","العنصر","الأثر"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } }));
+      const rows=[];
+      findings.forEach(({el})=>{ const it=peek(el.k); el.crit.forEach((c,i)=>{ const v=it.c[i]; if(v&&v.s==="n"){ const im=IMPACT[v.i||"none"];
+        rows.push([[it.note||"", specs(it)?" ("+specs(it).replace(/&amp;/g,"&")+")":""].join(""), c, el.main, `${el.no}. ${el.name}`, im.label].map((t,ci)=>({ text:t, options: ci===4?{ bold:true, color:im.color.slice(1) }:{} }))); } }); });
+      const s=add(`الملاحظات والبنود غير الجاهزة (${rows.length})`);
+      s.addTable([hdr, ...rows], { x:0.55, y:1.2, w:12.23, colW:[3.6,3.0,1.9,2.33,1.4], fontFace:F, fontSize:10.5, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 },
+        autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.2, newSlideStartY:1.2, masterName:"MAIN" });
+    }
+    /* photos */
+    const phs=[]; STEPS.forEach(st=>{ if(st.type!=="page") return; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>phs.push({p,el,it})); }); });
+    for(let i=0;i<phs.length;i+=3){
+      const s=add(`الشواهد المصوّرة${phs.length>3?` — ${Math.floor(i/3)+1}/${Math.ceil(phs.length/3)}`:""}`);
+      phs.slice(i,i+3).forEach((x,j)=>{ const w=3.9, xx=12.78-w-j*(w+0.265);
+        s.addImage({ data:x.p, x:xx, y:1.2, w, h:4.6, sizing:{ type:"cover", w, h:4.6 } });
+        s.addText([{ text:`صورة (${i+j+1})  `, options:{ bold:true, color:BROWN } },{ text:`${x.el.no}. ${x.el.name} — ${x.el.main}`, options:{ breakLine:!!x.it.note } }, ...(x.it.note?[{ text:x.it.note, options:{ color:MUTED, fontSize:10 } }]:[])], T({ x:xx, y:5.9, w, h:0.95, fontSize:11, valign:"top" })); });
+    }
+    /* decision */
+    { const s=add("قرار الجاهزية والاعتماد");
+      s.addText(decTxt, { x:0.55, y:1.25, w:12.23, h:0.9, fontFace:F, rtlMode:true, fontSize:26, bold:true, color:"FFFFFF", fill:{ color:decCol }, align:"center", valign:"middle" });
+      if(d.reason) s.addText([{ text:"المبررات والاشتراطات: ", options:{ bold:true } },{ text:d.reason }], T({ x:0.55, y:2.4, w:12.23, h:1.4, fontSize:14, fill:{ color:SAND }, margin:12, valign:"top" }));
+      [["المعتمد",d.signer||m.evaluator],["الصفة",d.signerTitle],["التوقيع",""],["التاريخ",dateBoth(m.date)]].forEach(([l,v],i)=>{ const w=2.9, x=12.78-w-i*(w+0.21);
+        s.addShape(P.ShapeType.rect,{ x, y:4.2, w, h:1.4, fill:{ color:"FFFFFF" }, line:{ color:"CDBFAE", dashType:"dash", width:1 } });
+        s.addText([{ text:l, options:{ fontSize:10, color:MUTED, breakLine:true } },{ text:v||"", options:{ fontSize:13 } }], T({ x:x+0.15, y:4.3, w:w-0.3, h:1.2, valign:"top" })); });
+    }
+    /* appendix (auto pages) */
+    { const hdr=["التفاصيل","غير جاهز","جاهز","العنصر","القسم"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } }));
+      const rows=ELS.map(el=>{ const it=peek(el.k)||{a:false,c:{}}; const s=elStats(el);
+        const bad=el.crit.filter((_,i)=>it.c[i]&&it.c[i].s==="n").join("، ");
+        const det=it.a?"غير موجود في المسجد":[bad?"غير جاهز: "+bad:"", s.total-s.done?`لم يُقيَّم: ${s.total-s.done}`:"", it.note?"ملاحظة: "+it.note:""].filter(Boolean).join(" — ");
+        return [det, it.a?"—":String(s.n), it.a?"—":String(s.r), `${el.no}. ${el.name}`, `${el.main} · ${el.title}`].map((t,ci)=>({ text:t, options: ci===1&&s.n ? { color:"A23E32", bold:true } : {} })); });
+      const s=add("ملحق: التقييم التفصيلي");
+      s.addTable([hdr, ...rows], { x:0.55, y:1.2, w:12.23, colW:[4.6,0.9,0.8,2.9,3.03], fontFace:F, fontSize:9.5, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.5 },
+        autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.2, newSlideStartY:1.2, masterName:"MAIN" });
+    }
+    /* end */
+    { const s=P.addSlide(); s.background={ color:DARK };
+      s.addImage({ data:LOGO, x:5.17, y:2.6, w:3.0, h:1.0, sizing:{ type:"contain", w:3.0, h:1.0 } });
+      s.addText(ORG, T({ x:2, y:4.2, w:9.333, h:0.5, fontSize:14, color:"E9D8C6", align:"center" })); }
+    const blob=await P.write({ outputType:"blob" });
+    busy(false); state.exp.pptx=true; save();
+    if(STEPS[state.step].type==="summary") render();
+    deliver(blob, baseName()+".pptx", "ملف PowerPoint");
+  }catch(err){ console.error(err); busy(false); toast("حدث خطأ أثناء إنشاء ملف PowerPoint", true); }
 }
 
 /* ---------------- تشغيل ---------------- */
