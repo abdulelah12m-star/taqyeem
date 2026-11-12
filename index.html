@@ -308,6 +308,12 @@ pre.code{direction:ltr;text-align:left;background:#FDF3EE;border-radius:10px;pad
 .slc-qr{display:flex;align-items:center;gap:14px;margin-top:16px}
 .slc-qr img{width:96px;height:96px;image-rendering:pixelated;background:#fff;border-radius:6px;border:1px solid #E9D9C8}
 .slc-qr b{display:block;font-size:13px}.slc-qr span{font-size:11px;color:#6B7A7D}
+/* data slide */
+.sdat{border:1px solid #E9D9C8;border-radius:12px;overflow:hidden}
+.sdat .r{display:flex;align-items:center;min-height:46px;border-bottom:1px solid #EFE5DA;font-size:18px}
+.sdat .r:last-child{border-bottom:none}
+.sdat .r span{flex:none;width:260px;align-self:stretch;display:flex;align-items:center;padding:0 20px;background:#FBF6F0;color:#8B5A3C;font-size:15px;font-weight:600}
+.sdat .r b{padding:0 20px;font-weight:600}
 /* summary */
 .sls{display:flex;gap:24px;height:100%}
 .sls-k{flex:none;width:400px;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
@@ -1347,10 +1353,11 @@ function buildSlides(host){
   /* cover */
   const meta=[["المدينة / المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" — ")],["الحي / الموقع",m.district],["تاريخ التقييم",dateBoth(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor]];
   const qr=qrData(mapLink());
-  S.push({ raw:`<div class="sl"><div class="slc-r"><img src="${LOGO}"><div class="slc-k">تقرير تقييم</div><div class="slc-t">جاهزية المسجد</div><div class="slc-m">${esc(info.name)}</div>${mosqueCode()?`<div class="slc-c">${esc(mosqueCode())}</div>`:""}</div><div class="slc-band"></div>
-    <div class="slc-l"><div class="slc-meta">${meta.map(([l,v])=>`<div><span>${l}</span>${esc(v||"—")}</div>`).join("")}</div>
-    <div class="slc-dec ${decCls}">${decTxt}</div>
-    ${qr?`<div class="slc-qr"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الباركود لفتح الموقع على خرائط Google</span></div></div>`:""}</div></div>` });
+  S.push({ raw:`<div class="sl"><div class="slc-r" style="width:auto;left:0;padding:70px 90px 0"><img src="${LOGO}" style="height:84px"><div class="slc-k" style="margin-top:110px;font-size:20px">تقرير تقييم</div><div class="slc-t" style="font-size:72px">جاهزية المسجد</div><div class="slc-m" style="font-size:34px">${esc(info.name)}</div>${mosqueCode()?`<div class="slc-c" style="font-size:20px">${esc(mosqueCode())}</div>`:""}</div><div style="position:absolute;left:0;right:0;bottom:0;height:14px;background:#E8985F"></div></div>` });
+  /* data slide */
+  S.push(slSlide("بيانات المسجد والتقييم", `<div class="sdat">${meta.map(([l,v])=>`<div class="r"><span>${l}</span><b>${esc(v||"—")}</b></div>`).join("")}</div>
+    <div style="display:flex;gap:20px;align-items:stretch;margin-top:18px"><div class="sl-dec ${decCls}" style="flex:1;display:flex;align-items:center;justify-content:center;font-size:24px">${decTxt}</div>
+    ${qr?`<div class="slc-qr" style="margin:0;border:1px solid #E9D9C8;border-radius:12px;padding:10px 16px;background:#FBF6F0"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الباركود لفتح الموقع<br>على خرائط Google</span></div></div>`:""}</div>`));
   /* summary */
   S.push(slSlide("ملخص النتائج", `<div class="sls"><div class="sls-k">
       <div class="sk dark"><div class="v">${tot.readiness==null?"—":tot.readiness+"%"}</div><div class="l">نسبة الجاهزية</div></div>
@@ -1452,19 +1459,21 @@ async function exportPPTX(){
       s.addText([{ text:title, options:{ fontSize:20, bold:true, color:"FFFFFF", breakLine:true } },{ text:sub, options:{ fontSize:10, color:GOLD } }], T({ x:2.3, y:0.1, w:10.48, h:0.68, valign:"middle" }));
       return s; };
     /* cover */
-    { const s=P.addSlide(); s.background={ color:SAND };
-      s.addShape(P.ShapeType.rect,{ x:5.2, y:0, w:8.133, h:7.5, fill:{ color:DARK } });
-      s.addShape(P.ShapeType.rect,{ x:5.08, y:0, w:0.12, h:7.5, fill:{ color:GOLD } });
-      s.addImage({ data:LOGO, x:10.3, y:0.6, w:2.4, h:0.8, sizing:{ type:"contain", w:2.4, h:0.8 } });
-      s.addText("تقرير تقييم", T({ x:5.8, y:2.0, w:6.9, h:0.4, fontSize:16, bold:true, color:GOLD }));
-      s.addText("جاهزية المسجد", T({ x:5.8, y:2.4, w:6.9, h:0.9, fontSize:44, bold:true, color:"FFFFFF" }));
-      s.addText(info.name, T({ x:5.8, y:3.45, w:6.9, h:0.9, fontSize:22, color:"F6DEC7" }));
-      if(mosqueCode()) s.addText(mosqueCode(), { x:10.9, y:4.5, w:1.8, h:0.42, fontFace:F, fontSize:15, bold:true, color:"141110", fill:{ color:GOLD }, align:"center", valign:"middle" });
+    { const s=P.addSlide(); s.background={ color:DARK };
+      s.addShape(P.ShapeType.rect,{ x:0, y:7.35, w:13.333, h:0.15, fill:{ color:GOLD } });
+      s.addImage({ data:LOGO, x:9.9, y:0.7, w:2.7, h:0.9, sizing:{ type:"contain", w:2.7, h:0.9 } });
+      s.addText("تقرير تقييم", T({ x:1, y:2.3, w:11.6, h:0.45, fontSize:18, bold:true, color:GOLD }));
+      s.addText("جاهزية المسجد", T({ x:1, y:2.75, w:11.6, h:1.1, fontSize:54, bold:true, color:"FFFFFF" }));
+      s.addText(info.name, T({ x:1, y:4.0, w:11.6, h:0.8, fontSize:26, color:"F6DEC7" }));
+      if(mosqueCode()) s.addText(mosqueCode(), { x:10.6, y:5.0, w:2.0, h:0.48, fontFace:F, fontSize:17, bold:true, color:"141110", fill:{ color:GOLD }, align:"center", valign:"middle" });
+    }
+    /* data slide */
+    { const s=add("بيانات المسجد والتقييم");
       const meta=[["المدينة / المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" — ")],["الحي / الموقع",m.district],["تاريخ التقييم",dateBoth(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor]];
-      s.addText(meta.flatMap(([l,v])=>[{ text:l, options:{ fontSize:9, color:MUTED, breakLine:true } },{ text:v||"—", options:{ fontSize:12, color:"1B2A2E", breakLine:true, paraSpaceAfter:6 } }]), T({ x:0.45, y:0.45, w:4.3, h:4.6, valign:"top" }));
-      s.addText(decTxt, { x:0.45, y:5.2, w:4.3, h:0.55, fontFace:F, rtlMode:true, fontSize:16, bold:true, color:"FFFFFF", fill:{ color:decCol }, align:"center", valign:"middle" });
+      s.addTable(meta.map(([l,v])=>[{ text:v||"—", options:{ fontSize:14 } },{ text:l, options:{ fontSize:12, bold:true, color:BROWN, fill:{ color:SAND } } }]), { x:0.55, y:1.2, w:12.23, colW:[9.23,3.0], fontFace:F, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 }, rowH:0.5 });
       const qr=qrData(mapLink());
-      if(qr){ s.addImage({ data:qr, x:3.65, y:5.95, w:1.1, h:1.1 }); s.addText([{ text:"موقع المسجد", options:{ bold:true, fontSize:11, breakLine:true } },{ text:"امسح الباركود لفتح الموقع", options:{ fontSize:9, color:MUTED } }], T({ x:0.45, y:6.05, w:3.05, h:0.9 })); }
+      s.addText(decTxt, { x:qr?3.6:0.55, y:5.0, w:qr?9.18:12.23, h:1.2, fontFace:F, rtlMode:true, fontSize:20, bold:true, color:"FFFFFF", fill:{ color:decCol }, align:"center", valign:"middle" });
+      if(qr){ s.addImage({ data:qr, x:0.6, y:5.0, w:1.2, h:1.2 }); s.addText([{ text:"موقع المسجد", options:{ bold:true, fontSize:11, breakLine:true } },{ text:"امسح الباركود لفتح الموقع", options:{ fontSize:9, color:MUTED } }], T({ x:1.9, y:5.1, w:1.6, h:1.0 })); }
     }
     /* summary */
     { const s=add("ملخص النتائج");
