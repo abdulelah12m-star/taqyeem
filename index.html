@@ -587,8 +587,12 @@ function mkPage(main, page, prefix, note){
 }
 STEPS.push({ type:"info", main:"البداية", title:"بيانات المسجد والتقييم" });
 REQ_PAGES.forEach(p=>mkPage("متطلبات الافتتاح", p, "R", "متطلبات أساسية لقرار الافتتاح — أي بند فيها غير جاهز يُنصح بتصنيف أثره بدقة."));
-[["M","مصلى الرجال"],["W","مصلى النساء"]].forEach(([pf,main])=>HALL_PAGES.forEach(p=>mkPage(main,p,pf,
-  pf==="W" ? "يُقيَّم مصلى النساء مستقلًا. العناصر غير الموجودة فيه (كالمنبر والمحراب) حدّدها بـ «غير موجود في المسجد»." : "")));
+/* عناصر مصلى الرجال غير المطبّقة على مصلى النساء */
+const WOMEN_EXCLUDE = new Set([10,11,12,13,14,15,16,17,18,19,24,25,48,49,66,67,68]);
+[["M","مصلى الرجال"],["W","مصلى النساء"]].forEach(([pf,main])=>HALL_PAGES.forEach(p=>{
+  const pg = pf==="W" ? { t:p.t, items:p.items.filter(x=>!WOMEN_EXCLUDE.has(x[0])) } : p;
+  if(pg.items.length) mkPage(main, pg, pf, pf==="W" ? "يُقيَّم مصلى النساء مستقلًا. أي عنصر غير موجود فيه حدّده بـ «غير موجود في المسجد»." : "");
+}));
 mkPage("الملحقات داخل المسجد", ANNEX_PAGE, "A");
 [["MW","دورات مياه الرجال"],["WW","دورات مياه النساء"]].forEach(([pf,main])=>WC_PAGES.forEach(p=>mkPage(main,p,pf)));
 mkPage("الملحقات البنائية", BUILD_PAGE, "B");
