@@ -599,6 +599,8 @@ mkPage("الملحقات البنائية", BUILD_PAGE, "B");
 mkPage("العناصر الخارجية", EXT_PAGE, "X");
 STEPS.push({ type:"summary", main:"الختام", title:"الملخص وقرار الجاهزية" });
 const MAINS = [...new Set(STEPS.filter(s=>s.type==="page").map(s=>s.main))];
+/* ترقيم متسلسل للعرض داخل كل قسم رئيسي (المفتاح الداخلي يبقى ثابتًا للحفاظ على البيانات المحفوظة) */
+MAINS.forEach(m=>{ let n=0; ELS.filter(e=>e.main===m).forEach(e=>{ e.no=String(++n); }); });
 
 /* ---------------- الحالة ---------------- */
 function freshState(){
