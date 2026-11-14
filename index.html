@@ -6,7 +6,7 @@
 <title>تقييم جاهزية المساجد</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#1E1E1E; --navy:#33957F; --navy-2:#1E1E1E; --brown:#F07E66; --gold:#F79C6D;
@@ -288,95 +288,98 @@ pre.code{direction:ltr;text-align:left;background:#FDF3EE;border-radius:10px;pad
 .cv-code{display:inline-block;margin-top:14px;background:#E8985F;color:#141110;font-weight:700;font-size:15px;border-radius:8px;padding:4px 14px;direction:ltr}
 .cv-band{height:10px;background:#E8985F}
 .cv-body{padding:30px 56px 0}
-/* ============ SLIDES (PDF 16:9) ============ */
-.sl{width:1280px;height:720px;position:relative;overflow:hidden;background:#fff;font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;direction:rtl;color:#1B2A2E;font-size:15px;line-height:1.6;margin-bottom:20px}
-.sl-measure{width:1168px;font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;direction:rtl;color:#1B2A2E;font-size:15px;line-height:1.6}
-.sl-hd{position:absolute;top:0;left:0;right:0;height:80px;background:#211D1A;display:flex;align-items:center;justify-content:space-between;padding:0 56px;color:#fff}
-.sl-hd .t{font-size:25px;font-weight:700;line-height:1.3}
-.sl-hd .t small{display:block;font-size:12.5px;color:#E8985F;font-weight:600;margin-top:2px}
-.sl-hd img{height:42px}
-.sl-gold{position:absolute;top:80px;left:0;right:0;height:5px;background:#E8985F}
-.sl-bd{position:absolute;top:112px;left:56px;right:56px;bottom:62px}
-.sl-ft{position:absolute;bottom:0;left:0;right:0;height:46px;border-top:1px solid #E9D9C8;display:flex;justify-content:space-between;align-items:center;padding:0 56px;font-size:12px;color:#6B7A7D}
+/* ============ SLIDES (PDF 16:9) — Mutib Foundation brand ============ */
+.sl{width:1280px;height:720px;position:relative;overflow:hidden;background:#fff;font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;direction:rtl;color:#000;font-size:16px;line-height:1.65;font-weight:300;margin-bottom:20px}
+.sl-measure{font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;direction:rtl;color:#000;font-size:16px;line-height:1.65;font-weight:300}
+.sl b,.sl-measure b{font-weight:500}
+.sl-hd{position:absolute;top:46px;right:72px;left:72px}
+.sl-hd .t{font-size:36px;font-weight:300;color:#FFA369;line-height:1.3}
+.sl-hd .t small{display:block;font-size:14px;color:#000;font-weight:400;margin-top:6px}
+.sl-bd{position:absolute;top:150px;left:72px;right:72px;bottom:86px}
+.sl-ft{position:absolute;left:72px;right:72px;bottom:24px;height:40px;border-top:1px solid #000;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#000}
+.sl-ft img{height:22px}
+.sl-ft .pn{display:flex;align-items:center;gap:18px}
+.sl-blk{padding-bottom:14px}
+.ln-v{position:absolute;top:0;bottom:0;width:1.5px;background:#000}
+.ln-h{position:absolute;left:0;right:0;height:1.5px;background:#000}
 /* cover */
-.slc-r{position:absolute;top:0;bottom:0;right:0;width:780px;background:#211D1A;color:#fff;padding:64px 70px 0}
-.slc-r img{height:74px}
-.slc-k{margin-top:70px;font-size:17px;color:#E8985F;font-weight:700}
-.slc-t{font-size:58px;font-weight:700;line-height:1.25;margin-top:6px}
-.slc-m{font-size:28px;font-weight:600;color:#F6DEC7;margin-top:22px;line-height:1.4}
-.slc-c{display:inline-block;margin-top:16px;background:#E8985F;color:#141110;font-weight:700;font-size:18px;border-radius:8px;padding:4px 16px;direction:ltr}
-.slc-band{position:absolute;top:0;bottom:0;right:780px;width:12px;background:#E8985F}
-.slc-l{position:absolute;top:0;bottom:0;left:0;width:488px;background:#FBF6F0;padding:52px 44px 0}
-.slc-meta div{border-bottom:1px solid #E9D9C8;padding:7px 0;font-size:14px;line-height:1.5}
-.slc-meta span{display:block;font-size:11px;color:#6B7A7D}
-.slc-dec{margin-top:20px;border-radius:12px;padding:12px 16px;color:#fff;font-size:20px;font-weight:700;text-align:center}
-.slc-qr{display:flex;align-items:center;gap:14px;margin-top:16px}
-.slc-qr img{width:96px;height:96px;image-rendering:pixelated;background:#fff;border-radius:6px;border:1px solid #E9D9C8}
-.slc-qr b{display:block;font-size:13px}.slc-qr span{font-size:11px;color:#6B7A7D}
+.bc{background:#FFA369}
+.bc-t{position:absolute;top:96px;right:84px;left:330px}
+.bc-t .k{font-size:22px;font-weight:400}
+.bc-t .t{font-size:64px;font-weight:300;line-height:1.25;margin-top:4px}
+.bc-t .m{font-size:30px;font-weight:400;margin-top:18px;line-height:1.4}
+.bc-t .c{display:inline-block;margin-top:14px;border:1.5px solid #000;font-weight:500;font-size:18px;padding:2px 16px;direction:ltr}
+.bc-d{position:absolute;bottom:56px;right:84px;font-size:17px;font-weight:400;line-height:1.7}
+.bc-logo{position:absolute;left:0;width:270px;bottom:0;height:180px;display:flex;align-items:center;justify-content:center}
+.bc-logo img{height:86px}
+.bc-org{position:absolute;left:0;width:270px;top:70px;text-align:center;font-size:13px;font-weight:400;line-height:1.7}
 /* data slide */
-.sdat{border:1px solid #E9D9C8;border-radius:12px;overflow:hidden}
-.sdat .r{display:flex;align-items:center;min-height:46px;border-bottom:1px solid #EFE5DA;font-size:18px}
+.sdat{border-top:1.5px solid #000;border-bottom:1.5px solid #000}
+.sdat .r{display:flex;align-items:center;min-height:48px;border-bottom:1px solid rgba(0,0,0,.18);font-size:19px}
 .sdat .r:last-child{border-bottom:none}
-.sdat .r span{flex:none;width:260px;align-self:stretch;display:flex;align-items:center;padding:0 20px;background:#FBF6F0;color:#8B5A3C;font-size:15px;font-weight:600}
-.sdat .r b{padding:0 20px;font-weight:600}
+.sdat .r span{flex:none;width:250px;font-size:15px;font-weight:500;color:#000}
+.sdat .r b{font-weight:400}
+.sl-dec{padding:14px 20px;font-size:22px;font-weight:500;text-align:center}
+.d-ready{background:#33B28A;color:#fff}.d-cond{background:#FDB940;color:#000}.d-not{background:#000;color:#fff}.d-none{background:#E6E6E6;color:#000}
+.bqr{display:flex;align-items:center;gap:16px;background:#FEE7D9;padding:10px 18px}
+.bqr img{width:92px;height:92px;image-rendering:pixelated;background:#fff}
+.bqr b{display:block;font-size:14px}.bqr span{font-size:12px}
 /* summary */
-.sls{display:flex;gap:24px;height:100%}
+.sls{display:flex;gap:28px;height:100%}
 .sls-k{flex:none;width:400px;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
-.sk{border:1px solid #E9D9C8;border-radius:14px;padding:14px 16px;background:#FBF6F0}
-.sk .v{font-size:34px;font-weight:700;line-height:1.15;color:#141110}
-.sk .l{font-size:12.5px;color:#6B7A7D;margin-top:2px}
-.sk.dark{background:#211D1A;border-color:#211D1A}.sk.dark .v{color:#E8985F}.sk.dark .l{color:#E9D8C6}
-.sk.red .v{color:#A23E32}
-.sk.wide{grid-column:1/-1}
-.sl-dec{border-radius:12px;padding:14px 18px;color:#fff;font-size:21px;font-weight:700;text-align:center}
-.d-ready{background:#3E7A55}.d-cond{background:#B7791F}.d-not{background:#A23E32}.d-none{background:#8A8F91}
+.sk{background:#FEE7D9;padding:16px 18px}
+.sk .v{font-size:40px;font-weight:500;line-height:1.1}
+.sk .l{font-size:13px;margin-top:4px;font-weight:400}
+.sk.or{background:#FFA369}
+.sk.wide{grid-column:1/-1;padding:0;background:none}
 .sls-t{flex:1;min-width:0}
-.st{border:1px solid #E9D9C8;border-radius:10px;overflow:hidden}
-.st-r{display:flex;align-items:center;min-height:44px;border-bottom:1px solid #EFE5DA;font-size:14px}
+.st{border-top:1.5px solid #000;border-bottom:1.5px solid #000}
+.st-r{display:flex;align-items:center;min-height:43px;border-bottom:1px solid rgba(0,0,0,.15);font-size:15px}
 .st-r:last-child{border-bottom:none}
-.st-r.h{background:#211D1A;color:#fff;font-weight:700;font-size:13px;min-height:40px}
-.st-r.tot{background:#FBF6F0;font-weight:700}
-.st-r > div{padding:6px 12px}
-.st-r .c1{flex:2.2;font-weight:700}.st-r .cn{flex:1;text-align:center}
+.st-r.h{font-weight:500;font-size:13.5px;border-bottom:1.5px solid #000;min-height:40px}
+.st-r.tot{font-weight:500;background:#FEE7D9}
+.st-r > div{padding:4px 10px}
+.st-r .c1{flex:2.2;font-weight:400}.st-r .cn{flex:1;text-align:center}
 .st-r .cb{flex:2.4;display:flex;align-items:center;gap:10px}
-.sbar{flex:1;height:9px;background:#EEE5DB;border-radius:6px;overflow:hidden}.sbar i{display:block;height:100%}
+.sbar{flex:1;height:8px;background:#FEE7D9;overflow:hidden}.sbar i{display:block;height:100%}
 /* findings */
-.sf-grid{display:flex;gap:20px;align-items:flex-start}
-.sf-col{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px}
-.sf{border:1px solid #E9D9C8;border-right:7px solid #A23E32;border-radius:12px;padding:14px 20px;background:#fff}
-.sf .fh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.sf .fh b{font-size:19px}
-.sf .where{font-size:13.5px;color:#6B7A7D}
-.sf ul{margin:6px 0 0;padding:0;list-style:none;font-size:16.5px}
-.sf li:before{content:"– ";color:#8A8F91}
-.sf .nt{font-size:15px;background:#FBF6F0;border-radius:6px;padding:5px 10px;margin-top:6px;color:#4A3B30}
-.sf .sp{font-size:14px;color:#8B5A3C;font-weight:600;margin-top:4px}
-.tg{font-size:13px;font-weight:700;color:#fff;border-radius:12px;padding:1px 10px}
+.sf{border-top:1px solid #000;padding:12px 0 2px}
+.sf .fh{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sf .fh b{font-size:20px;font-weight:500}
+.sf .where{font-size:13.5px;color:#555}
+.sf ul{margin:6px 0 0;padding:0;list-style:none;font-size:17px}
+.sf li:before{content:"— ";color:#FFA369;font-weight:500}
+.sf .nt{font-size:15px;background:#FEE7D9;padding:6px 12px;margin-top:6px}
+.sf .sp{font-size:14px;font-weight:500;margin-top:4px}
+.tg{font-size:13px;font-weight:500;padding:1px 12px}
 /* photos */
 .sp-grid{display:flex;gap:22px;height:100%}
 .sp-grid > div{flex:1;min-width:0;display:flex;flex-direction:column}
-.sp-grid .im{flex:1;border-radius:10px;background-size:cover;background-position:center;background-color:#F2ECE6}
-.sp-grid .cap{font-size:13.5px;line-height:1.6;padding:10px 4px 0;min-height:70px}
-.sp-grid .cap b{color:#8B5A3C;margin-left:6px}
+.sp-grid .im{flex:1;background-size:cover;background-position:center;background-color:#FEE7D9}
+.sp-grid .cap{font-size:14px;line-height:1.6;padding:10px 0 0;min-height:66px;border-bottom:1px solid #000}
+.sp-grid .cap b{color:#FFA369;margin-left:6px;font-weight:500}
 /* decision */
-.sd-reason{margin-top:18px;background:#FBF6F0;border-radius:12px;padding:16px 20px;font-size:16px;line-height:1.9}
-.sd-sign{display:flex;gap:16px;margin-top:22px}
-.sd-sign div{flex:1;border:1px dashed #CDBFAE;border-radius:10px;padding:12px 16px;min-height:110px;font-size:15px}
-.sd-sign span{display:block;font-size:12px;color:#6B7A7D;margin-bottom:6px}
+.sd-reason{margin-top:18px;background:#FEE7D9;padding:16px 22px;font-size:17px;line-height:1.9}
+.sd-sign{display:flex;gap:16px;margin-top:24px}
+.sd-sign div{flex:1;border-top:1.5px solid #000;padding:10px 4px;min-height:110px;font-size:16px;font-weight:400}
+.sd-sign span{display:block;font-size:12.5px;color:#555;margin-bottom:6px}
 /* appendix */
-.sa-bar{background:#8B5A3C;color:#fff;font-weight:700;font-size:18px;border-radius:8px;padding:8px 18px}
-.sa-row{display:flex;gap:16px;padding:10px 4px;border-bottom:1px solid #EFE5DA;align-items:flex-start}
-.sa-row .no{flex:none;width:36px;height:30px;border-radius:7px;background:#211D1A;color:#fff;font-size:14px;font-weight:700;text-align:center;line-height:30px}
-.sa-row .nm{flex:none;width:300px;font-weight:700;font-size:17px;line-height:1.45}
-.sa-row .nm small{display:block;font-weight:500;color:#6B7A7D;font-size:13px}
-.sa-row .cr{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:5px}
-.sa-row .cr{gap:7px}.sa-row .cr .ck{font-size:14px;padding:2px 10px;border-radius:6px}
-.sl-blk{padding-bottom:12px}
-.sa-stat{display:inline-block;margin-right:14px;font-size:13px;font-weight:600;color:#211D1A;background:#E8985F;border-radius:20px;padding:1px 12px;vertical-align:middle}
-/* end */
-.sle{background:#211D1A}
-.sle img{position:absolute;top:44%;left:50%;height:96px;transform:translate(-50%,-50%)}
-.sle div{position:absolute;top:62%;left:0;right:0;text-align:center;color:#E9D8C6;font-size:16px}
+.sa-row{display:flex;gap:16px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.15);align-items:flex-start}
+.sa-row .no{flex:none;width:34px;height:30px;border:1.5px solid #000;font-size:14px;font-weight:500;text-align:center;line-height:27px}
+.sa-row .nm{flex:none;width:300px;font-weight:500;font-size:17px;line-height:1.45}
+.sa-row .nm small{display:block;font-weight:300;color:#444;font-size:13px}
+.sa-row .cr{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:7px}
+.sl .ck,.sl-measure .ck{font-size:14px;padding:1px 10px;border-radius:0;font-weight:400;background:#F5F5F5;color:#777}
+.sl .ck.r,.sl-measure .ck.r{background:#E2F5EE;color:#137A5B}
+.sl .ck.n,.sl-measure .ck.n{background:#FFA369;color:#000;font-weight:500}
+.sl .ck.x,.sl-measure .ck.x{background:#F0F0F0;color:#777}
+.sa-stat{display:inline-block;margin-right:16px;font-size:14px;font-weight:500;color:#000;background:#FEE7D9;padding:1px 12px;vertical-align:middle}
+/* divider */
+.dv-num{position:absolute;right:70px;bottom:40px;height:300px}
+.dv-t{position:absolute;top:70px;right:84px;font-size:46px;font-weight:300;line-height:1.3}
+.dv-ph{position:absolute;top:0;left:0;right:0;height:500px;background-size:cover;background-position:center}
+.dv-logo{position:absolute;left:0;width:270px;bottom:0;height:220px;display:flex;align-items:center;justify-content:center}
+.dv-logo img{height:76px}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1350,10 +1353,25 @@ function coverHTML(){
     ${qr?`<div class="rp-qr"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الباركود بكاميرا الجوال لفتح الموقع على خرائط Google</span></div></div>`:""}
     </div><div class="rp-foot"><span>${ORG}</span><span>وفق عناصر برنامج طومان للمسجد · رقم التقييم ${esc(state.id)}</span></div></div>`;
 }
-/* ---------------- SLIDES (PDF 16:9 + PowerPoint) ---------------- */
-const SLW=1280, SLH=720, SL_BODY=720-112-62;
-function slHead(title){ const info=mosqueInfo(); return `<div class="sl-hd"><div class="t">${title}<small>${esc(info.name)}${mosqueCode()?" · "+esc(mosqueCode()):""}</small></div><img src="${LOGO}"></div><div class="sl-gold"></div>`; }
-function slFoot(n,total){ return `<div class="sl-ft"><span>${ORG}</span><span>${n} / ${total}</span></div>`; }
+/* ---------------- SLIDES (PDF 16:9 + PowerPoint) — Mutib Foundation brand ---------------- */
+const SLW=1280, SLH=720, SL_BODY=720-150-86-6;
+const BR={ or:"#FFA369", gl:"#FEE7D9", bk:"#000000", ye:"#FDB940", gr:"#69BE5C", te:"#33B28A" };
+const SIMP={ b:{bg:"#000000",fg:"#FFFFFF"}, u:{bg:"#FFA369",fg:"#000000"}, l:{bg:"#FDB940",fg:"#000000"}, none:{bg:"#D9D9D9",fg:"#000000"} };
+function brBar(p){ return p==null ? "#D9D9D9" : p>=90 ? BR.te : p>=70 ? BR.ye : BR.or; }
+let LOGO_BK="";
+async function tintImg(src,color){
+  return new Promise(res=>{ const im=new Image(); im.onload=()=>{ const c=document.createElement("canvas"); c.width=im.naturalWidth; c.height=im.naturalHeight; const g=c.getContext("2d"); g.drawImage(im,0,0);
+      try{ const d=g.getImageData(0,0,c.width,c.height), px=d.data; for(let i=3;i<px.length;i+=4){ px[i]=px[i]<70?0:Math.min(255,(px[i]-70)*1.4); } g.putImageData(d,0,0); }catch(e){}
+      g.globalCompositeOperation="source-in"; g.fillStyle=color; g.fillRect(0,0,c.width,c.height); res(c.toDataURL("image/png")); }; im.onerror=()=>res(src); im.src=src; });
+}
+function outlineNum(txt){
+  const c=document.createElement("canvas"); c.width=1100; c.height=560; const g=c.getContext("2d");
+  g.font='300 470px "IBM Plex Sans","IBM Plex Sans Arabic",Arial'; g.textBaseline="alphabetic"; g.lineWidth=3.5; g.strokeStyle="#000"; g.textAlign="right";
+  g.strokeText(txt, c.width-10, c.height-40); return c.toDataURL("image/png");
+}
+async function prepBrand(){ if(!LOGO_BK) LOGO_BK=await tintImg(LOGO,"#000"); }
+function slHead(title){ const info=mosqueInfo(); return `<div class="sl-hd"><div class="t">${title}<small>${esc(info.name)}${mosqueCode()?" · "+esc(mosqueCode()):""}</small></div></div>`; }
+function slFoot(n,total){ return `<div class="sl-ft"><img src="${LOGO_BK}"><div class="pn"><span>${ORG}</span><b>${n}</b></div></div>`; }
 function slSlide(title, body){ return { title, body }; }
 function measureH(host, htmlArr, width){
   host.innerHTML = `<div class="sl-measure" style="width:${width}px">${htmlArr.map(h=>`<div class="sl-blk">${h}</div>`).join("")}</div>`;
@@ -1361,60 +1379,82 @@ function measureH(host, htmlArr, width){
 }
 function findingCard(el, g){
   const it=peek(el.k);
-  const bad=el.crit.map((c,i)=>{ const v=it.c[i]; return v&&v.s==="n" ? `<li>${esc(c)} <span style="color:${IMPACT[v.i||"none"].color};font-weight:700">(${IMPACT[v.i||"none"].label})</span></li>` : ""; }).join("");
-  return `<div class="sf" style="border-right-color:${IMPACT[g].color}"><div class="fh"><span class="tg" style="background:${IMPACT[g].color}">${IMPACT[g].short}</span><b>${esc(el.no)}. ${esc(el.name)}</b><span class="where">${esc(el.main)} › ${esc(el.title)}</span></div>
+  const bad=el.crit.map((c,i)=>{ const v=it.c[i]; return v&&v.s==="n" ? `<li>${esc(c)} <b>(${IMPACT[v.i||"none"].label})</b></li>` : ""; }).join("");
+  return `<div class="sf"><div class="fh"><span class="tg" style="background:${SIMP[g].bg};color:${SIMP[g].fg}">${IMPACT[g].short}</span><b>${esc(el.no)}. ${esc(el.name)}</b><span class="where">${esc(el.main)} › ${esc(el.title)}</span></div>
     <ul>${bad}</ul>${specs(it)?`<div class="sp">${specs(it)}</div>`:""}${it.note?`<div class="nt">${esc(it.note)}</div>`:""}</div>`;
+}
+function divider(num, title, color, photo){
+  return { raw: photo
+    ? `<div class="sl" style="background:${color}"><div class="dv-ph" style="background-image:url('${photo}')"></div><div class="ln-h" style="top:500px"></div><div class="ln-v" style="left:270px;top:500px"></div>
+        <div style="position:absolute;top:524px;right:84px;font-size:44px;font-weight:300;line-height:1.3">${title}</div><div style="position:absolute;bottom:40px;right:84px;font-size:22px;font-weight:500;direction:ltr">${num}</div>
+        <div class="dv-logo"><img src="${LOGO_BK}"></div></div>`
+    : `<div class="sl" style="background:${color}"><div class="ln-v" style="left:120px"></div><div class="ln-v" style="left:170px"></div><div class="ln-v" style="left:220px"></div><div class="ln-v" style="left:270px"></div>
+        <div class="dv-t">${title}</div><img class="dv-num" src="${outlineNum(num)}"></div>` };
 }
 function buildSlides(host){
   const { per, tot, findings } = computeAll(), d=state.decision, m=state.meta, info=mosqueInfo();
   const S=[]; const decCls=d.value?DECISIONS[d.value].cls:"d-none", decTxt=d.value?DECISIONS[d.value].label:"لم يُعتمد القرار بعد (مسودة)";
-  /* cover */
   const meta=[["المدينة / المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" — ")],["الحي / الموقع",m.district],["تاريخ التقييم",dateBoth(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor]];
-  const qr=qrData(mapLink());
-  const cp=m.coverPhoto;
+  const qr=qrData(mapLink()), cp=m.coverPhoto;
+  /* cover */
+  const covTitle=`<div class="k">تقرير تقييم</div><div class="t">جاهزية المسجد</div>`;
   S.push({ raw: cp
-    ? `<div class="sl"><div style="position:absolute;top:0;bottom:0;left:0;width:690px;background:url('${cp}') center/cover"></div><div class="slc-r" style="width:590px;padding:64px 60px 0"><img src="${LOGO}" style="height:78px"><div class="slc-k" style="margin-top:96px;font-size:19px">تقرير تقييم</div><div class="slc-t" style="font-size:60px">جاهزية المسجد</div><div class="slc-m" style="font-size:28px">${esc(info.name)}</div>${mosqueCode()?`<div class="slc-c" style="font-size:19px">${esc(mosqueCode())}</div>`:""}</div><div style="position:absolute;top:0;bottom:0;left:690px;width:12px;background:#E8985F"></div><div style="position:absolute;left:0;right:0;bottom:0;height:14px;background:#E8985F"></div></div>`
-    : `<div class="sl"><div class="slc-r" style="width:auto;left:0;padding:70px 90px 0"><img src="${LOGO}" style="height:84px"><div class="slc-k" style="margin-top:110px;font-size:20px">تقرير تقييم</div><div class="slc-t" style="font-size:72px">جاهزية المسجد</div><div class="slc-m" style="font-size:34px">${esc(info.name)}</div>${mosqueCode()?`<div class="slc-c" style="font-size:20px">${esc(mosqueCode())}</div>`:""}</div><div style="position:absolute;left:0;right:0;bottom:0;height:14px;background:#E8985F"></div></div>` });
+    ? `<div class="sl bc"><div style="position:absolute;top:0;right:0;left:270px;height:430px;background:url('${cp}') center/cover"></div>
+        <div class="ln-v" style="left:270px"></div><div class="ln-h" style="top:430px"></div>
+        <div style="position:absolute;top:456px;right:84px;left:330px"><div style="font-size:46px;font-weight:300;line-height:1.25">تقرير تقييم جاهزية المسجد</div><div style="font-size:26px;font-weight:400;margin-top:10px">${esc(info.name)}</div>${mosqueCode()?`<div style="display:inline-block;margin-top:12px;border:1.5px solid #000;font-weight:500;font-size:16px;padding:1px 14px;direction:ltr">${esc(mosqueCode())}</div>`:""}</div>
+        <div class="bc-org" style="top:60px">${esc(dateBoth(m.date)).replace(" — ","<br>")}</div>
+        <div class="bc-logo"><img src="${LOGO_BK}"></div></div>`
+    : `<div class="sl bc"><div class="ln-v" style="left:270px"></div><div class="ln-h" style="top:540px"></div>
+        <div class="bc-t">${covTitle}<div class="m">${esc(info.name)}</div>${mosqueCode()?`<div class="c">${esc(mosqueCode())}</div>`:""}</div>
+        <div class="bc-d">${esc(dateBoth(m.date))}<br>مساجد الأمير متعب بن عبدالعزيز -رحمه الله-</div>
+        <div class="bc-logo"><img src="${LOGO_BK}"></div></div>` });
   /* data slide */
   S.push(slSlide("بيانات المسجد والتقييم", `<div class="sdat">${meta.map(([l,v])=>`<div class="r"><span>${l}</span><b>${esc(v||"—")}</b></div>`).join("")}</div>
     <div style="display:flex;gap:20px;align-items:stretch;margin-top:18px"><div class="sl-dec ${decCls}" style="flex:1;display:flex;align-items:center;justify-content:center;font-size:24px">${decTxt}</div>
-    ${qr?`<div class="slc-qr" style="margin:0;border:1px solid #E9D9C8;border-radius:12px;padding:10px 16px;background:#FBF6F0"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الباركود لفتح الموقع<br>على خرائط Google</span></div></div>`:""}</div>`));
+    ${qr?`<div class="bqr"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الباركود لفتح الموقع<br>على خرائط Google</span></div></div>`:""}</div>`));
   /* summary */
   S.push(slSlide("ملخص النتائج", `<div class="sls"><div class="sls-k">
-      <div class="sk dark"><div class="v">${tot.readiness==null?"—":tot.readiness+"%"}</div><div class="l">نسبة الجاهزية</div></div>
+      <div class="sk or"><div class="v">${tot.readiness==null?"—":tot.readiness+"%"}</div><div class="l">نسبة الجاهزية</div></div>
       <div class="sk"><div class="v">${tot.completion||0}%</div><div class="l">اكتمال التقييم (${tot.done}/${tot.total})</div></div>
-      <div class="sk red"><div class="v">${tot.b}</div><div class="l">بنود تمنع الافتتاح</div></div>
-      <div class="sk"><div class="v">${tot.u} <span style="font-size:20px;color:#6B7A7D">/ ${tot.l}</span></div><div class="l">عاجل / تحسين لاحق</div></div>
-      <div class="sk wide" style="padding:0;border:none;background:none"><div class="sl-dec ${decCls}">${decTxt}</div></div></div>
+      <div class="sk"><div class="v">${tot.b}</div><div class="l">بنود تمنع الافتتاح</div></div>
+      <div class="sk"><div class="v">${tot.u} <span style="font-size:22px;font-weight:300">/ ${tot.l}</span></div><div class="l">عاجل / تحسين لاحق</div></div>
+      <div class="sk wide"><div class="sl-dec ${decCls}">${decTxt}</div></div></div>
     <div class="sls-t"><div class="st"><div class="st-r h"><div class="c1">القسم</div><div class="cn">المُقيَّم</div><div class="cn">غير جاهز</div><div class="cn">مانع</div><div class="cb">نسبة الجاهزية</div></div>
-      ${per.map(p=>`<div class="st-r"><div class="c1">${esc(p.main)}</div><div class="cn">${p.done}/${p.total}</div><div class="cn">${p.n}</div><div class="cn" style="${p.b?"color:#A23E32;font-weight:700":""}">${p.b}</div><div class="cb"><div class="sbar"><i style="width:${p.readiness||0}%;background:${barColor(p.readiness)}"></i></div><b style="width:46px;color:${barColor(p.readiness)}">${p.readiness==null?"—":p.readiness+"%"}</b></div></div>`).join("")}
+      ${per.map(p=>`<div class="st-r"><div class="c1">${esc(p.main)}</div><div class="cn">${p.done}/${p.total}</div><div class="cn">${p.n}</div><div class="cn" style="${p.b?"font-weight:600":""}">${p.b}</div><div class="cb"><div class="sbar"><i style="width:${p.readiness||0}%;background:${brBar(p.readiness)}"></i></div><b style="width:48px">${p.readiness==null?"—":p.readiness+"%"}</b></div></div>`).join("")}
       <div class="st-r tot"><div class="c1">الإجمالي</div><div class="cn">${tot.done}/${tot.total}</div><div class="cn">${tot.n}</div><div class="cn">${tot.b}</div><div class="cb"><b>${tot.readiness==null?"—":tot.readiness+"%"}</b></div></div></div></div></div>`));
-  /* findings: 2-column card slides per impact group */
+  /* photos list (used by dividers too) */
+  const phs=[]; STEPS.forEach(st=>{ if(st.type!=="page") return; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>phs.push({p,el,it})); }); });
+  let secN=0; const nn=()=>String(++secN).padStart(2,"0");
+  /* findings */
+  S.push(divider(nn(), "الملاحظات", BR.or, null));
   ["b","u","l","none"].forEach(g=>{
     const list=findings.filter(f=>f.s.sev===g); if(!list.length) return;
-    const cards=list.map(({el})=>findingCard(el,g)), hs=measureH(host, cards, 1168);
+    const cards=list.map(({el})=>findingCard(el,g)), hs=measureH(host, cards, 1136);
     let cur=[], h=0; const pages=[];
     cards.forEach((c,i)=>{ if(h+hs[i]>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=0; } cur.push(c); h+=hs[i]; });
     if(cur.length) pages.push(cur);
-    pages.forEach((pc,pi)=>S.push(slSlide(`الملاحظات: ${IMPACT[g].label} (${list.length})${pages.length>1?` — ${pi+1}/${pages.length}`:""}`,
+    pages.forEach((pc,pi)=>S.push(slSlide(`${IMPACT[g].label} (${list.length})${pages.length>1?` — ${pi+1}/${pages.length}`:""}`,
       pc.map(c=>`<div class="sl-blk">${c}</div>`).join(""))));
   });
   if(!findings.length) S.push(slSlide("الملاحظات", `<div class="sd-reason">لم تُرصد بنود غير جاهزة في هذا التقييم.</div>`));
   /* photos: 3 per slide */
-  const phs=[]; STEPS.forEach(st=>{ if(st.type!=="page") return; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>phs.push({p,el,it})); }); });
-  for(let i=0;i<phs.length;i+=3){
-    const grp=phs.slice(i,i+3);
-    S.push(slSlide(`الشواهد المصوّرة${phs.length>3?` — ${Math.floor(i/3)+1}/${Math.ceil(phs.length/3)}`:""}`, `<div class="sp-grid">${grp.map((x,j)=>`<div><div class="im" style="background-image:url('${x.p}')"></div><div class="cap"><b>صورة (${i+j+1})</b>${esc(x.el.no)}. ${esc(x.el.name)} — ${esc(x.el.main)}${x.it.note?`<br><span style="color:#6B7A7D">${esc(x.it.note)}</span>`:""}</div></div>`).join("")}${grp.length<3?"<div></div>".repeat(3-grp.length):""}</div>`));
+  if(phs.length){
+    S.push(divider(nn(), "الشواهد المصوّرة", BR.ye, phs[0].p));
+    for(let i=0;i<phs.length;i+=3){
+      const grp=phs.slice(i,i+3);
+      S.push(slSlide(`الشواهد المصوّرة${phs.length>3?` — ${Math.floor(i/3)+1}/${Math.ceil(phs.length/3)}`:""}`, `<div class="sp-grid">${grp.map((x,j)=>`<div><div class="im" style="background-image:url('${x.p}')"></div><div class="cap"><b>صورة (${i+j+1})</b>${esc(x.el.no)}. ${esc(x.el.name)} — ${esc(x.el.main)}${x.it.note?`<br><span style="color:#555">${esc(x.it.note)}</span>`:""}</div></div>`).join("")}${grp.length<3?"<div></div>".repeat(3-grp.length):""}</div>`));
+    }
   }
   /* decision */
-  S.push(slSlide("قرار الجاهزية والاعتماد", `<div class="sl-dec ${decCls}" style="font-size:30px;padding:22px">${decTxt}</div>
+  S.push(slSlide("قرار الجاهزية والاعتماد", `<div class="sl-dec ${decCls}" style="font-size:32px;padding:24px;font-weight:400">${decTxt}</div>
     ${d.reason?`<div class="sd-reason"><b>المبررات والاشتراطات:</b> ${esc(d.reason)}</div>`:""}
     <div class="sd-sign"><div><span>المعتمد</span>${esc(d.signer||m.evaluator)}</div><div><span>الصفة</span>${esc(d.signerTitle)}</div><div><span>التوقيع</span></div><div><span>التاريخ</span>${esc(m.date)} م<br>${esc(hijri(m.date))}</div></div>`));
-  /* appendix: one slide per sub-section (continues on extra slides if long) */
+  /* appendix */
+  S.push(divider(nn(), "التقييم التفصيلي", BR.te, null));
   STEPS.forEach(st=>{ if(st.type!=="page") return;
     const rows=st.els.map(el=>{ const it=peek(el.k);
-      return `<div class="sa-row"><div class="no">${esc(el.no)}</div><div class="nm">${esc(el.name)}${it&&!it.a&&(it.q||it.ty||it.br)?`<small style="color:#8B5A3C">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</div><div class="cr">${rpChips(el)}</div></div>`; });
-    const hs=measureH(host, rows, 1168);
+      return `<div class="sa-row"><div class="no">${esc(el.no)}</div><div class="nm">${esc(el.name)}${it&&!it.a&&(it.q||it.ty||it.br)?`<small style="font-weight:500">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</div><div class="cr">${rpChips(el)}</div></div>`; });
+    const hs=measureH(host, rows, 1136);
     const pages=[]; let cur=[], h=0;
     rows.forEach((r,i)=>{ if(h+hs[i]>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=0; } cur.push(r); h+=hs[i]; });
     if(cur.length) pages.push(cur);
@@ -1422,7 +1462,9 @@ function buildSlides(host){
     pages.forEach((pg,pi)=>S.push(slSlide(`${ttl}${pages.length>1?` (${pi+1}/${pages.length})`:""}<span class="sa-stat">${a.absent===a.els?"غير موجود":a.readiness==null?"":`الجاهزية ${a.readiness}%`}${a.n?` · غير جاهز ${a.n}`:""}</span>`, pg.map(r=>`<div class="sl-blk">${r}</div>`).join(""))));
   });
   /* end */
-  S.push({ raw:`<div class="sl sle"><img src="${LOGO}"><div>${ORG}</div></div>` });
+  S.push({ raw:`<div class="sl bc"><div class="ln-v" style="left:270px"></div><div class="ln-h" style="top:540px"></div>
+    <div class="bc-t" style="top:120px"><div class="t" style="font-size:58px">شكرًا لكم</div><div class="m" style="font-size:22px;font-weight:300">${ORG}</div></div>
+    <div class="bc-d">mutib.org</div><div class="bc-logo"><img src="${LOGO_BK}"></div></div>` });
   host.innerHTML="";
   return S.map((s,i)=> s.raw ? s.raw : `<div class="sl">${slHead(s.title)}<div class="sl-bd">${s.body}</div>${slFoot(i+1,S.length)}</div>`);
 }
@@ -1434,6 +1476,7 @@ async function exportPDF(){
     if(document.fonts && document.fonts.ready) await document.fonts.ready;
     window.scrollTo(0,0);
     host.style.width=SLW+"px";
+    await prepBrand();
     const slides=buildSlides(host);
     host.innerHTML=slides.join("");
     const els=[...host.querySelectorAll(".sl")];
@@ -1457,54 +1500,62 @@ async function exportPPTX(){
   if(!window.PptxGenJS){ toast("تعذّر تحميل مكتبة PowerPoint — تحقق من الاتصال", true); return; }
   busy(true, "جاري إعداد ملف PowerPoint…");
   try{
+    await prepBrand();
     const { per, tot, findings } = computeAll(), d=state.decision, m=state.meta, info=mosqueInfo();
     const P=new PptxGenJS(); P.layout="LAYOUT_WIDE"; P.rtlMode=true; P.title="تقرير تقييم جاهزية المسجد"; P.author=m.evaluator||"";
-    const F="Arial", DARK="211D1A", GOLD="E8985F", BROWN="8B5A3C", SAND="FBF6F0", LINE="E9D9C8", MUTED="6B7A7D";
-    const T=(o)=>Object.assign({ fontFace:F, rtlMode:true, align:"right", color:"1B2A2E", margin:0 }, o);
+    const F="IBM Plex Sans Arabic", DARK="000000", GOLD="FFA369", BROWN="000000", SAND="FEE7D9", LINE="BFBFBF", MUTED="555555";
+    const T=(o)=>Object.assign({ fontFace:F, rtlMode:true, align:"right", color:"000000", margin:0 }, o);
     const decTxt=d.value?DECISIONS[d.value].label:"لم يُعتمد القرار بعد (مسودة)";
-    const decCol={ready:"3E7A55",cond:"B7791F",not:"A23E32"}[d.value]||"8A8F91";
+    const decCol={ready:"33B28A",cond:"FDB940",not:"000000"}[d.value]||"E6E6E6", decFg=(d.value==="cond"||!d.value)?"000000":"FFFFFF";
     const sub=`${info.name}${mosqueCode()?" · "+mosqueCode():""}`;
     let n=0; const total=[];
     P.defineSlideMaster({ title:"MAIN", background:{ color:"FFFFFF" }, objects:[
-      { rect:{ x:0, y:0, w:13.333, h:0.85, fill:{ color:DARK } } },
-      { rect:{ x:0, y:0.85, w:13.333, h:0.05, fill:{ color:GOLD } } },
-      { image:{ x:0.55, y:0.18, w:1.5, h:0.5, data:LOGO, sizing:{ type:"contain", w:1.5, h:0.5 } } },
-      { line:{ x:0.55, y:7.0, w:12.23, h:0, line:{ color:LINE, width:0.75 } } },
-      { text:{ text:ORG, options:T({ x:6.5, y:7.05, w:6.28, h:0.35, fontSize:10, color:MUTED }) } },
-    ], slideNumber:{ x:0.55, y:7.05, w:1, h:0.35, fontFace:F, fontSize:10, color:MUTED } });
+      { line:{ x:0.75, y:6.95, w:11.83, h:0, line:{ color:"000000", width:0.75 } } },
+      { image:{ x:0.75, y:7.02, w:1.1, h:0.36, data:LOGO_BK, sizing:{ type:"contain", w:1.1, h:0.36 } } },
+      { text:{ text:ORG, options:T({ x:6.3, y:7.03, w:5.8, h:0.35, fontSize:9 }) } },
+    ], slideNumber:{ x:12.1, y:7.03, w:0.5, h:0.35, fontFace:F, fontSize:9, color:"000000", align:"right" } });
     const add=(title)=>{ const s=P.addSlide({ masterName:"MAIN" });
-      s.addText([{ text:title, options:{ fontSize:20, bold:true, color:"FFFFFF", breakLine:true } },{ text:sub, options:{ fontSize:10, color:GOLD } }], T({ x:2.3, y:0.1, w:10.48, h:0.68, valign:"middle" }));
+      s.addText([{ text:title, options:{ fontSize:26, color:GOLD, breakLine:true } },{ text:sub, options:{ fontSize:11, color:"000000" } }], T({ x:0.75, y:0.4, w:11.83, h:1.0, valign:"top" }));
       return s; };
     /* cover */
-    { const s=P.addSlide(); s.background={ color:DARK };
-      if(m.coverPhoto){ s.addImage({ data:m.coverPhoto, x:0, y:0, w:7.19, h:7.5, sizing:{ type:"cover", w:7.19, h:7.5 } }); s.addShape(P.ShapeType.rect,{ x:7.19, y:0, w:0.12, h:7.5, fill:{ color:GOLD } }); }
-      s.addShape(P.ShapeType.rect,{ x:0, y:7.35, w:13.333, h:0.15, fill:{ color:GOLD } });
-      s.addImage({ data:LOGO, x:9.9, y:0.7, w:2.7, h:0.9, sizing:{ type:"contain", w:2.7, h:0.9 } });
-      const cx=m.coverPhoto?7.7:1, cw=m.coverPhoto?4.9:11.6;
-      s.addText("تقرير تقييم", T({ x:cx, y:2.3, w:cw, h:0.45, fontSize:18, bold:true, color:GOLD }));
-      s.addText("جاهزية المسجد", T({ x:cx, y:2.75, w:cw, h:1.1, fontSize:m.coverPhoto?42:54, bold:true, color:"FFFFFF" }));
-      s.addText(info.name, T({ x:cx, y:4.0, w:cw, h:1.0, fontSize:m.coverPhoto?20:26, color:"F6DEC7" }));
-      if(mosqueCode()) s.addText(mosqueCode(), { x:10.6, y:5.0, w:2.0, h:0.48, fontFace:F, fontSize:17, bold:true, color:"141110", fill:{ color:GOLD }, align:"center", valign:"middle" });
+    { const s=P.addSlide(); s.background={ color:GOLD };
+      const hy=m.coverPhoto?4.48:5.62;
+      if(m.coverPhoto) s.addImage({ data:m.coverPhoto, x:2.81, y:0, w:10.52, h:hy, sizing:{ type:"cover", w:10.52, h:hy } });
+      s.addShape(P.ShapeType.line,{ x:2.81, y:0, w:0, h:7.5, line:{ color:"000000", width:1.25 } });
+      s.addShape(P.ShapeType.line,{ x:0, y:hy, w:13.333, h:0, line:{ color:"000000", width:1.25 } });
+      s.addImage({ data:LOGO_BK, x:0.4, y:hy+0.55, w:2.0, h:0.9, sizing:{ type:"contain", w:2.0, h:0.9 } });
+      if(m.coverPhoto){
+        s.addText("تقرير تقييم جاهزية المسجد", T({ x:3.4, y:hy+0.25, w:9.0, h:0.7, fontSize:32 }));
+        s.addText(info.name, T({ x:3.4, y:hy+1.0, w:9.0, h:0.55, fontSize:18 }));
+        if(mosqueCode()) s.addText(mosqueCode(), { x:10.8, y:hy+1.65, w:1.6, h:0.38, fontFace:F, fontSize:13, bold:true, color:"000000", line:{ color:"000000", width:1 }, align:"center", valign:"middle" });
+        s.addText(dateBoth(m.date).replace(" — ","\n"), T({ x:0.3, y:0.5, w:2.2, h:0.9, fontSize:10, align:"center" }));
+      }else{
+        s.addText("تقرير تقييم", T({ x:3.4, y:1.0, w:9.0, h:0.45, fontSize:18 }));
+        s.addText("جاهزية المسجد", T({ x:3.4, y:1.45, w:9.0, h:1.0, fontSize:46 }));
+        s.addText(info.name, T({ x:3.4, y:2.65, w:9.0, h:0.7, fontSize:22 }));
+        if(mosqueCode()) s.addText(mosqueCode(), { x:10.6, y:3.5, w:1.8, h:0.42, fontFace:F, fontSize:14, bold:true, color:"000000", line:{ color:"000000", width:1 }, align:"center", valign:"middle" });
+        s.addText([{ text:dateBoth(m.date), options:{ breakLine:true } },{ text:"مساجد الأمير متعب بن عبدالعزيز -رحمه الله-" }], T({ x:3.4, y:6.1, w:9.0, h:0.8, fontSize:13 }));
+      }
     }
     /* data slide */
     { const s=add("بيانات المسجد والتقييم");
       const meta=[["المدينة / المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" — ")],["الحي / الموقع",m.district],["تاريخ التقييم",dateBoth(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor]];
-      s.addTable(meta.map(([l,v])=>[{ text:v||"—", options:{ fontSize:14 } },{ text:l, options:{ fontSize:12, bold:true, color:BROWN, fill:{ color:SAND } } }]), { x:0.55, y:1.2, w:12.23, colW:[9.23,3.0], fontFace:F, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 }, rowH:0.5 });
+      s.addTable(meta.map(([l,v])=>[{ text:v||"—", options:{ fontSize:14 } },{ text:l, options:{ fontSize:12, bold:true, color:BROWN, fill:{ color:SAND } } }]), { x:0.55, y:1.55, w:12.23, colW:[9.23,3.0], fontFace:F, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 }, rowH:0.5 });
       const qr=qrData(mapLink());
-      s.addText(decTxt, { x:qr?3.6:0.55, y:5.0, w:qr?9.18:12.23, h:1.2, fontFace:F, rtlMode:true, fontSize:20, bold:true, color:"FFFFFF", fill:{ color:decCol }, align:"center", valign:"middle" });
+      s.addText(decTxt, { x:qr?3.6:0.55, y:5.0, w:qr?9.18:12.23, h:1.2, fontFace:F, rtlMode:true, fontSize:20, bold:true, color:decFg, fill:{ color:decCol }, align:"center", valign:"middle" });
       if(qr){ s.addImage({ data:qr, x:0.6, y:5.0, w:1.2, h:1.2 }); s.addText([{ text:"موقع المسجد", options:{ bold:true, fontSize:11, breakLine:true } },{ text:"امسح الباركود لفتح الموقع", options:{ fontSize:9, color:MUTED } }], T({ x:1.9, y:5.1, w:1.6, h:1.0 })); }
     }
     /* summary */
     { const s=add("ملخص النتائج");
-      const k=[[tot.readiness==null?"—":tot.readiness+"%","نسبة الجاهزية",DARK,GOLD],[`${tot.completion||0}%`,"اكتمال التقييم",SAND,"141110"],[String(tot.b),"بنود تمنع الافتتاح",SAND,"A23E32"],[`${tot.u} / ${tot.l}`,"عاجل / لاحق",SAND,"141110"]];
-      k.forEach(([v,l,bg,c],i)=>{ const x=12.78-1.95-(i%2)*2.05, y=1.2+Math.floor(i/2)*1.35;
-        s.addShape(P.ShapeType.roundRect,{ x, y, w:1.95, h:1.2, fill:{ color:bg }, line:{ color:bg===DARK?DARK:LINE }, rectRadius:0.12 });
-        s.addText([{ text:v, options:{ fontSize:26, bold:true, color:c, breakLine:true } },{ text:l, options:{ fontSize:10, color:bg===DARK?"E9D8C6":MUTED } }], T({ x:x+0.15, y:y+0.1, w:1.65, h:1.0, valign:"middle" })); });
-      s.addText(decTxt, { x:8.78, y:3.98, w:4.0, h:0.6, fontFace:F, rtlMode:true, fontSize:16, bold:true, color:"FFFFFF", fill:{ color:decCol }, align:"center", valign:"middle" });
+      const k=[[tot.readiness==null?"—":tot.readiness+"%","نسبة الجاهزية",GOLD,"000000"],[`${tot.completion||0}%`,"اكتمال التقييم",SAND,"141110"],[String(tot.b),"بنود تمنع الافتتاح",SAND,"A23E32"],[`${tot.u} / ${tot.l}`,"عاجل / لاحق",SAND,"141110"]];
+      k.forEach(([v,l,bg,c],i)=>{ const x=12.78-1.95-(i%2)*2.05, y=1.55+Math.floor(i/2)*1.35;
+        s.addShape(P.ShapeType.roundRect,{ x, y, w:1.95, h:1.2, fill:{ color:bg }, line:{ color:bg }, rectRadius:0 });
+        s.addText([{ text:v, options:{ fontSize:26, bold:true, color:c, breakLine:true } },{ text:l, options:{ fontSize:10, color:"000000" } }], T({ x:x+0.15, y:y+0.1, w:1.65, h:1.0, valign:"middle" })); });
+      s.addText(decTxt, { x:8.78, y:4.33, w:4.0, h:0.6, fontFace:F, rtlMode:true, fontSize:16, bold:true, color:decFg, fill:{ color:decCol }, align:"center", valign:"middle" });
       const hdr=["نسبة الجاهزية","مانع","غير جاهز","المُقيَّم","القسم"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } }));
       const rows=per.map(p=>[p.readiness==null?"—":p.readiness+"%", String(p.b), String(p.n), `${p.done}/${p.total}`, p.main].map((t,ci)=>({ text:t, options:{ bold:ci===4||ci===0, color: ci===1&&p.b ? "A23E32" : (ci===0 ? barColor(p.readiness).slice(1) : "1B2A2E") } })));
       rows.push([tot.readiness==null?"—":tot.readiness+"%", String(tot.b), String(tot.n), `${tot.done}/${tot.total}`, "الإجمالي"].map(t=>({ text:t, options:{ bold:true, fill:{ color:SAND } } })));
-      s.addTable([hdr, ...rows], { x:0.55, y:1.2, w:8.0, colW:[1.4,0.9,1.1,1.3,3.3], fontFace:F, fontSize:11, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 }, rowH:0.4 });
+      s.addTable([hdr, ...rows], { x:0.55, y:1.55, w:8.0, colW:[1.4,0.9,1.1,1.3,3.3], fontFace:F, fontSize:11, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 }, rowH:0.4 });
     }
     /* findings table (auto pages) */
     if(findings.length){
@@ -1513,20 +1564,20 @@ async function exportPPTX(){
       findings.forEach(({el})=>{ const it=peek(el.k); el.crit.forEach((c,i)=>{ const v=it.c[i]; if(v&&v.s==="n"){ const im=IMPACT[v.i||"none"];
         rows.push([[it.note||"", specs(it)?" ("+specs(it).replace(/&amp;/g,"&")+")":""].join(""), c, el.main, `${el.no}. ${el.name}`, im.label].map((t,ci)=>({ text:t, options: ci===4?{ bold:true, color:im.color.slice(1) }:{} }))); } }); });
       const s=add(`الملاحظات والبنود غير الجاهزة (${rows.length})`);
-      s.addTable([hdr, ...rows], { x:0.55, y:1.2, w:12.23, colW:[3.6,3.0,1.9,2.33,1.4], fontFace:F, fontSize:10.5, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 },
-        autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.2, newSlideStartY:1.2, masterName:"MAIN" });
+      s.addTable([hdr, ...rows], { x:0.55, y:1.55, w:12.23, colW:[3.6,3.0,1.9,2.33,1.4], fontFace:F, fontSize:10.5, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 },
+        autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.55, newSlideStartY:1.55, masterName:"MAIN" });
     }
     /* photos */
     const phs=[]; STEPS.forEach(st=>{ if(st.type!=="page") return; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>phs.push({p,el,it})); }); });
     for(let i=0;i<phs.length;i+=3){
       const s=add(`الشواهد المصوّرة${phs.length>3?` — ${Math.floor(i/3)+1}/${Math.ceil(phs.length/3)}`:""}`);
       phs.slice(i,i+3).forEach((x,j)=>{ const w=3.9, xx=12.78-w-j*(w+0.265);
-        s.addImage({ data:x.p, x:xx, y:1.2, w, h:4.6, sizing:{ type:"cover", w, h:4.6 } });
-        s.addText([{ text:`صورة (${i+j+1})  `, options:{ bold:true, color:BROWN } },{ text:`${x.el.no}. ${x.el.name} — ${x.el.main}`, options:{ breakLine:!!x.it.note } }, ...(x.it.note?[{ text:x.it.note, options:{ color:MUTED, fontSize:10 } }]:[])], T({ x:xx, y:5.9, w, h:0.95, fontSize:11, valign:"top" })); });
+        s.addImage({ data:x.p, x:xx, y:1.55, w, h:4.3, sizing:{ type:"cover", w, h:4.3 } });
+        s.addText([{ text:`صورة (${i+j+1})  `, options:{ bold:true, color:BROWN } },{ text:`${x.el.no}. ${x.el.name} — ${x.el.main}`, options:{ breakLine:!!x.it.note } }, ...(x.it.note?[{ text:x.it.note, options:{ color:MUTED, fontSize:10 } }]:[])], T({ x:xx, y:5.95, w, h:0.9, fontSize:11, valign:"top" })); });
     }
     /* decision */
     { const s=add("قرار الجاهزية والاعتماد");
-      s.addText(decTxt, { x:0.55, y:1.25, w:12.23, h:0.9, fontFace:F, rtlMode:true, fontSize:26, bold:true, color:"FFFFFF", fill:{ color:decCol }, align:"center", valign:"middle" });
+      s.addText(decTxt, { x:0.55, y:1.25, w:12.23, h:0.9, fontFace:F, rtlMode:true, fontSize:26, bold:true, color:decFg, fill:{ color:decCol }, align:"center", valign:"middle" });
       if(d.reason) s.addText([{ text:"المبررات والاشتراطات: ", options:{ bold:true } },{ text:d.reason }], T({ x:0.55, y:2.4, w:12.23, h:1.4, fontSize:14, fill:{ color:SAND }, margin:12, valign:"top" }));
       [["المعتمد",d.signer||m.evaluator],["الصفة",d.signerTitle],["التوقيع",""],["التاريخ",dateBoth(m.date)]].forEach(([l,v],i)=>{ const w=2.9, x=12.78-w-i*(w+0.21);
         s.addShape(P.ShapeType.rect,{ x, y:4.2, w, h:1.4, fill:{ color:"FFFFFF" }, line:{ color:"CDBFAE", dashType:"dash", width:1 } });
@@ -1540,13 +1591,17 @@ async function exportPPTX(){
         const det=it.a?"غير موجود في المسجد":[bad?"غير جاهز: "+bad:"", s.total-s.done?`لم يُقيَّم: ${s.total-s.done}`:"", specs(it).replace(/&amp;/g,"&"), it.note?"ملاحظة: "+it.note:""].filter(Boolean).join(" — ");
         return [det, it.a?"—":String(s.n), it.a?"—":String(s.r), `${el.no}. ${el.name}`].map((t,ci)=>({ text:t, options: ci===1&&s.n ? { color:"A23E32", bold:true } : (ci===3?{ bold:true }:{}) })); });
       const sl=add(`${st.main}${st.main!==st.title?" · "+st.title:""}`);
-      sl.addTable([hdr, ...rows], { x:0.55, y:1.2, w:12.23, colW:[6.6,1.1,1.0,3.53], fontFace:F, fontSize:12, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.5 },
-        autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.2, newSlideStartY:1.2, masterName:"MAIN" });
+      sl.addTable([hdr, ...rows], { x:0.55, y:1.55, w:12.23, colW:[6.6,1.1,1.0,3.53], fontFace:F, fontSize:12, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.5 },
+        autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.55, newSlideStartY:1.55, masterName:"MAIN" });
     });
     /* end */
-    { const s=P.addSlide(); s.background={ color:DARK };
-      s.addImage({ data:LOGO, x:5.17, y:2.6, w:3.0, h:1.0, sizing:{ type:"contain", w:3.0, h:1.0 } });
-      s.addText(ORG, T({ x:2, y:4.2, w:9.333, h:0.5, fontSize:14, color:"E9D8C6", align:"center" })); }
+    { const s=P.addSlide(); s.background={ color:GOLD };
+      s.addShape(P.ShapeType.line,{ x:2.81, y:0, w:0, h:7.5, line:{ color:"000000", width:1.25 } });
+      s.addShape(P.ShapeType.line,{ x:0, y:5.62, w:13.333, h:0, line:{ color:"000000", width:1.25 } });
+      s.addImage({ data:LOGO_BK, x:0.4, y:6.15, w:2.0, h:0.9, sizing:{ type:"contain", w:2.0, h:0.9 } });
+      s.addText("شكرًا لكم", T({ x:3.4, y:1.55, w:9.0, h:1.0, fontSize:44 }));
+      s.addText(ORG, T({ x:3.4, y:2.3, w:9.0, h:0.5, fontSize:16 }));
+      s.addText("mutib.org", T({ x:3.4, y:6.2, w:9.0, h:0.5, fontSize:14 })); }
     const blob=await P.write({ outputType:"blob" });
     busy(false); state.exp.pptx=true; save();
     if(STEPS[state.step].type==="summary") render();
