@@ -288,98 +288,116 @@ pre.code{direction:ltr;text-align:left;background:#FDF3EE;border-radius:10px;pad
 .cv-code{display:inline-block;margin-top:14px;background:#E8985F;color:#141110;font-weight:700;font-size:15px;border-radius:8px;padding:4px 14px;direction:ltr}
 .cv-band{height:10px;background:#E8985F}
 .cv-body{padding:30px 56px 0}
-/* ============ SLIDES (PDF 16:9) — Mutib Foundation brand ============ */
-.sl{width:1280px;height:720px;position:relative;overflow:hidden;background:#fff;font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;direction:rtl;color:#000;font-size:16px;line-height:1.65;font-weight:300;margin-bottom:20px}
-.sl-measure{font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;direction:rtl;color:#000;font-size:16px;line-height:1.65;font-weight:300}
-.sl b,.sl-measure b{font-weight:500}
-.sl-hd{position:absolute;top:46px;right:72px;left:72px}
-.sl-hd .t{font-size:36px;font-weight:300;color:#FFA369;line-height:1.3}
-.sl-hd .t small{display:block;font-size:14px;color:#000;font-weight:400;margin-top:6px}
-.sl-bd{position:absolute;top:150px;left:72px;right:72px;bottom:86px}
-.sl-ft{position:absolute;left:72px;right:72px;bottom:24px;height:40px;border-top:1px solid #000;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#000}
-.sl-ft img{height:22px}
-.sl-ft .pn{display:flex;align-items:center;gap:18px}
+/* ============ SLIDES (PDF 16:9) — brand × committee report ============ */
+.sl{width:1280px;height:720px;position:relative;overflow:hidden;background:#fff;font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;direction:rtl;color:#1E1E1E;font-size:16px;line-height:1.7;font-weight:400;margin-bottom:20px}
+.sl-measure{font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;direction:rtl;color:#1E1E1E;font-size:16px;line-height:1.7;font-weight:400}
+.sl b,.sl-measure b{font-weight:600}
+.sl-hd{position:absolute;top:34px;right:64px;left:64px;display:flex;align-items:baseline;gap:16px}
+.sl-hd .t{font-size:32px;font-weight:600;line-height:1.3;color:#1E1E1E}
+.sl-hd .s{font-size:14px;color:#F07E50;font-weight:500}
+.sl-bd{position:absolute;top:118px;left:64px;right:64px;bottom:62px}
+.sl-st{position:absolute;left:0;right:0;bottom:0;height:8px;background:#FFA369}
+.sl-pn{position:absolute;left:64px;bottom:22px;font-size:12px;color:#8A8A8A}
+.sl-og{position:absolute;right:64px;bottom:22px;font-size:11px;color:#8A8A8A}
 .sl-blk{padding-bottom:14px}
 .ln-v{position:absolute;top:0;bottom:0;width:1.5px;background:#000}
-.ln-h{position:absolute;left:0;right:0;height:1.5px;background:#000}
 /* cover */
-.bc{background:#FFA369}
-.bc-t{position:absolute;top:96px;right:84px;left:330px}
-.bc-t .k{font-size:22px;font-weight:400}
-.bc-t .t{font-size:64px;font-weight:300;line-height:1.25;margin-top:4px}
-.bc-t .m{font-size:30px;font-weight:400;margin-top:18px;line-height:1.4}
-.bc-t .c{display:inline-block;margin-top:14px;border:1.5px solid #000;font-weight:500;font-size:18px;padding:2px 16px;direction:ltr}
-.bc-d{position:absolute;bottom:56px;right:84px;font-size:17px;font-weight:400;line-height:1.7}
-.bc-logo{position:absolute;left:0;width:270px;bottom:0;height:180px;display:flex;align-items:center;justify-content:center}
-.bc-logo img{height:86px}
-.bc-org{position:absolute;left:0;width:270px;top:70px;text-align:center;font-size:13px;font-weight:400;line-height:1.7}
-/* data slide */
-.sdat{border-top:1.5px solid #000;border-bottom:1.5px solid #000}
-.sdat .r{display:flex;align-items:center;min-height:48px;border-bottom:1px solid rgba(0,0,0,.18);font-size:19px}
-.sdat .r:last-child{border-bottom:none}
-.sdat .r span{flex:none;width:250px;font-size:15px;font-weight:500;color:#000}
-.sdat .r b{font-weight:400}
-.sl-dec{padding:14px 20px;font-size:22px;font-weight:500;text-align:center}
-.d-ready{background:#33B28A;color:#fff}.d-cond{background:#FDB940;color:#000}.d-not{background:#000;color:#fff}.d-none{background:#E6E6E6;color:#000}
-.bqr{display:flex;align-items:center;gap:16px;background:#FEE7D9;padding:10px 18px}
-.bqr img{width:92px;height:92px;image-rendering:pixelated;background:#fff}
-.bqr b{display:block;font-size:14px}.bqr span{font-size:12px}
+.cv-band{position:absolute;top:0;left:0;right:0;height:300px;background:linear-gradient(90deg,#FEE7D9 0%,#FFC199 45%,#FFA369 100%)}
+.cv-frame{position:absolute;left:330px;top:110px;right:64px;bottom:96px;background:#fff;border-top-left-radius:84px}
+.cv-ph{position:absolute;left:64px;top:160px;width:600px;height:360px;background-size:cover;background-position:center;background-color:#FEE7D9}
+.cv-teal{position:absolute;left:64px;top:520px;width:600px;height:128px;background:#33B28A;color:#fff;padding:14px 30px 0;display:flex;align-items:center;gap:24px}
+.cv-teal .n{font-size:86px;font-weight:600;line-height:1;direction:ltr}
+.cv-teal .l{font-size:15px;line-height:1.6}
+.cv-teal .l b{display:block;font-size:20px;font-weight:600}
+.cv-txt{position:absolute;left:700px;top:156px;right:108px}
+.cv-txt .k{color:#33B28A;font-weight:600;font-size:17px}
+.cv-txt .t{font-size:46px;font-weight:600;line-height:1.3;margin-top:4px}
+.cv-txt .m{font-size:24px;line-height:1.5;margin-top:16px}
+.cv-txt .c{display:inline-block;margin-top:14px;border:1.5px solid #000;font-weight:600;font-size:16px;padding:1px 14px;direction:ltr}
+.cv-txt .d{font-size:15px;color:#555;margin-top:16px;line-height:1.7}
+.cv-logo{position:absolute;left:700px;bottom:118px}
+.cv-logo img{height:64px}
+.cv-lines{position:absolute;left:64px;top:160px;width:600px;height:360px;background:#FEE7D9}
+.cv-lines i{position:absolute;top:0;bottom:0;width:1.5px;background:#000}
+/* info slide */
+.in-wrap{display:flex;gap:40px;height:100%}
+.in-side{flex:none;width:290px}
+.in-side .h{font-size:44px;font-weight:600;line-height:1.35}
+.in-side .s{font-size:15px;color:#F07E50;margin-top:8px}
+.in-main{flex:1;min-width:0}
+.in-tiles{display:flex}
+.in-tiles > div{flex:1;text-align:center}
+.in-tiles .ic{height:96px;display:flex;align-items:center;justify-content:center}
+.in-tiles .ic img{width:42px;height:42px}
+.in-tiles .l{color:#F07E50;font-size:14px;margin-top:10px;font-weight:500}
+.in-tiles .v{font-size:15px;line-height:1.6;margin-top:4px;padding:0 8px;min-height:50px}
+.in-tiles .u{height:5px;margin-top:8px}
+.kv{width:100%;border-collapse:collapse;font-size:15.5px;margin-top:18px}
+.kv td{padding:8px 16px;border-bottom:1px solid #EDEDED}
+.kv td.k{background:#FEE7D9;color:#E0703A;width:190px;font-weight:500}
+.in-dec{margin-top:26px;padding:16px 18px;font-size:19px;font-weight:600;text-align:center}
+.in-qr{display:flex;align-items:center;gap:14px;margin-top:14px;background:#FEE7D9;padding:10px 14px}
+.in-qr img{width:84px;height:84px;image-rendering:pixelated;background:#fff}
+.in-qr b{display:block;font-size:13px}.in-qr span{font-size:11.5px;color:#555}
+.d-ready{background:#33B28A;color:#fff}.d-cond{background:#FDB940;color:#1E1E1E}.d-not{background:#1E1E1E;color:#fff}.d-none{background:#E6E6E6;color:#1E1E1E}
 /* summary */
-.sls{display:flex;gap:28px;height:100%}
-.sls-k{flex:none;width:400px;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
-.sk{background:#FEE7D9;padding:16px 18px}
-.sk .v{font-size:40px;font-weight:500;line-height:1.1}
-.sk .l{font-size:13px;margin-top:4px;font-weight:400}
-.sk.or{background:#FFA369}
-.sk.wide{grid-column:1/-1;padding:0;background:none}
-.sls-t{flex:1;min-width:0}
-.st{border-top:1.5px solid #000;border-bottom:1.5px solid #000}
-.st-r{display:flex;align-items:center;min-height:43px;border-bottom:1px solid rgba(0,0,0,.15);font-size:15px}
-.st-r:last-child{border-bottom:none}
-.st-r.h{font-weight:500;font-size:13.5px;border-bottom:1.5px solid #000;min-height:40px}
-.st-r.tot{font-weight:500;background:#FEE7D9}
-.st-r > div{padding:4px 10px}
-.st-r .c1{flex:2.2;font-weight:400}.st-r .cn{flex:1;text-align:center}
-.st-r .cb{flex:2.4;display:flex;align-items:center;gap:10px}
-.sbar{flex:1;height:8px;background:#FEE7D9;overflow:hidden}.sbar i{display:block;height:100%}
+.tiles{display:flex;gap:0}
+.tiles > div{flex:1;text-align:center}
+.tiles .n{height:92px;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:600;color:#fff}
+.tiles .l{font-size:14px;padding:8px 6px 0;line-height:1.5}
+table.ct{width:100%;border-collapse:collapse;font-size:15px;margin-top:20px}
+.ct th{color:#fff;font-weight:600;text-align:right;padding:8px 14px;font-size:14px}
+.ct th.g{background:#FEE7D9;color:#E0703A}
+.ct td{padding:6px 14px}
+.ct tr:nth-child(even) td{background:#F6F6F6}
+.ct tr.tot td{background:#FEE7D9;font-weight:600}
+.cbar{display:flex;align-items:center;gap:10px}
+.cbar span{flex:1;height:8px;background:#FEE7D9;display:block;overflow:hidden}.cbar span i{display:block;height:100%}
+.cbar b{width:48px}
 /* findings */
-.sf{border-top:1px solid #000;padding:12px 0 2px}
-.sf .fh{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.sf .fh b{font-size:20px;font-weight:500}
-.sf .where{font-size:13.5px;color:#555}
-.sf ul{margin:6px 0 0;padding:0;list-style:none;font-size:17px}
-.sf li:before{content:"— ";color:#FFA369;font-weight:500}
-.sf .nt{font-size:15px;background:#FEE7D9;padding:6px 12px;margin-top:6px}
-.sf .sp{font-size:14px;font-weight:500;margin-top:4px}
-.tg{font-size:13px;font-weight:500;padding:1px 12px}
+.fbar{color:#fff;font-weight:600;font-size:17px;text-align:center;padding:9px 16px}
+.fi{display:flex;gap:14px;padding:6px 4px;font-size:16.5px;line-height:1.85}
+.fi > i{flex:none;font-style:normal;font-weight:700;width:26px;text-align:left;color:#E0703A}
+.fi > div{flex:1;min-width:0}
+.fi .w{color:#777;font-size:13.5px}
+.fi .im{font-weight:700}
+.fi .nt{background:#FEE7D9;padding:4px 12px;margin-top:4px;font-size:15px}
+.fi .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.fi .tags span{background:#F2F2F2;padding:0 10px;font-size:13px;line-height:2}
 /* photos */
-.sp-grid{display:flex;gap:22px;height:100%}
-.sp-grid > div{flex:1;min-width:0;display:flex;flex-direction:column}
-.sp-grid .im{flex:1;background-size:cover;background-position:center;background-color:#FEE7D9}
-.sp-grid .cap{font-size:14px;line-height:1.6;padding:10px 0 0;min-height:66px;border-bottom:1px solid #000}
-.sp-grid .cap b{color:#FFA369;margin-left:6px;font-weight:500}
+.ph3{display:flex;gap:22px;height:100%}
+.ph3 > div{flex:1;min-width:0;display:flex;flex-direction:column}
+.ph3 .im{flex:1;background-size:cover;background-position:center;background-color:#F2F2F2}
+.ph3 .cap{background:#FEE7D9;padding:10px 14px;font-size:14px;line-height:1.7;min-height:74px}
+.ph3 .cap b{color:#E0703A;margin-left:6px}
 /* decision */
-.sd-reason{margin-top:18px;background:#FEE7D9;padding:16px 22px;font-size:17px;line-height:1.9}
-.sd-sign{display:flex;gap:16px;margin-top:24px}
-.sd-sign div{flex:1;border-top:1.5px solid #000;padding:10px 4px;min-height:110px;font-size:16px;font-weight:400}
-.sd-sign span{display:block;font-size:12.5px;color:#555;margin-bottom:6px}
+.dec-big{padding:26px 30px}
+.dec-big span{display:block;font-size:15px;opacity:.9}
+.dec-big b{display:block;font-size:34px;font-weight:600;line-height:1.4}
+.cream{background:#FFF6F0;padding:18px 26px;font-size:17px;line-height:2;margin-top:18px}
 /* appendix */
-.sa-row{display:flex;gap:16px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.15);align-items:flex-start}
-.sa-row .no{flex:none;width:34px;height:30px;border:1.5px solid #000;font-size:14px;font-weight:500;text-align:center;line-height:27px}
-.sa-row .nm{flex:none;width:300px;font-weight:500;font-size:17px;line-height:1.45}
-.sa-row .nm small{display:block;font-weight:300;color:#444;font-size:13px}
-.sa-row .cr{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:7px}
-.sl .ck,.sl-measure .ck{font-size:14px;padding:1px 10px;border-radius:0;font-weight:400;background:#F5F5F5;color:#777}
+table.at{width:100%;border-collapse:collapse;font-size:15px}
+.at th{color:#fff;font-weight:600;text-align:right;padding:8px 12px;font-size:14px}
+.at th.g{background:#FEE7D9;color:#E0703A}
+.at td{padding:9px 12px;vertical-align:top}
+.at tr:nth-child(even) td{background:#F6F6F6}
+.at .no{font-weight:700;color:#E0703A;width:40px}
+.at .nm{font-weight:600;width:270px;font-size:16px;line-height:1.5}
+.at .nm small{display:block;font-weight:400;color:#666;font-size:12.5px}
+.at .cr{display:flex;flex-wrap:wrap;gap:6px}
+.sl .ck,.sl-measure .ck{font-size:13.5px;padding:1px 10px;border-radius:0;font-weight:400;background:#F0F0F0;color:#777}
 .sl .ck.r,.sl-measure .ck.r{background:#E2F5EE;color:#137A5B}
-.sl .ck.n,.sl-measure .ck.n{background:#FFA369;color:#000;font-weight:500}
-.sl .ck.x,.sl-measure .ck.x{background:#F0F0F0;color:#777}
-.sa-stat{display:inline-block;margin-right:16px;font-size:14px;font-weight:500;color:#000;background:#FEE7D9;padding:1px 12px;vertical-align:middle}
+.sl .ck.n,.sl-measure .ck.n{background:#FFA369;color:#1E1E1E;font-weight:600}
+.sl .ck.x,.sl-measure .ck.x{background:#EEEEEE;color:#888}
+.badge{display:inline-block;font-size:13.5px;font-weight:600;background:#FEE7D9;color:#E0703A;padding:1px 12px}
 /* divider */
-.dv-num{position:absolute;right:70px;bottom:40px;height:300px}
-.dv-t{position:absolute;top:70px;right:84px;font-size:46px;font-weight:300;line-height:1.3}
-.dv-ph{position:absolute;top:0;left:0;right:0;height:500px;background-size:cover;background-position:center}
-.dv-logo{position:absolute;left:0;width:270px;bottom:0;height:220px;display:flex;align-items:center;justify-content:center}
-.dv-logo img{height:76px}
+.dv-r{position:absolute;top:0;left:390px;width:500px;height:460px;background:rgba(255,255,255,.16)}
+.dv-n{position:absolute;top:96px;left:390px;width:500px;text-align:center;font-size:20px;font-weight:600;color:#fff;letter-spacing:2px;direction:ltr}
+.dv-t{position:absolute;top:150px;left:390px;width:500px;text-align:center;color:#fff;font-size:44px;font-weight:600;line-height:1.5}
+.dv-ph{position:absolute;left:0;right:0;bottom:0;height:260px;background-size:cover;background-position:center}
+/* end */
+.sle{background:#0F0F0F}
+.sle img{position:absolute;top:50%;left:50%;width:260px;transform:translate(-50%,-50%)}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1353,120 +1371,123 @@ function coverHTML(){
     ${qr?`<div class="rp-qr"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الباركود بكاميرا الجوال لفتح الموقع على خرائط Google</span></div></div>`:""}
     </div><div class="rp-foot"><span>${ORG}</span><span>وفق عناصر برنامج طومان للمسجد · رقم التقييم ${esc(state.id)}</span></div></div>`;
 }
-/* ---------------- SLIDES (PDF 16:9 + PowerPoint) — Mutib Foundation brand ---------------- */
-const SLW=1280, SLH=720, SL_BODY=720-150-86-6;
-const BR={ or:"#FFA369", gl:"#FEE7D9", bk:"#000000", ye:"#FDB940", gr:"#69BE5C", te:"#33B28A" };
-const SIMP={ b:{bg:"#000000",fg:"#FFFFFF"}, u:{bg:"#FFA369",fg:"#000000"}, l:{bg:"#FDB940",fg:"#000000"}, none:{bg:"#D9D9D9",fg:"#000000"} };
+/* ---------------- SLIDES (PDF 16:9 + PowerPoint) — brand × committee report ---------------- */
+const SLW=1280, SLH=720, SL_BODY=720-118-62-8;
+const BR={ or:"#FFA369", gl:"#FEE7D9", bk:"#1E1E1E", ye:"#FDB940", gr:"#69BE5C", te:"#33B28A", od:"#E0703A" };
+const SIMP={ b:{bg:"#1E1E1E",fg:"#FFFFFF"}, u:{bg:"#FFA369",fg:"#FFFFFF"}, l:{bg:"#FDB940",fg:"#1E1E1E"}, none:{bg:"#BDBDBD",fg:"#1E1E1E"} };
+const SIMPC={ b:"#1E1E1E", u:"#E0703A", l:"#C98A0B", none:"#888" };
+const ORDS=["أولًا","ثانيًا","ثالثًا","رابعًا"];
 function brBar(p){ return p==null ? "#D9D9D9" : p>=90 ? BR.te : p>=70 ? BR.ye : BR.or; }
-let LOGO_BK="";
+let LOGO_BK="", ICON_PNG={};
+const svgI = p => "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#1E1E1E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`);
+const ICONS = {
+  pin: svgI('<path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.6"/>'),
+  cal: svgI('<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M8.5 13.5v3M12 13.5v3M15.5 13.5v3"/>'),
+  ppl: svgI('<circle cx="9" cy="8" r="3.4"/><path d="M2.8 20c.6-3.6 3.2-5.6 6.2-5.6s5.6 2 6.2 5.6z"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.3M17.4 14.6c2.2.5 3.6 2.4 3.9 5.4h-3.2"/>'),
+  bld: svgI('<path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9.5 21v-5h5v5M9 11.5h1.5M13.5 11.5H15"/>'),
+};
 async function tintImg(src,color){
   return new Promise(res=>{ const im=new Image(); im.onload=()=>{ const c=document.createElement("canvas"); c.width=im.naturalWidth; c.height=im.naturalHeight; const g=c.getContext("2d"); g.drawImage(im,0,0);
       try{ const d=g.getImageData(0,0,c.width,c.height), px=d.data; for(let i=3;i<px.length;i+=4){ px[i]=px[i]<70?0:Math.min(255,(px[i]-70)*1.4); } g.putImageData(d,0,0); }catch(e){}
       g.globalCompositeOperation="source-in"; g.fillStyle=color; g.fillRect(0,0,c.width,c.height); res(c.toDataURL("image/png")); }; im.onerror=()=>res(src); im.src=src; });
 }
-function outlineNum(txt){
-  const c=document.createElement("canvas"); c.width=1100; c.height=560; const g=c.getContext("2d");
-  g.font='300 470px "IBM Plex Sans","IBM Plex Sans Arabic",Arial'; g.textBaseline="alphabetic"; g.lineWidth=3.5; g.strokeStyle="#000"; g.textAlign="right";
-  g.strokeText(txt, c.width-10, c.height-40); return c.toDataURL("image/png");
+async function rasterIcons(){
+  if(ICON_PNG.pin) return; const out={};
+  for(const [k,src] of Object.entries(ICONS)) out[k]=await new Promise(res=>{ const im=new Image(); im.onload=()=>{ const c=document.createElement("canvas"); c.width=c.height=128; c.getContext("2d").drawImage(im,0,0,128,128); res(c.toDataURL("image/png")); }; im.onerror=()=>res(src); im.src=src; });
+  ICON_PNG=out;
 }
-async function prepBrand(){ if(!LOGO_BK) LOGO_BK=await tintImg(LOGO,"#000"); }
-function slHead(title){ const info=mosqueInfo(); return `<div class="sl-hd"><div class="t">${title}<small>${esc(info.name)}${mosqueCode()?" · "+esc(mosqueCode()):""}</small></div></div>`; }
-function slFoot(n,total){ return `<div class="sl-ft"><img src="${LOGO_BK}"><div class="pn"><span>${ORG}</span><b>${n}</b></div></div>`; }
+async function prepBrand(){ if(!LOGO_BK) LOGO_BK=await tintImg(LOGO,"#000"); await rasterIcons(); }
+function slHead(title){ const info=mosqueInfo(); return `<div class="sl-hd"><div class="t">${title}</div><div class="s">${esc(info.name)}${mosqueCode()?" · "+esc(mosqueCode()):""}</div></div>`; }
+function slFoot(n){ return `<div class="sl-st"></div><div class="sl-pn">${n}</div><div class="sl-og">${ORG}</div>`; }
 function slSlide(title, body){ return { title, body }; }
 function measureH(host, htmlArr, width){
   host.innerHTML = `<div class="sl-measure" style="width:${width}px">${htmlArr.map(h=>`<div class="sl-blk">${h}</div>`).join("")}</div>`;
   return [...host.firstChild.children].map(n=>n.getBoundingClientRect().height);
 }
-function findingCard(el, g){
-  const it=peek(el.k);
-  const bad=el.crit.map((c,i)=>{ const v=it.c[i]; return v&&v.s==="n" ? `<li>${esc(c)} <b>(${IMPACT[v.i||"none"].label})</b></li>` : ""; }).join("");
-  return `<div class="sf"><div class="fh"><span class="tg" style="background:${SIMP[g].bg};color:${SIMP[g].fg}">${IMPACT[g].short}</span><b>${esc(el.no)}. ${esc(el.name)}</b><span class="where">${esc(el.main)} › ${esc(el.title)}</span></div>
-    <ul>${bad}</ul>${specs(it)?`<div class="sp">${specs(it)}</div>`:""}${it.note?`<div class="nt">${esc(it.note)}</div>`:""}</div>`;
+function paginateKeep(blocks, hs){
+  const pages=[]; let cur=[], h=0;
+  blocks.forEach((b,i)=>{
+    if(h+hs[i]>SL_BODY && cur.length){ let carry=[]; while(cur.length && blocks[cur[cur.length-1]].keep) carry.unshift(cur.pop()); if(!cur.length){ cur=carry; carry=[]; } pages.push(cur); cur=carry; h=carry.reduce((s,j)=>s+hs[j],0); }
+    cur.push(i); h+=hs[i];
+  });
+  if(cur.length) pages.push(cur);
+  return pages;
 }
 function divider(num, title, color, photo){
-  return { raw: photo
-    ? `<div class="sl" style="background:${color}"><div class="dv-ph" style="background-image:url('${photo}')"></div><div class="ln-h" style="top:500px"></div><div class="ln-v" style="left:270px;top:500px"></div>
-        <div style="position:absolute;top:524px;right:84px;font-size:44px;font-weight:300;line-height:1.3">${title}</div><div style="position:absolute;bottom:40px;right:84px;font-size:22px;font-weight:500;direction:ltr">${num}</div>
-        <div class="dv-logo"><img src="${LOGO_BK}"></div></div>`
-    : `<div class="sl" style="background:${color}"><div class="ln-v" style="left:120px"></div><div class="ln-v" style="left:170px"></div><div class="ln-v" style="left:220px"></div><div class="ln-v" style="left:270px"></div>
-        <div class="dv-t">${title}</div><img class="dv-num" src="${outlineNum(num)}"></div>` };
+  return { raw:`<div class="sl" style="background:${color}"><div class="dv-r"></div><div class="dv-n">${num}</div><div class="dv-t">${title}</div>${photo?`<div class="dv-ph" style="background-image:url('${photo}')"></div>`:""}<div class="sl-st" style="background:#1E1E1E;opacity:.15"></div></div>` };
 }
 function buildSlides(host){
   const { per, tot, findings } = computeAll(), d=state.decision, m=state.meta, info=mosqueInfo();
   const S=[]; const decCls=d.value?DECISIONS[d.value].cls:"d-none", decTxt=d.value?DECISIONS[d.value].label:"لم يُعتمد القرار بعد (مسودة)";
-  const meta=[["المدينة / المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" — ")],["الحي / الموقع",m.district],["تاريخ التقييم",dateBoth(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor]];
-  const qr=qrData(mapLink()), cp=m.coverPhoto;
-  /* cover */
-  const covTitle=`<div class="k">تقرير تقييم</div><div class="t">جاهزية المسجد</div>`;
-  S.push({ raw: cp
-    ? `<div class="sl bc"><div style="position:absolute;top:0;right:0;left:270px;height:430px;background:url('${cp}') center/cover"></div>
-        <div class="ln-v" style="left:270px"></div><div class="ln-h" style="top:430px"></div>
-        <div style="position:absolute;top:456px;right:84px;left:330px"><div style="font-size:46px;font-weight:300;line-height:1.25">تقرير تقييم جاهزية المسجد</div><div style="font-size:26px;font-weight:400;margin-top:10px">${esc(info.name)}</div>${mosqueCode()?`<div style="display:inline-block;margin-top:12px;border:1.5px solid #000;font-weight:500;font-size:16px;padding:1px 14px;direction:ltr">${esc(mosqueCode())}</div>`:""}</div>
-        <div class="bc-org" style="top:60px">${esc(dateBoth(m.date)).replace(" — ","<br>")}</div>
-        <div class="bc-logo"><img src="${LOGO_BK}"></div></div>`
-    : `<div class="sl bc"><div class="ln-v" style="left:270px"></div><div class="ln-h" style="top:540px"></div>
-        <div class="bc-t">${covTitle}<div class="m">${esc(info.name)}</div>${mosqueCode()?`<div class="c">${esc(mosqueCode())}</div>`:""}</div>
-        <div class="bc-d">${esc(dateBoth(m.date))}<br>مساجد الأمير متعب بن عبدالعزيز -رحمه الله-</div>
-        <div class="bc-logo"><img src="${LOGO_BK}"></div></div>` });
-  /* data slide */
-  S.push(slSlide("بيانات المسجد والتقييم", `<div class="sdat">${meta.map(([l,v])=>`<div class="r"><span>${l}</span><b>${esc(v||"—")}</b></div>`).join("")}</div>
-    <div style="display:flex;gap:20px;align-items:stretch;margin-top:18px"><div class="sl-dec ${decCls}" style="flex:1;display:flex;align-items:center;justify-content:center;font-size:24px">${decTxt}</div>
-    ${qr?`<div class="bqr"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الباركود لفتح الموقع<br>على خرائط Google</span></div></div>`:""}</div>`));
-  /* summary */
-  S.push(slSlide("ملخص النتائج", `<div class="sls"><div class="sls-k">
-      <div class="sk or"><div class="v">${tot.readiness==null?"—":tot.readiness+"%"}</div><div class="l">نسبة الجاهزية</div></div>
-      <div class="sk"><div class="v">${tot.completion||0}%</div><div class="l">اكتمال التقييم (${tot.done}/${tot.total})</div></div>
-      <div class="sk"><div class="v">${tot.b}</div><div class="l">بنود تمنع الافتتاح</div></div>
-      <div class="sk"><div class="v">${tot.u} <span style="font-size:22px;font-weight:300">/ ${tot.l}</span></div><div class="l">عاجل / تحسين لاحق</div></div>
-      <div class="sk wide"><div class="sl-dec ${decCls}">${decTxt}</div></div></div>
-    <div class="sls-t"><div class="st"><div class="st-r h"><div class="c1">القسم</div><div class="cn">المُقيَّم</div><div class="cn">غير جاهز</div><div class="cn">مانع</div><div class="cb">نسبة الجاهزية</div></div>
-      ${per.map(p=>`<div class="st-r"><div class="c1">${esc(p.main)}</div><div class="cn">${p.done}/${p.total}</div><div class="cn">${p.n}</div><div class="cn" style="${p.b?"font-weight:600":""}">${p.b}</div><div class="cb"><div class="sbar"><i style="width:${p.readiness||0}%;background:${brBar(p.readiness)}"></i></div><b style="width:48px">${p.readiness==null?"—":p.readiness+"%"}</b></div></div>`).join("")}
-      <div class="st-r tot"><div class="c1">الإجمالي</div><div class="cn">${tot.done}/${tot.total}</div><div class="cn">${tot.n}</div><div class="cn">${tot.b}</div><div class="cb"><b>${tot.readiness==null?"—":tot.readiness+"%"}</b></div></div></div></div></div>`));
-  /* photos list (used by dividers too) */
+  const qr=qrData(mapLink());
   const phs=[]; STEPS.forEach(st=>{ if(st.type!=="page") return; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>phs.push({p,el,it})); }); });
+  const cp=m.coverPhoto || (phs[0]&&phs[0].p) || "";
+  const place=[m.district, info.city].filter(Boolean).join(" – ");
+  /* cover */
+  S.push({ raw:`<div class="sl"><div class="cv-band"></div><div class="cv-frame"></div>
+    ${cp?`<div class="cv-ph" style="background-image:url('${cp}')"></div>`:`<div class="cv-lines"><i style="left:120px"></i><i style="left:170px"></i><i style="left:220px"></i><i style="left:270px"></i></div>`}
+    <div class="cv-teal"><div class="n">${tot.readiness==null?"—":tot.readiness+"%"}</div><div class="l"><b>نسبة الجاهزية</b>${decTxt}</div></div>
+    <div class="cv-txt"><div class="k">تقرير تقييم</div><div class="t">جاهزية المسجد</div><div class="m">${esc(info.name)}</div>${mosqueCode()?`<div class="c">${esc(mosqueCode())}</div>`:""}<div class="d">${esc(dateBoth(m.date))}</div></div>
+    <div class="cv-logo"><img src="${LOGO_BK}"></div><div class="sl-st"></div></div>` });
+  /* basic information */
+  const IC=ICON_PNG.pin?ICON_PNG:ICONS;
+  const tiles=[[BR.or,IC.pin,"الموقع",esc(place||"—")],[BR.ye,IC.cal,"تاريخ التقييم",`${esc(m.date)} م<br>${esc(hijri(m.date))}`],[BR.te,IC.ppl,"المقيّم",esc(m.evaluator||"—")],[BR.gl,IC.bld,"المقاول المنفّذ",esc(m.contractor||"—")]];
+  const kv=[["المسجد",info.name],["رمز المسجد",mosqueCode()],["المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" – ")],["جهة المقيّم",m.evaluatorOrg],["الاستشاري / المشرف",m.supervisor]].filter(x=>x[1]);
+  S.push({ title:"", body:"", raw2:`<div class="in-wrap"><div class="in-side"><div class="h">المعلومات<br>الأساسية</div><div class="s">${esc(info.name)}</div>
+      <div class="in-dec ${decCls}">${decTxt}</div>
+      ${qr?`<div class="in-qr"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الباركود لفتح الموقع على خرائط Google</span></div></div>`:""}</div>
+    <div class="in-main"><div class="in-tiles">${tiles.map(([c,ic,l,v])=>`<div><div class="ic" style="background:${c}"><img src="${ic}"></div><div class="l">${l}</div><div class="v">${v}</div><div class="u" style="background:${c}"></div></div>`).join("")}</div>
+      <table class="kv">${kv.map(([k,v])=>`<tr><td class="k">${k}</td><td>${esc(v)}</td></tr>`).join("")}</table></div></div>` });
+  /* summary */
+  S.push(slSlide("ملخص النتائج", `<div class="tiles">${[[BR.te,tot.readiness==null?"—":tot.readiness+"%","نسبة الجاهزية"],[BR.or,(tot.completion||0)+"%",`اكتمال التقييم (${tot.done}/${tot.total})`],[BR.bk,tot.b,"بنود تمنع الافتتاح"],[BR.ye,tot.u,"عاجل بعد الافتتاح"],[BR.gl,tot.l,"تحسين لاحق"]].map(([c,n,l],i)=>`<div><div class="n" style="background:${c};${i===4?"color:"+BR.od:i===3?"color:#1E1E1E":""}">${n}</div><div class="l">${l}</div></div>`).join("")}</div>
+    <table class="ct"><tr><th style="background:${BR.or}">القسم</th><th class="g">المُقيَّم</th><th class="g">غير جاهز</th><th class="g">يمنع الافتتاح</th><th style="background:${BR.ye};color:#1E1E1E;width:250px">نسبة الجاهزية</th></tr>
+      ${per.map(p=>`<tr><td>${esc(p.main)}</td><td>${p.done} / ${p.total}</td><td>${p.n}</td><td style="${p.b?"font-weight:700":""}">${p.b}</td><td><div class="cbar"><span><i style="width:${p.readiness||0}%;background:${brBar(p.readiness)}"></i></span><b>${p.readiness==null?"—":p.readiness+"%"}</b></div></td></tr>`).join("")}
+      <tr class="tot"><td>الإجمالي</td><td>${tot.done} / ${tot.total}</td><td>${tot.n}</td><td>${tot.b}</td><td>${tot.readiness==null?"—":tot.readiness+"%"}</td></tr></table>`));
   let secN=0; const nn=()=>String(++secN).padStart(2,"0");
   /* findings */
-  S.push(divider(nn(), "الملاحظات", BR.or, null));
+  S.push(divider(nn(), "الملاحظات<br>والبنود غير الجاهزة", BR.or, phs[1]?phs[1].p:(phs[0]?phs[0].p:"")));
+  const fb=[]; let gi=0;
   ["b","u","l","none"].forEach(g=>{
     const list=findings.filter(f=>f.s.sev===g); if(!list.length) return;
-    const cards=list.map(({el})=>findingCard(el,g)), hs=measureH(host, cards, 1136);
-    let cur=[], h=0; const pages=[];
-    cards.forEach((c,i)=>{ if(h+hs[i]>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=0; } cur.push(c); h+=hs[i]; });
-    if(cur.length) pages.push(cur);
-    pages.forEach((pc,pi)=>S.push(slSlide(`${IMPACT[g].label} (${list.length})${pages.length>1?` — ${pi+1}/${pages.length}`:""}`,
-      pc.map(c=>`<div class="sl-blk">${c}</div>`).join(""))));
+    fb.push({ html:`<div class="fbar" style="background:${SIMP[g].bg};color:${SIMP[g].fg}">${ORDS[gi++]||""}: ${g==="b"?"البنود التي تمنع الافتتاح":IMPACT[g].label} (${list.length})</div>`, keep:true });
+    list.forEach(({el},ii)=>{ const it=peek(el.k);
+      const bad=el.crit.map((c,i)=>{ const v=it.c[i]; return v&&v.s==="n" ? `${esc(c)} <span class="im" style="color:${SIMPC[v.i||"none"]}">(${IMPACT[v.i||"none"].label})</span>` : ""; }).filter(Boolean).join("، ");
+      const sp=specs(it);
+      fb.push({ html:`<div class="fi"><i>${ii+1}.</i><div><b>${esc(el.name)}</b> <span class="w">— ${esc(el.main)} › ${esc(el.title)}</span><div>${bad}</div>${it.note?`<div class="nt">${esc(it.note)}</div>`:""}${sp?`<div class="tags"><span>${sp.split(" · ").join("</span><span>")}</span></div>`:""}</div></div>` });
+    });
   });
-  if(!findings.length) S.push(slSlide("الملاحظات", `<div class="sd-reason">لم تُرصد بنود غير جاهزة في هذا التقييم.</div>`));
-  /* photos: 3 per slide */
+  if(fb.length){ const hs=measureH(host, fb.map(b=>b.html), 1152); paginateKeep(fb,hs).forEach((pg,pi,arr)=>S.push(slSlide(`الملاحظات${arr.length>1?` (${pi+1}/${arr.length})`:""}`, pg.map(i=>`<div class="sl-blk">${fb[i].html}</div>`).join("")))); }
+  else S.push(slSlide("الملاحظات", `<div class="cream">لم تُرصد بنود غير جاهزة في هذا التقييم.</div>`));
+  /* photos */
   if(phs.length){
-    S.push(divider(nn(), "الشواهد المصوّرة", BR.ye, phs[0].p));
+    S.push(divider(nn(), "الشواهد<br>المصوّرة", BR.ye, phs[2]?phs[2].p:phs[0].p));
     for(let i=0;i<phs.length;i+=3){
       const grp=phs.slice(i,i+3);
-      S.push(slSlide(`الشواهد المصوّرة${phs.length>3?` — ${Math.floor(i/3)+1}/${Math.ceil(phs.length/3)}`:""}`, `<div class="sp-grid">${grp.map((x,j)=>`<div><div class="im" style="background-image:url('${x.p}')"></div><div class="cap"><b>صورة (${i+j+1})</b>${esc(x.el.no)}. ${esc(x.el.name)} — ${esc(x.el.main)}${x.it.note?`<br><span style="color:#555">${esc(x.it.note)}</span>`:""}</div></div>`).join("")}${grp.length<3?"<div></div>".repeat(3-grp.length):""}</div>`));
+      S.push(slSlide(`الشواهد المصوّرة${phs.length>3?` (${Math.floor(i/3)+1}/${Math.ceil(phs.length/3)})`:""}`, `<div class="ph3">${grp.map((x,j)=>`<div><div class="im" style="background-image:url('${x.p}')"></div><div class="cap"><b>صورة (${i+j+1})</b>${esc(x.el.name)} — ${esc(x.el.main)}${x.it.note?`، ${esc(x.it.note)}`:""}</div></div>`).join("")}${grp.length<3?"<div></div>".repeat(3-grp.length):""}</div>`));
     }
   }
   /* decision */
-  S.push(slSlide("قرار الجاهزية والاعتماد", `<div class="sl-dec ${decCls}" style="font-size:32px;padding:24px;font-weight:400">${decTxt}</div>
-    ${d.reason?`<div class="sd-reason"><b>المبررات والاشتراطات:</b> ${esc(d.reason)}</div>`:""}
-    <div class="sd-sign"><div><span>المعتمد</span>${esc(d.signer||m.evaluator)}</div><div><span>الصفة</span>${esc(d.signerTitle)}</div><div><span>التوقيع</span></div><div><span>التاريخ</span>${esc(m.date)} م<br>${esc(hijri(m.date))}</div></div>`));
+  S.push(slSlide("قرار الجاهزية والاعتماد", `<div class="dec-big ${decCls}"><span>قرار الجاهزية</span><b>${decTxt}</b></div>
+    ${d.reason?`<div class="cream"><b>المبررات والاشتراطات:</b> ${esc(d.reason)}</div>`:""}
+    <table class="kv"><tr><td class="k">المعتمد</td><td>${esc(d.signer||m.evaluator)}</td></tr><tr><td class="k">الصفة</td><td>${esc(d.signerTitle)}</td></tr><tr><td class="k">التاريخ</td><td>${esc(dateBoth(m.date))}</td></tr><tr><td class="k">التوقيع</td><td style="height:60px"></td></tr></table>`));
   /* appendix */
-  S.push(divider(nn(), "التقييم التفصيلي", BR.te, null));
+  S.push(divider(nn(), "الملحق<br>التقييم التفصيلي", BR.te, phs[3]?phs[3].p:""));
   STEPS.forEach(st=>{ if(st.type!=="page") return;
     const rows=st.els.map(el=>{ const it=peek(el.k);
-      return `<div class="sa-row"><div class="no">${esc(el.no)}</div><div class="nm">${esc(el.name)}${it&&!it.a&&(it.q||it.ty||it.br)?`<small style="font-weight:500">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</div><div class="cr">${rpChips(el)}</div></div>`; });
-    const hs=measureH(host, rows, 1136);
-    const pages=[]; let cur=[], h=0;
-    rows.forEach((r,i)=>{ if(h+hs[i]>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=0; } cur.push(r); h+=hs[i]; });
+      return `<tr><td class="no">${esc(el.no)}</td><td class="nm">${esc(el.name)}${it&&!it.a&&(it.q||it.ty||it.br)?`<small style="color:${BR.od};font-weight:500">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</td><td><div class="cr">${rpChips(el)}</div></td></tr>`; });
+    const head=`<tr><th style="background:${BR.or};width:40px">#</th><th style="background:${BR.or}">العنصر</th><th class="g">بنود التقييم</th></tr>`;
+    host.innerHTML=`<div class="sl-measure" style="width:1152px"><table class="at">${head}${rows.join("")}</table></div>`;
+    const trs=[...host.querySelectorAll("tr")], hh=trs[0].getBoundingClientRect().height, hs=trs.slice(1).map(t=>t.getBoundingClientRect().height);
+    const pages=[]; let cur=[], h=hh;
+    rows.forEach((r,i)=>{ if(h+hs[i]>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=hh; } cur.push(r); h+=hs[i]; });
     if(cur.length) pages.push(cur);
     const a=agg(st.els), ttl=`${esc(st.main)}${st.main!==st.title?" · "+esc(st.title):""}`;
-    pages.forEach((pg,pi)=>S.push(slSlide(`${ttl}${pages.length>1?` (${pi+1}/${pages.length})`:""}<span class="sa-stat">${a.absent===a.els?"غير موجود":a.readiness==null?"":`الجاهزية ${a.readiness}%`}${a.n?` · غير جاهز ${a.n}`:""}</span>`, pg.map(r=>`<div class="sl-blk">${r}</div>`).join(""))));
+    pages.forEach((pg,pi)=>S.push(slSlide(`${ttl}${pages.length>1?` (${pi+1}/${pages.length})`:""} <span class="badge">${a.absent===a.els?"غير موجود":a.readiness==null?"":`الجاهزية ${a.readiness}%`}${a.n?` · غير جاهز ${a.n}`:""}</span>`, `<table class="at">${head}${pg.join("")}</table>`)));
   });
   /* end */
-  S.push({ raw:`<div class="sl bc"><div class="ln-v" style="left:270px"></div><div class="ln-h" style="top:540px"></div>
-    <div class="bc-t" style="top:120px"><div class="t" style="font-size:58px">شكرًا لكم</div><div class="m" style="font-size:22px;font-weight:300">${ORG}</div></div>
-    <div class="bc-d">mutib.org</div><div class="bc-logo"><img src="${LOGO_BK}"></div></div>` });
+  S.push({ raw:`<div class="sl sle"><img src="${LOGO}"></div>` });
   host.innerHTML="";
-  return S.map((s,i)=> s.raw ? s.raw : `<div class="sl">${slHead(s.title)}<div class="sl-bd">${s.body}</div>${slFoot(i+1,S.length)}</div>`);
+  return S.map((s,i)=> s.raw ? s.raw : s.raw2 ? `<div class="sl"><div class="sl-bd" style="top:56px">${s.raw2}</div>${slFoot(i+1)}</div>` : `<div class="sl">${slHead(s.title)}<div class="sl-bd">${s.body}</div>${slFoot(i+1)}</div>`);
 }
 async function exportPDF(){
   if(!window.html2canvas || !window.jspdf){ toast("تعذّر تحميل مكتبات التقرير — تحقق من الاتصال", true); return; }
