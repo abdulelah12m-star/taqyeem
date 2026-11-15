@@ -338,10 +338,10 @@ pre.code{direction:ltr;text-align:left;background:#FDF3EE;border-radius:10px;pad
 .fv-logo img{height:64px}
 /* per-section photo slides */
 .pbar{position:absolute;top:34px;left:64px;right:64px;background:linear-gradient(90deg,#FEE7D9,#FFA369);color:#fff;font-weight:600;font-size:18px;text-align:center;padding:9px 16px}
-.p4{position:absolute;top:100px;left:64px;right:64px;bottom:58px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:16px 22px}
-.p4 > div{display:flex;flex-direction:column;min-height:0}
-.p4 .im{flex:1;background-size:cover;background-position:center;background-color:#F2F2F2}
-.p4 .cap{background:#FFF1E9;padding:6px 14px;font-size:13.5px;line-height:1.6;min-height:46px}
+.p4{position:absolute;top:96px;left:64px;right:64px;bottom:50px;display:flex;justify-content:center;gap:30px}
+.p4 > div{flex:none;width:360px;display:flex;flex-direction:column;min-height:0}
+.p4 .im{flex:none;height:480px;background-size:cover;background-position:center;background-color:#F2F2F2}
+.p4 .cap{background:#FFF1E9;padding:6px 12px;font-size:12.5px;line-height:1.55;flex:1;max-height:84px;overflow:hidden}
 .p4 .cap b{color:#E0703A;margin-left:6px}
 /* info slide */
 .in-wrap{display:flex;gap:40px;height:100%}
@@ -1427,9 +1427,9 @@ async function prepBrand(){ if(!LOGO_BK) LOGO_BK=await tintImg(LOGO,"#000"); if(
 function greg(d){ if(!d) return ""; try{ return new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-latn",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"}).format(new Date(d+"T00:00:00Z")).replace(/\s*م$/,"")+"م"; }catch(e){ return d; } }
 function photoSlides(list, title){
   const out=[];
-  for(let i=0;i<list.length;i+=4){
-    const grp=list.slice(i,i+4), pg=list.length>4?` (${Math.floor(i/4)+1}/${Math.ceil(list.length/4)})`:"";
-    out.push({ raw3:`<div class="pbar">الشواهد المصوّرة: ${title}${pg}</div><div class="p4">${grp.map(x=>`<div><div class="im" style="background-image:url('${x.p}')"></div><div class="cap"><b>صورة (${x.n})</b>${esc(x.el.no)}. ${esc(x.el.name)}${x.it.note?` — ${esc(x.it.note)}`:""}</div></div>`).join("")}${grp.length%2?"<div></div>":""}</div>` });
+  for(let i=0;i<list.length;i+=3){
+    const grp=list.slice(i,i+3), pg=list.length>3?` (${Math.floor(i/3)+1}/${Math.ceil(list.length/3)})`:"";
+    out.push({ raw3:`<div class="pbar">الشواهد المصوّرة: ${title}${pg}</div><div class="p4">${grp.map(x=>`<div><div class="im" style="background-image:url('${x.p}')"></div><div class="cap"><b>صورة (${x.n})</b>${esc(x.el.no)}. ${esc(x.el.name)}${x.it.note?` — ${esc(x.it.note)}`:""}</div></div>`).join("")}</div>` });
   }
   return out;
 }
@@ -1644,9 +1644,9 @@ async function exportPPTX(){
     const phs=[]; STEPS.forEach(st=>{ if(st.type!=="page") return; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>phs.push({p,el,it})); }); });
     for(let i=0;i<phs.length;i+=3){
       const s=add(`الشواهد المصوّرة${phs.length>3?` — ${Math.floor(i/3)+1}/${Math.ceil(phs.length/3)}`:""}`);
-      phs.slice(i,i+3).forEach((x,j)=>{ const w=3.9, xx=12.78-w-j*(w+0.265);
-        s.addImage({ data:x.p, x:xx, y:1.55, w, h:4.3, sizing:{ type:"cover", w, h:4.3 } });
-        s.addText([{ text:`صورة (${i+j+1})  `, options:{ bold:true, color:BROWN } },{ text:`${x.el.no}. ${x.el.name} — ${x.el.main}`, options:{ breakLine:!!x.it.note } }, ...(x.it.note?[{ text:x.it.note, options:{ color:MUTED, fontSize:10 } }]:[])], T({ x:xx, y:5.95, w, h:0.9, fontSize:11, valign:"top" })); });
+      phs.slice(i,i+3).forEach((x,j)=>{ const w=3.3, xx=12.115-w-j*(w+0.5);
+        s.addImage({ data:x.p, x:xx, y:1.35, w, h:4.4, sizing:{ type:"cover", w, h:4.4 } });
+        s.addText([{ text:`صورة (${i+j+1})  `, options:{ bold:true, color:BROWN } },{ text:`${x.el.no}. ${x.el.name} — ${x.el.main}`, options:{ breakLine:!!x.it.note } }, ...(x.it.note?[{ text:x.it.note, options:{ color:MUTED, fontSize:10 } }]:[])], T({ x:xx, y:5.8, w, h:1.0, fontSize:10, valign:"top" })); });
     }
     /* decision */
     { const s=add("قرار الجاهزية والاعتماد");
@@ -1686,7 +1686,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261115073736";
+const BUILD_ID = "20261115075906";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
