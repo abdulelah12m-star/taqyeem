@@ -1505,8 +1505,9 @@ function buildSlides(host){
   /* absent elements */
   const absent=ELS.filter(el=>{ const it=peek(el.k); return it&&it.a; });
   if(absent.length){
-    const head=`<tr><th style="background:${BR.or};width:40px">#</th><th style="background:${BR.or}">العنصر</th><th class="g">القسم</th></tr>`;
-    tblRows(head, absent.map((el,i)=>`<tr><td class="no">${i+1}</td><td class="nm">${esc(el.name)}</td><td>${esc(el.main)} › ${esc(el.title)}</td></tr>`), `العناصر غير الموجودة في المسجد (${absent.length})`);
+    const head=`<tr><th style="background:${BR.or};width:230px">القسم</th><th class="g">العناصر غير الموجودة</th></tr>`;
+    const grp=[]; absent.forEach(el=>{ let g=grp.find(x=>x.m===el.main); if(!g) grp.push(g={m:el.main,l:[]}); g.l.push(el); });
+    tblRows(head, grp.map(g=>`<tr><td class="nm">${esc(g.m)}<small>${g.l.length} عنصر</small></td><td><div class="cr">${g.l.map(el=>`<span class="ck x">${esc(el.no)}. ${esc(el.name)}</span>`).join("")}</div></td></tr>`), `العناصر غير الموجودة في المسجد (${absent.length})`);
   }
   /* decision */
   S.push(slSlide("قرار الجاهزية والاعتماد", `<div class="dec-big ${decCls}"><span>قرار الجاهزية</span><b>${decTxt}</b></div>
@@ -1636,8 +1637,9 @@ async function exportPPTX(){
     /* absent elements */
     { const absent=ELS.filter(el=>{ const it=peek(el.k); return it&&it.a; });
       if(absent.length){ const s=add(`العناصر غير الموجودة في المسجد (${absent.length})`);
-        s.addTable([["القسم","العنصر","#"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } })), ...absent.map((el,i)=>[`${el.main} › ${el.title}`, el.name, String(i+1)].map(t=>({ text:t })))],
-          { x:0.55, y:1.55, w:12.23, colW:[6.0,5.43,0.8], fontFace:F, fontSize:12, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.5 }, autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.55, newSlideStartY:1.55, masterName:"MAIN" }); } }
+        const grp=[]; absent.forEach(el=>{ let g=grp.find(x=>x.m===el.main); if(!g) grp.push(g={m:el.main,l:[]}); g.l.push(el); });
+        s.addTable([["العناصر غير الموجودة","القسم"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } })), ...grp.map(g=>[g.l.map(el=>el.no+". "+el.name).join("  ·  "), `${g.m} (${g.l.length})`].map(t=>({ text:t })))],
+          { x:0.55, y:1.55, w:12.23, colW:[9.43,2.8], fontFace:F, fontSize:12, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.5 }, autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.55, newSlideStartY:1.55, masterName:"MAIN" }); } }
     /* photos */
     const phs=[]; STEPS.forEach(st=>{ if(st.type!=="page") return; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>phs.push({p,el,it})); }); });
     for(let i=0;i<phs.length;i+=3){
@@ -1684,7 +1686,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261115061802";
+const BUILD_ID = "20261115073736";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
