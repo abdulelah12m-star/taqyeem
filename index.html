@@ -1063,7 +1063,7 @@ function summaryHTML(){
     </div>
     <div class="card"><h3>الملاحظات (${findings.length} عنصر)</h3>
       ${findings.length? groups.map(({g,list})=>`<div class="grp-title"><span class="dot" style="background:${IMPACT[g].color}"></span>${IMPACT[g].label} (${list.length})</div>
-        ${list.map(({el,s})=>{ const it=peek(el.k); const bad=el.crit.filter((_,i)=>it.c[i]&&it.c[i].s==="n");
+        ${list.map(({el,s})=>{ const it=peek(el.k); const bad=crOf(el).filter((_,i)=>it.c[i]&&it.c[i].s==="n");
           return `<button class="find ${g==="b"?"":g}" data-act="goto" data-i="${el.step}" data-k="${el.k}"><span class="where">${esc(el.main)} › ${esc(el.title)}</span><b>${esc(el.no)}. ${esc(el.name)}</b><div class="what">${bad.map(esc).join("، ")}${it.note?` — <i>${esc(it.note)}</i>`:""}</div></button>`; }).join("")}`).join("")
         : `<p class="indicator">لا توجد بنود غير جاهزة.</p>`}
     </div>
@@ -1272,7 +1272,7 @@ function detailRows(){
   ELS.forEach(el=>{ const it=peek(el.k)||{a:false,c:{},note:""};
     const phc = (it.ph||[]).length || "", qty = it.q ? +it.q : "", ty = it.ty||"", br = it.br||"";
     if(it.a){ rows.push({ el, crit:"—", status:"غير موجود", impact:"", note:it.note||"", phc, qty:"", ty:"", br:"" }); return; }
-    el.crit.forEach((c,i)=>{ const v=it.c[i]; rows.push({ el, crit:c, status:statusLabel(v), impact: v&&v.s==="n" ? IMPACT[v.i||"none"].label : "", note: i===0 ? (it.note||"") : "", phc: i===0 ? phc : "", qty: i===0 ? qty : "", ty: i===0 ? ty : "", br: i===0 ? br : "" }); });
+    crOf(el).forEach((c,i)=>{ const v=it.c[i]; rows.push({ el, crit:c, status:statusLabel(v), impact: v&&v.s==="n" ? IMPACT[v.i||"none"].label : "", note: i===0 ? (it.note||"") : "", phc: i===0 ? phc : "", qty: i===0 ? qty : "", ty: i===0 ? ty : "", br: i===0 ? br : "" }); });
   });
   return rows;
 }
@@ -1295,7 +1295,7 @@ function exportXLSX(){
   const ws2=X.utils.aoa_to_sheet(s2); ws2["!cols"]=[{wch:24},...Array(12).fill({wch:13})]; X.utils.book_append_sheet(wb, ws2, "الأقسام");
   const s3=[["م","الأثر","القسم","الصفحة","رقم العنصر","العنصر","العدد","النوع","الماركة","البند غير الجاهز","الملاحظة","الإجراء المطلوب","المسؤول","موعد الإنجاز","الحالة"]];
   let n=1;
-  findings.forEach(({el})=>{ const it=peek(el.k); el.crit.forEach((c,i)=>{ const v=it.c[i]; if(v&&v.s==="n") s3.push([n++,IMPACT[v.i||"none"].label,el.main,el.title,+el.no,el.name,it.q?+it.q:"",it.ty||"",it.br||"",c,it.note||"","","","","مفتوحة"]); }); });
+  findings.forEach(({el})=>{ const it=peek(el.k); crOf(el).forEach((c,i)=>{ const v=it.c[i]; if(v&&v.s==="n") s3.push([n++,IMPACT[v.i||"none"].label,el.main,el.title,+el.no,el.name,it.q?+it.q:"",it.ty||"",it.br||"",c,it.note||"","","","","مفتوحة"]); }); });
   const ws3=X.utils.aoa_to_sheet(s3); ws3["!cols"]=[{wch:5},{wch:17},{wch:20},{wch:20},{wch:9},{wch:28},{wch:7},{wch:16},{wch:16},{wch:30},{wch:40},{wch:30},{wch:16},{wch:14},{wch:10}];
   ws3["!autofilter"]={ ref:"A1:O"+Math.max(1,s3.length) };
   X.utils.book_append_sheet(wb, ws3, "الملاحظات للمتابعة");
@@ -1331,7 +1331,7 @@ function specs(it){ return [it.q?"العدد: "+esc(it.q):"", it.ty?"النوع:
 function rpChips(el){
   const it=peek(el.k)||{a:false,c:{}};
   if(it.a) return `<span class="ck x">غير موجود في المسجد</span>`;
-  return el.crit.map((c,i)=>{ const v=it.c[i]||{};
+  return crOf(el).map((c,i)=>{ const v=it.c[i]||{};
     if(v.s==="r") return `<span class="ck r">✓ ${esc(c)}</span>`;
     if(v.s==="x") return `<span class="ck x">— ${esc(c)}</span>`;
     if(v.s==="n") return `<span class="ck n">✗ ${esc(c)} · ${IMPACT[v.i||"none"].short}</span>`;
@@ -1358,7 +1358,7 @@ function reportBlocks(){
     add(`<div class="rp-h3" style="background:${IMPACT[g].color}">${IMPACT[g].label} — ${list.length} عنصر</div>`, true);
     list.forEach(({el})=>{ const it=peek(el.k);
       add(`<div class="rp-find ${g==="b"?"":g}"><div class="fh"><span class="rp-tag ${g==="b"?"":g}">${IMPACT[g].short}</span><b>${esc(el.no)}. ${esc(el.name)}</b>${it.q||it.ty||it.br?`<span class="where">${specs(it)}</span>`:""}<span class="where">${esc(el.main)} › ${esc(el.title)}</span></div>
-        <ul>${el.crit.map((c,i)=>{ const v=it.c[i]; return v&&v.s==="n" ? `<li>${esc(c)} <span style="color:${IMPACT[v.i||"none"].color};font-weight:700">(${IMPACT[v.i||"none"].label})</span></li>` : ""; }).join("")}</ul>
+        <ul>${crOf(el).map((c,i)=>{ const v=it.c[i]; return v&&v.s==="n" ? `<li>${esc(c)} <span style="color:${IMPACT[v.i||"none"].color};font-weight:700">(${IMPACT[v.i||"none"].label})</span></li>` : ""; }).join("")}</ul>
         ${it.note?`<div class="rp-note">${esc(it.note)}</div>`:""}
         ${it.ph&&it.ph.length?`<div class="rp-phs">${it.ph.map(p=>`<div class="rp-ph" style="background-image:url('${p}')"></div>`).join("")}</div>`:""}</div>`); });
   });
@@ -1425,6 +1425,7 @@ async function rasterIcons(){
 let LOGO_OR="";
 async function prepBrand(){ if(!LOGO_BK) LOGO_BK=await tintImg(LOGO,"#000"); if(!LOGO_OR) LOGO_OR=await tintImg(LOGO,"#FFA369"); await rasterIcons(); }
 function greg(d){ if(!d) return ""; try{ return new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-latn",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"}).format(new Date(d+"T00:00:00Z")).replace(/\s*م$/,"")+"م"; }catch(e){ return d; } }
+function crOf(el){ const it=peek(el.k)||{c:{}}; return el.crit.map((c,i)=>(it.c&&it.c[i]&&it.c[i].t)||c); }
 function photoSlides(list, title){
   const out=[];
   for(let i=0;i<list.length;i+=3){
@@ -1497,7 +1498,7 @@ function buildSlides(host){
   if(findings.length){
     const head=`<tr><th style="background:${BR.or};width:40px">#</th><th style="background:${BR.or}">العنصر</th><th class="g">البنود غير الجاهزة والملاحظة</th><th style="background:${BR.ye};color:#1E1E1E;width:150px">الحالة</th></tr>`;
     const rows=findings.map(({el,s},i)=>{ const it=peek(el.k), g=s.sev;
-      const bad=el.crit.map((c,ci)=>{ const v=it.c[ci]; return v&&v.s==="n" ? `<div>— ${esc(c)}${(v.i||"none")!==g?` <span style="color:${SIMPC[v.i||"none"]};font-weight:600">(${IMPACT[v.i||"none"].short})</span>`:""}</div>` : ""; }).join("");
+      const bad=crOf(el).map((c,ci)=>{ const v=it.c[ci]; return v&&v.s==="n" ? `<div>— ${esc(c)}${(v.i||"none")!==g?` <span style="color:${SIMPC[v.i||"none"]};font-weight:600">(${IMPACT[v.i||"none"].short})</span>`:""}</div>` : ""; }).join("");
       const sp=specs(it);
       return `<tr><td class="no">${i+1}</td><td class="nm">${esc(el.name)}<small>${esc(el.main)} › ${esc(el.title)}</small></td><td>${bad}${it.note?`<div class="fnote">${esc(it.note)}</div>`:""}${sp?`<div style="font-size:13px;color:${BR.od};font-weight:500">${sp}</div>`:""}</td><td><span class="tg2" style="background:${SIMP[g].bg};color:${SIMP[g].fg}">${g==="b"?"يمنع الافتتاح":IMPACT[g].label}</span></td></tr>`; });
     tblRows(head, rows, `الملاحظات والبنود غير الجاهزة (${findings.length})`);
@@ -1628,7 +1629,7 @@ async function exportPPTX(){
     if(findings.length){
       const hdr=["الملاحظة","البند غير الجاهز","القسم","العنصر","الأثر"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } }));
       const rows=[];
-      findings.forEach(({el})=>{ const it=peek(el.k); el.crit.forEach((c,i)=>{ const v=it.c[i]; if(v&&v.s==="n"){ const im=IMPACT[v.i||"none"];
+      findings.forEach(({el})=>{ const it=peek(el.k); crOf(el).forEach((c,i)=>{ const v=it.c[i]; if(v&&v.s==="n"){ const im=IMPACT[v.i||"none"];
         rows.push([[it.note||"", specs(it)?" ("+specs(it).replace(/&amp;/g,"&")+")":""].join(""), c, el.main, `${el.no}. ${el.name}`, im.label].map((t,ci)=>({ text:t, options: ci===4?{ bold:true, color:im.color.slice(1) }:{} }))); } }); });
       const s=add(`الملاحظات والبنود غير الجاهزة (${rows.length})`);
       s.addTable([hdr, ...rows], { x:0.55, y:1.55, w:12.23, colW:[3.6,3.0,1.9,2.33,1.4], fontFace:F, fontSize:10.5, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 },
@@ -1660,7 +1661,7 @@ async function exportPPTX(){
     STEPS.forEach(st=>{ if(st.type!=="page") return;
       const hdr=["التفاصيل","غير جاهز","جاهز","العنصر"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } }));
       const rows=st.els.map(el=>{ const it=peek(el.k)||{a:false,c:{}}; const s=elStats(el);
-        const bad=el.crit.filter((_,i)=>it.c[i]&&it.c[i].s==="n").join("، ");
+        const bad=crOf(el).filter((_,i)=>it.c[i]&&it.c[i].s==="n").join("، ");
         const det=it.a?"غير موجود في المسجد":[bad?"غير جاهز: "+bad:"", s.total-s.done?`لم يُقيَّم: ${s.total-s.done}`:"", specs(it).replace(/&amp;/g,"&"), it.note?"ملاحظة: "+it.note:""].filter(Boolean).join(" — ");
         return [det, it.a?"—":String(s.n), it.a?"—":String(s.r), `${el.no}. ${el.name}`].map((t,ci)=>({ text:t, options: ci===1&&s.n ? { color:"A23E32", bold:true } : (ci===3?{ bold:true }:{}) })); });
       const sl=add(`${st.main}${st.main!==st.title?" · "+st.title:""}`);
@@ -1686,7 +1687,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261115075906";
+const BUILD_ID = "20261115100352";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
