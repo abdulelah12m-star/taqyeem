@@ -1458,7 +1458,9 @@ function buildSlides(host){
   const qr=qrData(mapLink());
   const phs=[]; STEPS.forEach(st=>{ if(st.type!=="page") return; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>phs.push({p,el,it})); }); });
   const cp=m.coverPhoto || (phs[0]&&phs[0].p) || "";
-  const place=[m.district, info.city].filter(Boolean).join(" – ");
+  const _city=(info.city||"").trim(); let _dist=String(m.district||"").trim();
+  if(_city){ _dist=_dist.split(/\s*[\/\-–—،,]\s*/).filter(x=>x&&x!==_city).join(" "); }
+  const place=[_dist, _city].filter(Boolean).join(" - ");
   /* cover */
   S.push({ raw:`<div class="sl"><div class="fv-band"></div><div class="fv-lbl">تقرير تقييم ميداني</div>
     ${cp?`<div class="fv-ph" style="background-image:url('${cp}')"></div>`:""}
@@ -1682,7 +1684,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261115055747";
+const BUILD_ID = "20261115061802";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
