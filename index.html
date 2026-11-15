@@ -459,7 +459,7 @@ const STORE_KEY = "mosque-readiness-eval-v1";
 const LOGO = document.querySelector("header.top img").src;
 const ORG = "مؤسسة الأمير متعب بن عبدالعزيز -رحمه الله-";
 
-const REGION_NAMES = { W:"الغربية", C:"الوسطى", S:"الجنوبية", E:"الشرقية", N:"الشمالية" };
+const REGION_NAMES = { W:"المنطقة الغربية", C:"المنطقة الوسطى", S:"المنطقة الجنوبية", E:"المنطقة الشرقية", N:"المنطقة الشمالية" };
 const MOSQUES = [
   { no:"1",  name:"جامع الملك عبدالعزيز – حي العدل", city:"مكة المكرمة", region:"W", district:"حي العدل" },
   { no:"2",  name:"جامع الأميرة شهيدة", city:"مكة المكرمة", region:"W", district:"حي العزيزية" },
@@ -842,7 +842,7 @@ function mosqueInfo(){
 function mosqueCode(){
   const i = mosqueInfo();
   if(!i.region) return "";
-  return "MJ"+i.region+"-"+(i.no ? String(i.no).padStart(3,"0") : "NEW");
+  return "MF-MJ"+i.region+"-"+(i.no ? String(i.no).padStart(3,"0") : "NEW");
 }
 
 /* ---------------- الإحصاءات ---------------- */
