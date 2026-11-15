@@ -319,6 +319,30 @@ pre.code{direction:ltr;text-align:left;background:#FDF3EE;border-radius:10px;pad
 .cv-logo img{height:64px}
 .cv-lines{position:absolute;left:64px;top:160px;width:600px;height:360px;background:#FEE7D9}
 .cv-lines i{position:absolute;top:0;bottom:0;width:1.5px;background:#000}
+/* formal cover (field-visit report) */
+.fv-band{position:absolute;top:0;left:0;right:0;height:330px;background:linear-gradient(90deg,#FEE7D9 0%,#FFBE96 45%,#FFA369 80%)}
+.fv-lbl{position:absolute;top:44px;right:84px;color:#fff;font-size:17px;font-weight:600}
+.fv-ph{position:absolute;left:64px;top:118px;width:270px;height:500px;background-size:cover;background-position:center}
+.fv-card{position:absolute;top:118px;left:334px;right:64px;height:350px;background:linear-gradient(90deg,#FEF0E8,#FEE7D9);padding:48px 56px 0}
+.fv-card .k{color:#33B28A;font-weight:600;font-size:16px}
+.fv-card .t{font-size:42px;font-weight:600;line-height:1.35;margin-top:8px}
+.fv-card .s{font-size:17px;line-height:1.9;margin-top:10px;color:#333}
+.fv-card .c{display:inline-block;margin-top:10px;background:#fff;color:#E0703A;font-weight:600;font-size:15px;padding:1px 14px;direction:ltr}
+.fv-teal{position:absolute;top:468px;left:334px;right:64px;height:150px;background:#33B28A;border-bottom-left-radius:64px;display:flex;align-items:center;padding:0 56px}
+.fv-teal > div{flex:1;color:#fff;padding:0 22px;border-left:1px solid rgba(255,255,255,.35)}
+.fv-teal > div:first-child{padding-right:0}
+.fv-teal > div:last-child{border-left:none}
+.fv-teal span{display:block;font-size:13px;opacity:.9}
+.fv-teal b{display:block;font-size:19px;font-weight:600;margin-top:2px;line-height:1.5;white-space:nowrap}
+.fv-logo{position:absolute;left:334px;right:64px;top:632px;text-align:center}
+.fv-logo img{height:64px}
+/* per-section photo slides */
+.pbar{position:absolute;top:34px;left:64px;right:64px;background:linear-gradient(90deg,#FEE7D9,#FFA369);color:#fff;font-weight:600;font-size:18px;text-align:center;padding:9px 16px}
+.p4{position:absolute;top:100px;left:64px;right:64px;bottom:58px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:16px 22px}
+.p4 > div{display:flex;flex-direction:column;min-height:0}
+.p4 .im{flex:1;background-size:cover;background-position:center;background-color:#F2F2F2}
+.p4 .cap{background:#FFF1E9;padding:6px 14px;font-size:13.5px;line-height:1.6;min-height:46px}
+.p4 .cap b{color:#E0703A;margin-left:6px}
 /* info slide */
 .in-wrap{display:flex;gap:40px;height:100%}
 .in-side{flex:none;width:290px}
@@ -1396,7 +1420,17 @@ async function rasterIcons(){
   for(const [k,src] of Object.entries(ICONS)) out[k]=await new Promise(res=>{ const im=new Image(); im.onload=()=>{ const c=document.createElement("canvas"); c.width=c.height=128; c.getContext("2d").drawImage(im,0,0,128,128); res(c.toDataURL("image/png")); }; im.onerror=()=>res(src); im.src=src; });
   ICON_PNG=out;
 }
-async function prepBrand(){ if(!LOGO_BK) LOGO_BK=await tintImg(LOGO,"#000"); await rasterIcons(); }
+let LOGO_OR="";
+async function prepBrand(){ if(!LOGO_BK) LOGO_BK=await tintImg(LOGO,"#000"); if(!LOGO_OR) LOGO_OR=await tintImg(LOGO,"#FFA369"); await rasterIcons(); }
+function greg(d){ if(!d) return ""; try{ return new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-latn",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"}).format(new Date(d+"T00:00:00Z")).replace(/\s*م$/,"")+"م"; }catch(e){ return d; } }
+function photoSlides(list, title){
+  const out=[];
+  for(let i=0;i<list.length;i+=4){
+    const grp=list.slice(i,i+4), pg=list.length>4?` (${Math.floor(i/4)+1}/${Math.ceil(list.length/4)})`:"";
+    out.push({ raw3:`<div class="pbar">الشواهد المصوّرة: ${title}${pg}</div><div class="p4">${grp.map(x=>`<div><div class="im" style="background-image:url('${x.p}')"></div><div class="cap"><b>صورة (${x.n})</b>${esc(x.el.no)}. ${esc(x.el.name)}${x.it.note?` — ${esc(x.it.note)}`:""}</div></div>`).join("")}${grp.length%2?"<div></div>":""}</div>` });
+  }
+  return out;
+}
 function slHead(title){ const info=mosqueInfo(); return `<div class="sl-hd"><div class="t">${title}</div><div class="s">${esc(info.name)}${mosqueCode()?" · "+esc(mosqueCode()):""}</div></div>`; }
 function slFoot(n){ return `<div class="sl-st"></div><div class="sl-pn">${n}</div><div class="sl-og">${ORG}</div>`; }
 function slSlide(title, body){ return { title, body }; }
@@ -1424,11 +1458,12 @@ function buildSlides(host){
   const cp=m.coverPhoto || (phs[0]&&phs[0].p) || "";
   const place=[m.district, info.city].filter(Boolean).join(" – ");
   /* cover */
-  S.push({ raw:`<div class="sl"><div class="cv-band"></div><div class="cv-frame"></div>
-    ${cp?`<div class="cv-ph" style="background-image:url('${cp}')"></div>`:`<div class="cv-lines"><i style="left:120px"></i><i style="left:170px"></i><i style="left:220px"></i><i style="left:270px"></i></div>`}
-    <div class="cv-teal"><div class="n">${tot.readiness==null?"—":tot.readiness+"%"}</div><div class="l"><b>نسبة الجاهزية</b>${decTxt}</div></div>
-    <div class="cv-txt"><div class="k">تقرير تقييم</div><div class="t">جاهزية المسجد</div><div class="m">${esc(info.name)}</div>${mosqueCode()?`<div class="c">${esc(mosqueCode())}</div>`:""}<div class="d">${esc(dateBoth(m.date))}</div></div>
-    <div class="cv-logo"><img src="${LOGO_BK}"></div><div class="sl-st"></div></div>` });
+  S.push({ raw:`<div class="sl"><div class="fv-band"></div><div class="fv-lbl">تقرير تقييم ميداني</div>
+    ${cp?`<div class="fv-ph" style="background-image:url('${cp}')"></div>`:""}
+    <div class="fv-card" style="${cp?"":"left:64px"}"><div class="k">تقرير تقييم جاهزية المسجد</div><div class="t">${esc(info.name)}</div>
+      <div class="s">مساجد الأمير متعب بن عبدالعزيز -رحمه الله-${place?"<br>"+esc(place):""}</div>${mosqueCode()?`<div class="c">${esc(mosqueCode())}</div>`:""}</div>
+    <div class="fv-teal" style="${cp?"":"left:64px"}"><div><span>تاريخ التقييم</span><b>${esc(hijri(m.date))}</b></div><div><span>الموافق</span><b>${esc(greg(m.date))}</b></div><div><span>المقيّم</span><b>${esc(m.evaluator)}</b></div><div><span>نسبة الجاهزية</span><b>${tot.readiness==null?"—":tot.readiness+"%"}</b></div></div>
+    <div class="fv-logo" style="${cp?"":"left:64px"}"><img src="${LOGO_OR}"></div><div class="sl-st"></div></div>` });
   /* basic information */
   const IC=ICON_PNG.pin?ICON_PNG:ICONS;
   const tiles=[[BR.or,IC.pin,"الموقع",esc(place||"—")],[BR.ye,IC.cal,"تاريخ التقييم",`${esc(m.date)} م<br>${esc(hijri(m.date))}`],[BR.te,IC.ppl,"المقيّم",esc(m.evaluator||"—")],[BR.gl,IC.bld,"المقاول المنفّذ",esc(m.contractor||"—")]];
@@ -1458,20 +1493,13 @@ function buildSlides(host){
   });
   if(fb.length){ const hs=measureH(host, fb.map(b=>b.html), 1152); paginateKeep(fb,hs).forEach((pg,pi,arr)=>S.push(slSlide(`الملاحظات${arr.length>1?` (${pi+1}/${arr.length})`:""}`, pg.map(i=>`<div class="sl-blk">${fb[i].html}</div>`).join("")))); }
   else S.push(slSlide("الملاحظات", `<div class="cream">لم تُرصد بنود غير جاهزة في هذا التقييم.</div>`));
-  /* photos */
-  if(phs.length){
-    S.push(divider(nn(), "الشواهد<br>المصوّرة", BR.ye, phs[2]?phs[2].p:phs[0].p));
-    for(let i=0;i<phs.length;i+=3){
-      const grp=phs.slice(i,i+3);
-      S.push(slSlide(`الشواهد المصوّرة${phs.length>3?` (${Math.floor(i/3)+1}/${Math.ceil(phs.length/3)})`:""}`, `<div class="ph3">${grp.map((x,j)=>`<div><div class="im" style="background-image:url('${x.p}')"></div><div class="cap"><b>صورة (${i+j+1})</b>${esc(x.el.name)} — ${esc(x.el.main)}${x.it.note?`، ${esc(x.it.note)}`:""}</div></div>`).join("")}${grp.length<3?"<div></div>".repeat(3-grp.length):""}</div>`));
-    }
-  }
   /* decision */
   S.push(slSlide("قرار الجاهزية والاعتماد", `<div class="dec-big ${decCls}"><span>قرار الجاهزية</span><b>${decTxt}</b></div>
     ${d.reason?`<div class="cream"><b>المبررات والاشتراطات:</b> ${esc(d.reason)}</div>`:""}
     <table class="kv"><tr><td class="k">المعتمد</td><td>${esc(d.signer||m.evaluator)}</td></tr><tr><td class="k">الصفة</td><td>${esc(d.signerTitle)}</td></tr><tr><td class="k">التاريخ</td><td>${esc(dateBoth(m.date))}</td></tr><tr><td class="k">التوقيع</td><td style="height:60px"></td></tr></table>`));
   /* appendix */
-  S.push(divider(nn(), "الملحق<br>التقييم التفصيلي", BR.te, phs[3]?phs[3].p:""));
+  S.push(divider(nn(), "الملحق<br>التقييم التفصيلي والشواهد", BR.te, phs[3]?phs[3].p:""));
+  let phN=0;
   STEPS.forEach(st=>{ if(st.type!=="page") return;
     const rows=st.els.map(el=>{ const it=peek(el.k);
       return `<tr><td class="no">${esc(el.no)}</td><td class="nm">${esc(el.name)}${it&&!it.a&&(it.q||it.ty||it.br)?`<small style="color:${BR.od};font-weight:500">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</td><td><div class="cr">${rpChips(el)}</div></td></tr>`; });
@@ -1482,12 +1510,14 @@ function buildSlides(host){
     rows.forEach((r,i)=>{ if(h+hs[i]>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=hh; } cur.push(r); h+=hs[i]; });
     if(cur.length) pages.push(cur);
     const a=agg(st.els), ttl=`${esc(st.main)}${st.main!==st.title?" · "+esc(st.title):""}`;
+    const secPh=[]; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>secPh.push({p,el,it,n:++phN})); });
     pages.forEach((pg,pi)=>S.push(slSlide(`${ttl}${pages.length>1?` (${pi+1}/${pages.length})`:""} <span class="badge">${a.absent===a.els?"غير موجود":a.readiness==null?"":`الجاهزية ${a.readiness}%`}${a.n?` · غير جاهز ${a.n}`:""}</span>`, `<table class="at">${head}${pg.join("")}</table>`)));
+    photoSlides(secPh, ttl).forEach(x=>S.push(x));
   });
   /* end */
   S.push({ raw:`<div class="sl sle"><img src="${LOGO}"></div>` });
   host.innerHTML="";
-  return S.map((s,i)=> s.raw ? s.raw : s.raw2 ? `<div class="sl"><div class="sl-bd" style="top:56px">${s.raw2}</div>${slFoot(i+1)}</div>` : `<div class="sl">${slHead(s.title)}<div class="sl-bd">${s.body}</div>${slFoot(i+1)}</div>`);
+  return S.map((s,i)=> s.raw ? s.raw : s.raw3 ? `<div class="sl">${s.raw3}${slFoot(i+1)}</div>` : s.raw2 ? `<div class="sl"><div class="sl-bd" style="top:56px">${s.raw2}</div>${slFoot(i+1)}</div>` : `<div class="sl">${slHead(s.title)}<div class="sl-bd">${s.body}</div>${slFoot(i+1)}</div>`);
 }
 async function exportPDF(){
   if(!window.html2canvas || !window.jspdf){ toast("تعذّر تحميل مكتبات التقرير — تحقق من الاتصال", true); return; }
