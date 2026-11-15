@@ -1430,7 +1430,7 @@ function photoSlides(list, title){
   const out=[];
   for(let i=0;i<list.length;i+=3){
     const grp=list.slice(i,i+3), pg=list.length>3?` (${Math.floor(i/3)+1}/${Math.ceil(list.length/3)})`:"";
-    out.push({ raw3:`<div class="pbar">${title.startsWith("!")?title.slice(1):"الشواهد المصوّرة: "+title}${pg}</div><div class="p4">${grp.map(x=>`<div><div class="im" style="background-image:url('${x.p}')"></div><div class="cap"><b>صورة (${x.n})</b>${x.cap!=null?x.cap:`${esc(x.el.no)}. ${esc(x.el.name)}${x.it.note?` — ${esc(x.it.note)}`:""}`}</div></div>`).join("")}</div>` });
+    out.push({ raw3:`<div class="pbar">الشواهد المصوّرة: ${title}${pg}</div><div class="p4">${grp.map(x=>`<div><div class="im" style="background-image:url('${x.p}')"></div><div class="cap"><b>صورة (${x.n})</b>${esc(x.el.no)}. ${esc(x.el.name)}${x.it.note?` — ${esc(x.it.note)}`:""}</div></div>`).join("")}</div>` });
   }
   return out;
 }
@@ -1474,6 +1474,7 @@ function buildSlides(host){
   const tiles=[[BR.or,IC.pin,"الموقع",esc(place||"—")],[BR.ye,IC.cal,"تاريخ التقييم",`${esc(m.date)} م<br>${esc(hijri(m.date))}`],[BR.te,IC.ppl,"المقيّم",esc(m.evaluator||"—")],[BR.gl,IC.bld,"المقاول المنفّذ",esc(m.contractor||"—")]];
   const kv=[["المسجد",info.name],["رمز المسجد",mosqueCode()],["المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" – ")],["جهة المقيّم",m.evaluatorOrg],["الاستشاري / المشرف",m.supervisor]].filter(x=>x[1]);
   S.push({ title:"", body:"", raw2:`<div class="in-wrap"><div class="in-side"><div class="h">المعلومات<br>الأساسية</div><div class="s">${esc(info.name)}</div>
+      <div class="in-dec ${decCls}">${decTxt}</div>
       ${qr?`<div class="in-qr"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الباركود لفتح الموقع على خرائط Google</span></div></div>`:""}</div>
     <div class="in-main"><div class="in-tiles">${tiles.map(([c,ic,l,v])=>`<div><div class="ic" style="background:${c}"><img src="${ic}"></div><div class="l">${l}</div><div class="v">${v}</div><div class="u" style="background:${c}"></div></div>`).join("")}</div>
       <table class="kv">${kv.map(([k,v])=>`<tr><td class="k">${k}</td><td>${esc(v)}</td></tr>`).join("")}</table></div></div>` });
@@ -1494,18 +1495,13 @@ function buildSlides(host){
     if(cur.length) pages.push(cur);
     pages.forEach((pg,pi)=>S.push(slSlide(`${title}${pages.length>1?` (${pi+1}/${pages.length})`:""}`, `<table class="at">${head}${pg.join("")}</table>`)));
   };
-  /* unique photos of findings, numbered in order */
-  const fPh=[], fRef={};
-  findings.forEach(({el},i)=>{ const it=peek(el.k); fRef[el.k]=[]; (it.ph||[]).forEach(p=>{ let x=fPh.find(y=>y.p===p); if(!x){ x={p,el,it,refs:[],n:fPh.length+1}; fPh.push(x); } x.refs.push({i:i+1,el}); fRef[el.k].push(x.n); }); });
-  fPh.forEach(x=>{ x.cap=`${x.refs.map(r=>`ملاحظة ${r.i}`).join(" و")} — ${[...new Set(x.refs.map(r=>esc(r.el.name)+" ("+esc(r.el.main)+")"))].join("، ")}`; });
   if(findings.length){
     const head=`<tr><th style="background:${BR.or};width:40px">#</th><th style="background:${BR.or}">العنصر</th><th class="g">البنود غير الجاهزة والملاحظة</th><th style="background:${BR.ye};color:#1E1E1E;width:150px">الحالة</th></tr>`;
     const rows=findings.map(({el,s},i)=>{ const it=peek(el.k), g=s.sev;
       const bad=crOf(el).map((c,ci)=>{ const v=it.c[ci]; return v&&v.s==="n" ? `<div>— ${esc(c)}${(v.i||"none")!==g?` <span style="color:${SIMPC[v.i||"none"]};font-weight:600">(${IMPACT[v.i||"none"].short})</span>`:""}</div>` : ""; }).join("");
       const sp=specs(it);
-      return `<tr><td class="no">${i+1}</td><td class="nm">${esc(el.name)}<small>${esc(el.main)} › ${esc(el.title)}</small>${fRef[el.k].length?`<small style="color:${BR.od};font-weight:600">الشواهد: صورة ${fRef[el.k].join("، ")}</small>`:""}</td><td>${bad}${it.note?`<div class="fnote">${esc(it.note)}</div>`:""}${sp?`<div style="font-size:13px;color:${BR.od};font-weight:500">${sp}</div>`:""}</td><td><span class="tg2" style="background:${SIMP[g].bg};color:${SIMP[g].fg}">${g==="b"?"يمنع الافتتاح":IMPACT[g].label}</span></td></tr>`; });
+      return `<tr><td class="no">${i+1}</td><td class="nm">${esc(el.name)}<small>${esc(el.main)} › ${esc(el.title)}</small></td><td>${bad}${it.note?`<div class="fnote">${esc(it.note)}</div>`:""}${sp?`<div style="font-size:13px;color:${BR.od};font-weight:500">${sp}</div>`:""}</td><td><span class="tg2" style="background:${SIMP[g].bg};color:${SIMP[g].fg}">${g==="b"?"يمنع الافتتاح":IMPACT[g].label}</span></td></tr>`; });
     tblRows(head, rows, `الملاحظات والبنود غير الجاهزة (${findings.length})`);
-    photoSlides(fPh, "!الشواهد المصوّرة للملاحظات").forEach(x=>S.push(x));
   } else S.push(slSlide("الملاحظات", `<div class="cream">لم تُرصد بنود غير جاهزة في هذا التقييم.</div>`));
   /* absent elements */
   const absent=ELS.filter(el=>{ const it=peek(el.k); return it&&it.a; });
@@ -1518,22 +1514,23 @@ function buildSlides(host){
   S.push(slSlide("قرار الجاهزية والاعتماد", `<div class="dec-big ${decCls}"><span>قرار الجاهزية</span><b>${decTxt}</b></div>
     ${d.reason?`<div class="cream"><b>المبررات والاشتراطات:</b> ${esc(d.reason)}</div>`:""}
     <table class="kv"><tr><td class="k">المعتمد</td><td>${esc(d.signer||m.evaluator)}</td></tr><tr><td class="k">الصفة</td><td>${esc(d.signerTitle)}</td></tr><tr><td class="k">التاريخ</td><td>${esc(dateBoth(m.date))}</td></tr><tr><td class="k">التوقيع</td><td style="height:60px"></td></tr></table>`));
-  /* appendix: readiness map (present elements only) */
-  S.push(divider(nn(), "الملحق<br>خريطة جاهزية العناصر", BR.te, phs[3]?phs[3].p:""));
-  const fIdx={}; findings.forEach(({el},i)=>fIdx[el.k]=i+1);
-  const mains=[...new Set(STEPS.filter(st=>st.type==="page").map(st=>st.main))];
-  mains.forEach(mn=>{ const sts=STEPS.filter(st=>st.type==="page"&&st.main===mn);
-    const rows=[]; sts.forEach(st=>{ const pres=st.els.filter(el=>{ const it=peek(el.k); return !(it&&it.a); });
-      if(!pres.length) return;
-      rows.push(`<tr><td class="nm">${esc(st.title===mn?"عام":st.title)}<small>${pres.length} عنصر</small></td><td><div class="cr">${pres.map(el=>{ const f=fIdx[el.k]; const it=peek(el.k); const done=it&&el.crit.every((_,i)=>it.c[i]&&it.c[i].s);
-        return f?`<span class="ck n">${esc(el.no)}. ${esc(el.name)} · ملاحظة ${f}</span>`:done?`<span class="ck r">✓ ${esc(el.no)}. ${esc(el.name)}</span>`:`<span class="ck">${esc(el.no)}. ${esc(el.name)} · لم يُقيّم</span>`; }).join("")}</div></td></tr>`); });
-    if(!rows.length) return;
-    const a=agg(sts.flatMap(st=>st.els)); a.n=sts.flatMap(st=>st.els).filter(el=>fIdx[el.k]).length;
-    const head=`<tr><th style="background:${BR.or};width:230px">الجزء</th><th class="g">العناصر الموجودة وحالتها</th></tr>`;
-    tblRows(head, rows, `${esc(mn)} <span class="badge">${a.readiness==null?"":`الجاهزية ${a.readiness}%`}${a.n?` · ملاحظات ${a.n}`:""}</span>`);
+  /* appendix */
+  S.push(divider(nn(), "الملحق<br>التقييم التفصيلي والشواهد", BR.te, phs[3]?phs[3].p:""));
+  let phN=0;
+  STEPS.forEach(st=>{ if(st.type!=="page") return;
+    const rows=st.els.map(el=>{ const it=peek(el.k);
+      return `<tr><td class="no">${esc(el.no)}</td><td class="nm">${esc(el.name)}${it&&!it.a&&(it.q||it.ty||it.br)?`<small style="color:${BR.od};font-weight:500">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</td><td><div class="cr">${rpChips(el)}</div></td></tr>`; });
+    const head=`<tr><th style="background:${BR.or};width:40px">#</th><th style="background:${BR.or}">العنصر</th><th class="g">بنود التقييم</th></tr>`;
+    host.innerHTML=`<div class="sl-measure" style="width:1152px"><table class="at">${head}${rows.join("")}</table></div>`;
+    const trs=[...host.querySelectorAll("tr")], hh=trs[0].getBoundingClientRect().height, hs=trs.slice(1).map(t=>t.getBoundingClientRect().height);
+    const pages=[]; let cur=[], h=hh;
+    rows.forEach((r,i)=>{ if(h+hs[i]>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=hh; } cur.push(r); h+=hs[i]; });
+    if(cur.length) pages.push(cur);
+    const a=agg(st.els), ttl=`${esc(st.main)}${st.main!==st.title?" · "+esc(st.title):""}`;
+    const secPh=[]; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>secPh.push({p,el,it,n:++phN})); });
+    pages.forEach((pg,pi)=>S.push(slSlide(`${ttl}${pages.length>1?` (${pi+1}/${pages.length})`:""} <span class="badge">${a.absent===a.els?"غير موجود":a.readiness==null?"":`الجاهزية ${a.readiness}%`}${a.n?` · غير جاهز ${a.n}`:""}</span>`, `<table class="at">${head}${pg.join("")}</table>`)));
+    photoSlides(secPh, ttl).forEach(x=>S.push(x));
   });
-  const extra=phs.filter(x=>!fPh.some(y=>y.p===x.p)).map((x,i)=>({...x,n:fPh.length+i+1}));
-  if(extra.length) photoSlides(extra, "!شواهد مصوّرة إضافية").forEach(x=>S.push(x));
   /* end */
   S.push({ raw:`<div class="sl sle"><img src="${LOGO}"></div>` });
   host.innerHTML="";
@@ -1613,6 +1610,7 @@ async function exportPPTX(){
       const meta=[["المدينة / المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" — ")],["الحي / الموقع",m.district],["تاريخ التقييم",dateBoth(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor]];
       s.addTable(meta.map(([l,v])=>[{ text:v||"—", options:{ fontSize:14 } },{ text:l, options:{ fontSize:12, bold:true, color:BROWN, fill:{ color:SAND } } }]), { x:0.55, y:1.55, w:12.23, colW:[9.23,3.0], fontFace:F, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 }, rowH:0.5 });
       const qr=qrData(mapLink());
+      s.addText(decTxt, { x:qr?3.6:0.55, y:5.0, w:qr?9.18:12.23, h:1.2, fontFace:F, rtlMode:true, fontSize:20, bold:true, color:decFg, fill:{ color:decCol }, align:"center", valign:"middle" });
       if(qr){ s.addImage({ data:qr, x:0.6, y:5.0, w:1.2, h:1.2 }); s.addText([{ text:"موقع المسجد", options:{ bold:true, fontSize:11, breakLine:true } },{ text:"امسح الباركود لفتح الموقع", options:{ fontSize:9, color:MUTED } }], T({ x:1.9, y:5.1, w:1.6, h:1.0 })); }
     }
     /* summary */
@@ -1627,25 +1625,15 @@ async function exportPPTX(){
       rows.push([tot.readiness==null?"—":tot.readiness+"%", String(tot.b), String(tot.n), `${tot.done}/${tot.total}`, "الإجمالي"].map(t=>({ text:t, options:{ bold:true, fill:{ color:SAND } } })));
       s.addTable([hdr, ...rows], { x:0.55, y:1.55, w:8.0, colW:[1.4,0.9,1.1,1.3,3.3], fontFace:F, fontSize:11, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 }, rowH:0.4 });
     }
-    /* findings: one row per element */
-    const fPh=[], fRef={};
-    findings.forEach(({el},i)=>{ const it=peek(el.k); fRef[el.k]=[]; (it.ph||[]).forEach(p=>{ let x=fPh.find(y=>y.p===p); if(!x){ x={p,refs:[]}; fPh.push(x); } x.refs.push({i:i+1,el}); fRef[el.k].push(fPh.indexOf(x)+1); }); });
+    /* findings table (auto pages) */
     if(findings.length){
-      const hdr=["الحالة","البنود غير الجاهزة والملاحظة","العنصر","#"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } }));
-      const rows=findings.map(({el,s},i)=>{ const it=peek(el.k), im=IMPACT[s.sev||"none"];
-        const bad=crOf(el).filter((_,ci)=>it.c[ci]&&it.c[ci].s==="n");
-        const det=[...bad.map((c,j)=>({ text:"— "+c, options:{ breakLine:j<bad.length-1||!!it.note } })), ...(it.note?[{ text:it.note, options:{ color:MUTED, fontSize:10 } }]:[])];
-        return [{ text:s.sev==="b"?"يمنع الافتتاح":im.label, options:{ bold:true, color:im.color.slice(1) } }, { text:det }, { text:[{ text:`${el.no}. ${el.name}`, options:{ bold:true, breakLine:true } },{ text:el.main+(fRef[el.k].length?` · صورة ${fRef[el.k].join("، ")}`:""), options:{ fontSize:9.5, color:MUTED } }] }, { text:String(i+1), options:{ bold:true, color:BROWN } }]; });
-      const PER=5, np=Math.ceil(rows.length/PER);
-      for(let k=0;k<np;k++){ const s=add(`الملاحظات والبنود غير الجاهزة (${findings.length})${np>1?` — ${k+1}/${np}`:""}`);
-        s.addTable([hdr, ...rows.slice(k*PER,(k+1)*PER)], { x:0.55, y:1.45, w:12.23, colW:[1.6,6.6,3.43,0.6], fontFace:F, fontSize:10.5, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 } }); }
-    }
-    /* photos of findings (each photo once) */
-    for(let i=0;i<fPh.length;i+=3){
-      const s=add(`الشواهد المصوّرة للملاحظات${fPh.length>3?` — ${Math.floor(i/3)+1}/${Math.ceil(fPh.length/3)}`:""}`);
-      fPh.slice(i,i+3).forEach((x,j)=>{ const w=3.3, xx=12.115-w-j*(w+0.5);
-        s.addImage({ data:x.p, x:xx, y:1.35, w, h:4.4, sizing:{ type:"cover", w, h:4.4 } });
-        s.addText([{ text:`صورة (${i+j+1})  `, options:{ bold:true, color:BROWN } },{ text:`${x.refs.map(r=>"ملاحظة "+r.i).join(" و")} — ${[...new Set(x.refs.map(r=>r.el.name))].join("، ")}` }], T({ x:xx, y:5.8, w, h:0.9, fontSize:10.5, valign:"top" })); });
+      const hdr=["الملاحظة","البند غير الجاهز","القسم","العنصر","الأثر"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } }));
+      const rows=[];
+      findings.forEach(({el})=>{ const it=peek(el.k); crOf(el).forEach((c,i)=>{ const v=it.c[i]; if(v&&v.s==="n"){ const im=IMPACT[v.i||"none"];
+        rows.push([[it.note||"", specs(it)?" ("+specs(it).replace(/&amp;/g,"&")+")":""].join(""), c, el.main, `${el.no}. ${el.name}`, im.label].map((t,ci)=>({ text:t, options: ci===4?{ bold:true, color:im.color.slice(1) }:{} }))); } }); });
+      const s=add(`الملاحظات والبنود غير الجاهزة (${rows.length})`);
+      s.addTable([hdr, ...rows], { x:0.55, y:1.55, w:12.23, colW:[3.6,3.0,1.9,2.33,1.4], fontFace:F, fontSize:10.5, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 },
+        autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.55, newSlideStartY:1.55, masterName:"MAIN" });
     }
     /* absent elements */
     { const absent=ELS.filter(el=>{ const it=peek(el.k); return it&&it.a; });
@@ -1653,6 +1641,14 @@ async function exportPPTX(){
         const grp=[]; absent.forEach(el=>{ let g=grp.find(x=>x.m===el.main); if(!g) grp.push(g={m:el.main,l:[]}); g.l.push(el); });
         s.addTable([["العناصر غير الموجودة","القسم"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } })), ...grp.map(g=>[g.l.map(el=>el.no+". "+el.name).join("  ·  "), `${g.m} (${g.l.length})`].map(t=>({ text:t })))],
           { x:0.55, y:1.55, w:12.23, colW:[9.43,2.8], fontFace:F, fontSize:12, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.5 }, autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.55, newSlideStartY:1.55, masterName:"MAIN" }); } }
+    /* photos */
+    const phs=[]; STEPS.forEach(st=>{ if(st.type!=="page") return; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>phs.push({p,el,it})); }); });
+    for(let i=0;i<phs.length;i+=3){
+      const s=add(`الشواهد المصوّرة${phs.length>3?` — ${Math.floor(i/3)+1}/${Math.ceil(phs.length/3)}`:""}`);
+      phs.slice(i,i+3).forEach((x,j)=>{ const w=3.3, xx=12.115-w-j*(w+0.5);
+        s.addImage({ data:x.p, x:xx, y:1.35, w, h:4.4, sizing:{ type:"cover", w, h:4.4 } });
+        s.addText([{ text:`صورة (${i+j+1})  `, options:{ bold:true, color:BROWN } },{ text:`${x.el.no}. ${x.el.name} — ${x.el.main}`, options:{ breakLine:!!x.it.note } }, ...(x.it.note?[{ text:x.it.note, options:{ color:MUTED, fontSize:10 } }]:[])], T({ x:xx, y:5.8, w, h:1.0, fontSize:10, valign:"top" })); });
+    }
     /* decision */
     { const s=add("قرار الجاهزية والاعتماد");
       s.addText(decTxt, { x:0.55, y:1.25, w:12.23, h:0.9, fontFace:F, rtlMode:true, fontSize:26, bold:true, color:decFg, fill:{ color:decCol }, align:"center", valign:"middle" });
@@ -1661,18 +1657,17 @@ async function exportPPTX(){
         s.addShape(P.ShapeType.rect,{ x, y:4.2, w, h:1.4, fill:{ color:"FFFFFF" }, line:{ color:"CDBFAE", dashType:"dash", width:1 } });
         s.addText([{ text:l, options:{ fontSize:10, color:MUTED, breakLine:true } },{ text:v||"", options:{ fontSize:13 } }], T({ x:x+0.15, y:4.3, w:w-0.3, h:1.2, valign:"top" })); });
     }
-    /* appendix: readiness map per main section (present elements only) */
-    { const fIdx={}; findings.forEach(({el},i)=>fIdx[el.k]=i+1);
-      [...new Set(STEPS.filter(st=>st.type==="page").map(st=>st.main))].forEach(mn=>{
-        const rows=[]; STEPS.filter(st=>st.type==="page"&&st.main===mn).forEach(st=>{
-          const pres=st.els.filter(el=>{ const it=peek(el.k); return !(it&&it.a); }); if(!pres.length) return;
-          const runs=[]; pres.forEach((el,j)=>{ const f=fIdx[el.k]; runs.push({ text:(f?`${el.no}. ${el.name} (ملاحظة ${f})`:`✓ ${el.no}. ${el.name}`)+(j<pres.length-1?"   ·   ":""), options:f?{ bold:true, color:"C0562A" }:{ color:"137A5B" } }); });
-          rows.push([{ text:runs }, { text:(st.title===mn?"عام":st.title)+` (${pres.length})`, options:{ bold:true } }]); });
-        if(!rows.length) return;
-        const sl=add(`خريطة الجاهزية — ${mn}`);
-        sl.addTable([["العناصر الموجودة وحالتها","الجزء"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } })), ...rows], { x:0.55, y:1.55, w:12.23, colW:[9.43,2.8], fontFace:F, fontSize:11.5, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.5 },
-          autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.55, newSlideStartY:1.55, masterName:"MAIN" });
-      }); }
+    /* appendix: one slide per sub-section */
+    STEPS.forEach(st=>{ if(st.type!=="page") return;
+      const hdr=["التفاصيل","غير جاهز","جاهز","العنصر"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } }));
+      const rows=st.els.map(el=>{ const it=peek(el.k)||{a:false,c:{}}; const s=elStats(el);
+        const bad=crOf(el).filter((_,i)=>it.c[i]&&it.c[i].s==="n").join("، ");
+        const det=it.a?"غير موجود في المسجد":[bad?"غير جاهز: "+bad:"", s.total-s.done?`لم يُقيَّم: ${s.total-s.done}`:"", specs(it).replace(/&amp;/g,"&"), it.note?"ملاحظة: "+it.note:""].filter(Boolean).join(" — ");
+        return [det, it.a?"—":String(s.n), it.a?"—":String(s.r), `${el.no}. ${el.name}`].map((t,ci)=>({ text:t, options: ci===1&&s.n ? { color:"A23E32", bold:true } : (ci===3?{ bold:true }:{}) })); });
+      const sl=add(`${st.main}${st.main!==st.title?" · "+st.title:""}`);
+      sl.addTable([hdr, ...rows], { x:0.55, y:1.55, w:12.23, colW:[6.6,1.1,1.0,3.53], fontFace:F, fontSize:12, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.5 },
+        autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.55, newSlideStartY:1.55, masterName:"MAIN" });
+    });
     /* end */
     { const s=P.addSlide(); s.background={ color:GOLD };
       s.addShape(P.ShapeType.line,{ x:2.81, y:0, w:0, h:7.5, line:{ color:"000000", width:1.25 } });
@@ -1692,7 +1687,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261115115835";
+const BUILD_ID = "20261115120654";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
