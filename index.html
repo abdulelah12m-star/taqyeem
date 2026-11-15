@@ -388,6 +388,8 @@ table.ct{width:100%;border-collapse:collapse;font-size:15px;margin-top:20px}
 .fi .nt{background:#FEE7D9;padding:4px 12px;margin-top:4px;font-size:15px}
 .fi .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 .fi .tags span{background:#F2F2F2;padding:0 10px;font-size:13px;line-height:2}
+.tg2{display:inline-block;font-size:13.5px;font-weight:600;padding:2px 12px}
+.fnote{background:#FEE7D9;padding:3px 10px;margin-top:4px;font-size:14px}
 /* photos */
 .ph3{display:flex;gap:22px;height:100%}
 .ph3 > div{flex:1;min-width:0;display:flex;flex-direction:column}
@@ -1481,18 +1483,29 @@ function buildSlides(host){
   let secN=0; const nn=()=>String(++secN).padStart(2,"0");
   /* findings */
   S.push(divider(nn(), "الملاحظات<br>والبنود غير الجاهزة", BR.or, phs[1]?phs[1].p:(phs[0]?phs[0].p:"")));
-  const fb=[]; let gi=0;
-  ["b","u","l","none"].forEach(g=>{
-    const list=findings.filter(f=>f.s.sev===g); if(!list.length) return;
-    fb.push({ html:`<div class="fbar" style="background:${SIMP[g].bg};color:${SIMP[g].fg}">${ORDS[gi++]||""}: ${g==="b"?"البنود التي تمنع الافتتاح":IMPACT[g].label} (${list.length})</div>`, keep:true });
-    list.forEach(({el},ii)=>{ const it=peek(el.k);
-      const bad=el.crit.map((c,i)=>{ const v=it.c[i]; return v&&v.s==="n" ? `${esc(c)} <span class="im" style="color:${SIMPC[v.i||"none"]}">(${IMPACT[v.i||"none"].label})</span>` : ""; }).filter(Boolean).join("، ");
+  /* findings: one list, each element with its status */
+  const tblRows=(head, rows, title)=>{
+    host.innerHTML=`<div class="sl-measure" style="width:1152px"><table class="at">${head}${rows.join("")}</table></div>`;
+    const trs=[...host.querySelectorAll("tr")], hh=trs[0].getBoundingClientRect().height, hs=trs.slice(1).map(t=>t.getBoundingClientRect().height);
+    const pages=[]; let cur=[], h=hh;
+    rows.forEach((r,i)=>{ if(h+hs[i]>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=hh; } cur.push(r); h+=hs[i]; });
+    if(cur.length) pages.push(cur);
+    pages.forEach((pg,pi)=>S.push(slSlide(`${title}${pages.length>1?` (${pi+1}/${pages.length})`:""}`, `<table class="at">${head}${pg.join("")}</table>`)));
+  };
+  if(findings.length){
+    const head=`<tr><th style="background:${BR.or};width:40px">#</th><th style="background:${BR.or}">العنصر</th><th class="g">البنود غير الجاهزة والملاحظة</th><th style="background:${BR.ye};color:#1E1E1E;width:150px">الحالة</th></tr>`;
+    const rows=findings.map(({el,s},i)=>{ const it=peek(el.k), g=s.sev;
+      const bad=el.crit.map((c,ci)=>{ const v=it.c[ci]; return v&&v.s==="n" ? `<div>— ${esc(c)}${(v.i||"none")!==g?` <span style="color:${SIMPC[v.i||"none"]};font-weight:600">(${IMPACT[v.i||"none"].short})</span>`:""}</div>` : ""; }).join("");
       const sp=specs(it);
-      fb.push({ html:`<div class="fi"><i>${ii+1}.</i><div><b>${esc(el.name)}</b> <span class="w">— ${esc(el.main)} › ${esc(el.title)}</span><div>${bad}</div>${it.note?`<div class="nt">${esc(it.note)}</div>`:""}${sp?`<div class="tags"><span>${sp.split(" · ").join("</span><span>")}</span></div>`:""}</div></div>` });
-    });
-  });
-  if(fb.length){ const hs=measureH(host, fb.map(b=>b.html), 1152); paginateKeep(fb,hs).forEach((pg,pi,arr)=>S.push(slSlide(`الملاحظات${arr.length>1?` (${pi+1}/${arr.length})`:""}`, pg.map(i=>`<div class="sl-blk">${fb[i].html}</div>`).join("")))); }
-  else S.push(slSlide("الملاحظات", `<div class="cream">لم تُرصد بنود غير جاهزة في هذا التقييم.</div>`));
+      return `<tr><td class="no">${i+1}</td><td class="nm">${esc(el.name)}<small>${esc(el.main)} › ${esc(el.title)}</small></td><td>${bad}${it.note?`<div class="fnote">${esc(it.note)}</div>`:""}${sp?`<div style="font-size:13px;color:${BR.od};font-weight:500">${sp}</div>`:""}</td><td><span class="tg2" style="background:${SIMP[g].bg};color:${SIMP[g].fg}">${g==="b"?"يمنع الافتتاح":IMPACT[g].label}</span></td></tr>`; });
+    tblRows(head, rows, `الملاحظات والبنود غير الجاهزة (${findings.length})`);
+  } else S.push(slSlide("الملاحظات", `<div class="cream">لم تُرصد بنود غير جاهزة في هذا التقييم.</div>`));
+  /* absent elements */
+  const absent=ELS.filter(el=>{ const it=peek(el.k); return it&&it.a; });
+  if(absent.length){
+    const head=`<tr><th style="background:${BR.or};width:40px">#</th><th style="background:${BR.or}">العنصر</th><th class="g">القسم</th></tr>`;
+    tblRows(head, absent.map((el,i)=>`<tr><td class="no">${i+1}</td><td class="nm">${esc(el.name)}</td><td>${esc(el.main)} › ${esc(el.title)}</td></tr>`), `العناصر غير الموجودة في المسجد (${absent.length})`);
+  }
   /* decision */
   S.push(slSlide("قرار الجاهزية والاعتماد", `<div class="dec-big ${decCls}"><span>قرار الجاهزية</span><b>${decTxt}</b></div>
     ${d.reason?`<div class="cream"><b>المبررات والاشتراطات:</b> ${esc(d.reason)}</div>`:""}
@@ -1618,6 +1631,11 @@ async function exportPPTX(){
       s.addTable([hdr, ...rows], { x:0.55, y:1.55, w:12.23, colW:[3.6,3.0,1.9,2.33,1.4], fontFace:F, fontSize:10.5, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.75 },
         autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.55, newSlideStartY:1.55, masterName:"MAIN" });
     }
+    /* absent elements */
+    { const absent=ELS.filter(el=>{ const it=peek(el.k); return it&&it.a; });
+      if(absent.length){ const s=add(`العناصر غير الموجودة في المسجد (${absent.length})`);
+        s.addTable([["القسم","العنصر","#"].map(t=>({ text:t, options:{ bold:true, color:"FFFFFF", fill:{ color:DARK } } })), ...absent.map((el,i)=>[`${el.main} › ${el.title}`, el.name, String(i+1)].map(t=>({ text:t })))],
+          { x:0.55, y:1.55, w:12.23, colW:[6.0,5.43,0.8], fontFace:F, fontSize:12, rtlMode:true, align:"right", valign:"middle", border:{ type:"solid", color:LINE, pt:0.5 }, autoPage:true, autoPageRepeatHeader:true, autoPageSlideStartY:1.55, newSlideStartY:1.55, masterName:"MAIN" }); } }
     /* photos */
     const phs=[]; STEPS.forEach(st=>{ if(st.type!=="page") return; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>phs.push({p,el,it})); }); });
     for(let i=0;i<phs.length;i+=3){
@@ -1663,6 +1681,18 @@ async function exportPPTX(){
 /* ---------------- تشغيل ---------------- */
 render();
 loadSaved().then(()=>{ if(restored) render(); });
+/* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
+const BUILD_ID = "20261115055747";
+(function checkUpdate(){
+  if(location.protocol==="file:") return;
+  try{
+    fetch(location.pathname+"?nocache="+Date.now(), { cache:"no-store" }).then(r=>r.ok?r.text():"").then(t=>{
+      const m=t.match(/const BUILD_ID = "([^"]+)"/); if(!m || m[1]===BUILD_ID || m[1]==="__BUILD__") return;
+      let n=0; try{ n=+sessionStorage.getItem("upd-"+m[1])||0; sessionStorage.setItem("upd-"+m[1], n+1); }catch(_){}
+      if(n<2){ saveNow(); setTimeout(()=>location.replace(location.pathname+"?v="+m[1]), 400); }
+    }).catch(()=>{});
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
