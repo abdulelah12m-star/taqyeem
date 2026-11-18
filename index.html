@@ -1648,6 +1648,7 @@ function buildSlides(host){
   /* absent elements */
   const absent=ELS.filter(el=>{ const it=peek(el.k); return it&&it.a; });
   if(absent.length){
+    S.push(divider(nn(), "العناصر غير الموجودة<br>في المسجد", BR.ye, dvp[1]||dvp[0]||""));
     const head=`<tr><th style="background:${BR.or};width:230px">القسم</th><th class="g">العناصر غير الموجودة</th></tr>`;
     const grp=[]; absent.forEach(el=>{ let g=grp.find(x=>x.m===el.main); if(!g) grp.push(g={m:el.main,l:[]}); g.l.push(el); });
     tblRows(head, grp.map(g=>`<tr><td class="nm">${esc(g.m)}<small>${g.l.length} عنصر</small></td><td><div class="cr">${g.l.map(el=>`<span class="ck x">${esc(el.no)}. ${esc(el.name)}</span>`).join("")}</div></td></tr>`), `العناصر غير الموجودة في المسجد (${absent.length})`);
@@ -1833,7 +1834,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118181236";
+const BUILD_ID = "20261118181430";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
