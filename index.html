@@ -1595,6 +1595,9 @@ function buildSlides(host){
     if(tot.b) gen.push(`معالجة البنود المانعة للافتتاح (${tot.b}) قبل أي افتتاح، وإعادة التقييم بعد إغلاقها.`);
     if(tot.u) gen.push(`إغلاق البنود العاجلة بعد الافتتاح (${tot.u}) خلال مدة يحددها مشرف المساجد.`);
     if(tot.l) gen.push(`إدراج التحسينات اللاحقة (${tot.l}) ضمن خطة الصيانة والتشغيل.`);
+    ELS.forEach(el=>{ const it=peek(el.k); if(!(it&&it.a&&it.note)) return;
+      String(it.note).split(/\n+/).map(x=>x.replace(/^\s*\d+[\.\-)]\s*/,"").trim()).filter(x=>/^(يلزم|يجب|يوصى|ينبغي)/.test(x))
+        .forEach(x=>gen.push(`${esc(x)} <small style="color:#777">(${esc(el.name)} — غير موجود حاليًا)</small>`)); });
     gen.push("إجراء زيارة تحقق ميدانية لتوثيق إغلاق الملاحظات بالصور قبل الاستلام النهائي.");
     if(d.reason) gen.push(`اشتراطات المقيّم: ${esc(d.reason)}`);
     const dcls=dv?DECISIONS[dv].cls:"d-none";
@@ -1825,7 +1828,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118125902";
+const BUILD_ID = "20261118170950";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
