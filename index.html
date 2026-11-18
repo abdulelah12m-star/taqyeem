@@ -1652,10 +1652,6 @@ function buildSlides(host){
     const grp=[]; absent.forEach(el=>{ let g=grp.find(x=>x.m===el.main); if(!g) grp.push(g={m:el.main,l:[]}); g.l.push(el); });
     tblRows(head, grp.map(g=>`<tr><td class="nm">${esc(g.m)}<small>${g.l.length} عنصر</small></td><td><div class="cr">${g.l.map(el=>`<span class="ck x">${esc(el.no)}. ${esc(el.name)}</span>`).join("")}</div></td></tr>`), `العناصر غير الموجودة في المسجد (${absent.length})`);
   }
-  /* decision */
-  S.push(slSlide("قرار الجاهزية والاعتماد", `<div class="dec-big ${decCls}"><span>قرار الجاهزية</span><b>${decTxt}</b></div>
-    ${d.reason?`<div class="cream"><b>المبررات والاشتراطات:</b> ${esc(d.reason)}</div>`:""}
-    <table class="kv"><tr><td class="k">المعتمد</td><td>${esc(d.signer||m.evaluator)}</td></tr><tr><td class="k">الصفة</td><td>${esc(d.signerTitle)}</td></tr><tr><td class="k">التاريخ</td><td>${esc(dateBoth(m.date))}</td></tr><tr><td class="k">التوقيع</td><td style="height:60px"></td></tr></table>`));
   /* appendix */
   S.push(divider(nn(), "الملحق<br>التقييم التفصيلي والشواهد", BR.te, dvp[dvp.length>2?2:1]||dvp[0]||""));
   let phN=0;
@@ -1837,7 +1833,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118173154";
+const BUILD_ID = "20261118181236";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
