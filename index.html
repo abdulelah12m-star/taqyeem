@@ -1533,9 +1533,36 @@ function illSvg(kind, acc){
   if(kind==="appx") art=`<rect x="230" y="190" width="270" height="340" rx="14" ${S}/><rect x="260" y="160" width="270" height="340" rx="14" fill="#FDE6D8" stroke="#1E1E1E" stroke-width="5"/>
     ${[0,1,2,3,4].map(i=>`<path d="M292 ${215+i*52}h70M382 ${215+i*52}h116" ${S}/>`).join("")}<rect x="292" y="196" width="206" height="22" rx="4" fill="${acc}" opacity=".9"/>
     <circle cx="500" cy="440" r="70" fill="#fff" fill-opacity=".6" stroke="#1E1E1E" stroke-width="6"/><path d="M550 490l70 70" stroke="#1E1E1E" stroke-width="16" stroke-linecap="round"/><path d="M468 440l22 22 38-44" fill="none" stroke="#E0703A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>`;
+  if(kind==="cover"){
+    const tri=(x,y,z)=>`<path d="M${x} ${y}l${z} 0l${-z/2} ${z*1.05}z" fill="#FDB940"/>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="760" height="720" viewBox="0 0 760 720">
+    <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBD3B8"/><stop offset=".62" stop-color="#FDE6D8"/><stop offset="1" stop-color="#FFF3EA"/></linearGradient>
+    <linearGradient id="pv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9C7AE"/><stop offset="1" stop-color="#D9A988"/></linearGradient></defs>
+    <rect width="760" height="720" fill="url(#sky)"/>
+    <circle cx="560" cy="170" r="74" fill="#FFA369" opacity=".55"/><circle cx="560" cy="170" r="46" fill="#FFA369" opacity=".8"/>
+    <path d="M0 520 C140 495 250 505 380 498 C520 490 640 470 760 480 V720 H0z" fill="#F2D6C2"/>
+    <rect x="455" y="120" width="34" height="400" fill="#EFE4D8"/><path d="M455 120l17-70 17 70z" fill="#E3D3C3"/><rect x="472" y="120" width="17" height="400" fill="#DCCBB9"/>
+    <rect x="452" y="150" width="40" height="7" fill="#C9B6A2"/><path d="M462 205v26M482 205v26" stroke="#B9A48E" stroke-width="3"/>
+    <path d="M150 520 L178 250 L330 232 L338 520z" fill="#F4ECE3"/><path d="M178 250 L330 232 L330 245 L180 262z" fill="#E6D9CC"/>
+    <path d="M330 520 L336 196 L470 214 L488 520z" fill="#EFE5DA"/><path d="M336 196 L470 214 L488 520 L420 520 L404 230z" fill="#E2D3C4"/>
+    <path d="M488 520 L500 300 L640 318 L612 520z" fill="#F4ECE3"/><path d="M590 314 L640 318 L612 520 L576 520z" fill="#E6D9CC"/>
+    <path d="M362 520 L376 360 L410 362 L404 520z" fill="#6E5A4B"/><path d="M370 520 L380 372 L402 374 L398 520z" fill="#FDB940" opacity=".9"/>
+    ${tri(212,300,18)}${tri(240,330,12)}${tri(204,348,10)}${tri(262,296,10)}${tri(350,250,16)}${tri(380,280,10)}${tri(530,350,16)}${tri(560,378,10)}${tri(520,394,9)}
+    <path d="M0 540 H760 V720 H0z" fill="url(#pv)"/>
+    ${Array.from({length:12},(_,k)=>`<path d="M${k*70-40} 720 L${k*64+20} 540" stroke="#C99A79" stroke-width="2" opacity=".5"/>`).join("")}
+    ${[0,1,2,3].map(k=>`<path d="M0 ${570+k*40} H760" stroke="#C99A79" stroke-width="2" opacity=".45"/>`).join("")}
+    <rect x="110" y="380" width="8" height="160" fill="#BFAE9C"/><path d="M114 382 h34" stroke="#BFAE9C" stroke-width="7" stroke-linecap="round"/><rect x="140" y="378" width="22" height="9" rx="3" fill="#A8968A"/>
+    <rect x="640" y="400" width="8" height="140" fill="#BFAE9C"/><path d="M644 402 h-30" stroke="#BFAE9C" stroke-width="7" stroke-linecap="round"/>
+    ${[250,300,560].map(x=>`<rect x="${x}" y="520" width="7" height="34" rx="2" fill="#2B2B2B"/><rect x="${x+2}" y="524" width="3" height="14" fill="#FDB940"/>`).join("")}
+    <g transform="translate(108 520)"><ellipse cx="34" cy="8" rx="40" ry="6" fill="#C99A79" opacity=".5"/><path d="M34 6 C30 -40 36 -70 34 -96" stroke="#7A5C45" stroke-width="7" fill="none"/>
+      ${[[-50,-110],[40,-120],[-30,-140],[60,-95],[-60,-85]].map(([x,y])=>`<path d="M34 -96 Q${34+x/2} ${y-10} ${34+x} ${y+30}" stroke="#33B28A" stroke-width="9" fill="none" stroke-linecap="round"/>`).join("")}</g>
+    <g transform="translate(500 555) scale(.85)"><rect x="0" y="0" width="120" height="150" rx="10" fill="#fff" stroke="#1E1E1E" stroke-width="4"/><rect x="38" y="-12" width="44" height="22" rx="6" fill="#FFA369" stroke="#1E1E1E" stroke-width="4"/>
+      ${[0,1,2,3].map(k=>`<rect x="16" y="${26+k*30}" width="16" height="16" rx="3" fill="none" stroke="#1E1E1E" stroke-width="3"/><path d="M42 ${34+k*30}h58" stroke="#1E1E1E" stroke-width="3" stroke-linecap="round"/>${k<3?`<path d="M19 ${34+k*30}l5 5 9-11" fill="none" stroke="#33B28A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`:""}`).join("")}</g>
+    </svg>`;
+  }
   return `<svg xmlns="http://www.w3.org/2000/svg" width="760" height="720" viewBox="0 0 760 720"><rect width="760" height="720" fill="#FDE6D8"/>${tri.join("")}${art}</svg>`;
 }
-async function prepIll(){ for(const [k,a] of [["find","#F5A06E"],["absent","#FDB940"],["appx","#33B28A"]]){ if(ILL[k]) continue;
+async function prepIll(){ for(const [k,a] of [["cover","#F5A06E"],["find","#F5A06E"],["absent","#FDB940"],["appx","#33B28A"]]){ if(ILL[k]) continue;
   ILL[k]=await new Promise(res=>{ const im=new Image(); im.onload=()=>{ const c=document.createElement("canvas"); c.width=1520; c.height=1440; c.getContext("2d").drawImage(im,0,0,1520,1440); res(c.toDataURL("image/png")); }; im.onerror=()=>res(""); im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(illSvg(k,a)); }); } }
 const PH_LAND=new Map();
 async function photoDims(){ const all=[]; Object.values(state.items||{}).forEach(it=>{ if(it&&it.ph) it.ph.forEach(p=>all.push(p)); });
@@ -1610,7 +1637,7 @@ function buildSlides(host){
   if(_city){ _dist=_dist.split(/\s*[\/\-–—،,]\s*/).filter(x=>x&&x!==_city).join(" "); }
   const place=[_dist, _city].filter(Boolean).join(" - ");
   /* cover (guide style) */
-  S.push({ raw:`<div class="sl"><div class="gc-ph" style="${cp?`background-image:url('${cp}')`:""}"></div><div class="gc-or"></div>
+  S.push({ raw:`<div class="sl"><div class="gc-ph" style="background-image:url('${ILL.cover||cp}')"></div><div class="gc-or"></div>
     <div class="gc-k">تقرير تقييم جاهزية المسجد للافتتاح</div><div class="gc-t">${esc(info.name)}</div>
     ${place?`<div class="gc-p">${esc(place)}</div>`:""}${mosqueCode()?`<div class="gc-c" style="${place?"":"top:322px"}">${esc(mosqueCode())}</div>`:""}
     <div class="gc-d"><div><span>تاريخ التقييم</span><b>${esc(hijri(m.date))}</b></div><div><span>الموافق</span><b>${esc(greg(m.date))}</b></div><div><span>المقيّم</span><b>${esc(m.evaluator||"—")}</b></div></div>
@@ -1880,7 +1907,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118190050";
+const BUILD_ID = "20261118190804";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
