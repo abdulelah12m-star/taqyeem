@@ -486,6 +486,15 @@ table.at{width:100%;border-collapse:collapse;font-size:15px}
 .pbar{background:linear-gradient(270deg,#F5A06E 0%,#F8BE9A 55%,#FDE6D8 100%) !important;color:#1E1E1E !important;font-weight:600}
 .p4 .cap{background:#fff;border-bottom:1.5px solid #F5A06E}
 .dec-big{text-align:center}
+
+.rc-lead{padding:16px 24px;font-size:20px;font-weight:600;line-height:1.6;margin-bottom:18px}
+.rc-lead span{display:block;font-size:13px;font-weight:500;opacity:.85}
+.rc-gen{margin-top:18px}
+.rc-gen > div{display:flex;gap:14px;align-items:flex-start;padding:7px 0;border-bottom:1px solid #EAEAEA;font-size:16px;line-height:1.7}
+.rc-gen i{flex:none;font-style:normal;width:30px;height:30px;line-height:30px;text-align:center;border:1.5px solid #1E1E1E;font-weight:600;font-size:14px}
+.rc-gen p{margin:0;flex:1}
+.at tr.rc-g td{background:linear-gradient(270deg,#F5A06E 0%,#F8BE9A 55%,#FDE6D8 100%) !important;font-weight:600;font-size:16px;padding:7px 12px}
+.at tr.rc-g img{width:24px;height:24px;vertical-align:middle;margin-left:10px}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1576,6 +1585,42 @@ function buildSlides(host){
       <tr class="tot"><td>الإجمالي</td><td>${tot.done} / ${tot.total}</td><td>${tot.n}</td><td>${tot.b}</td><td>${tot.readiness==null?"—":tot.readiness+"%"}</td></tr></table>`));
   let secN=0; const nn=()=>String(++secN).padStart(2,"0");
   /* findings */
+  /* ===== final recommendations ===== */
+  { const dv=d.value || (tot.b>0?"not":tot.u>0?"cond":(tot.readiness!=null?"ready":""));
+    const lead={ ready:"يوصى بافتتاح المسجد للمصلين، مع متابعة التحسينات اللاحقة ضمن أعمال الصيانة الدورية.",
+      cond:"يوصى بافتتاح المسجد للمصلين بشرط الالتزام بمعالجة البنود العاجلة بعد الافتتاح مباشرة، وجدولة التحسينات اللاحقة.",
+      not:"لا يوصى بافتتاح المسجد قبل معالجة البنود المانعة للافتتاح وإعادة التحقق منها ميدانيًا." }[dv]||"تُستكمل التوصية بعد اكتمال التقييم.";
+    const gen=[];
+    if(m.contractor) gen.push(`تكليف المقاول (${esc(m.contractor)}) بمعالجة البنود وفق الأولوية الموضحة${m.supervisor?`، تحت إشراف الاستشاري (${esc(m.supervisor)})`:""}.`);
+    if(tot.b) gen.push(`معالجة البنود المانعة للافتتاح (${tot.b}) قبل أي افتتاح، وإعادة التقييم بعد إغلاقها.`);
+    if(tot.u) gen.push(`إغلاق البنود العاجلة بعد الافتتاح (${tot.u}) خلال مدة يحددها مشرف المساجد.`);
+    if(tot.l) gen.push(`إدراج التحسينات اللاحقة (${tot.l}) ضمن خطة الصيانة والتشغيل.`);
+    gen.push("إجراء زيارة تحقق ميدانية لتوثيق إغلاق الملاحظات بالصور قبل الاستلام النهائي.");
+    if(d.reason) gen.push(`اشتراطات المقيّم: ${esc(d.reason)}`);
+    const dcls=dv?DECISIONS[dv].cls:"d-none";
+    S.push(slSlide("التوصيات النهائية", `<div class="rc-lead ${dcls}"><span>${d.value?"التوصية العامة":"التوصية العامة (مبدئية حسب النتائج)"}</span>${lead}</div>
+      ${band("gbar",[["stp","تُعالج قبل الافتتاح",tot.b],["clk","عاجلة بعد الافتتاح",tot.u],["wrn","تحسينات لاحقة",tot.l],["chk","نسبة الجاهزية الحالية",tot.readiness==null?"—":tot.readiness+"%"]])}
+      <div class="rc-gen">${gen.map((g,i)=>`<div><i>${i+1}</i><p>${g}</p></div>`).join("")}</div>`));
+    if(findings.length){
+      const act=(el,it)=>{ const req=String(it.note||"").split(/\n+/).map(x=>x.replace(/^\s*\d+[\.\-)]\s*/,"").trim()).filter(x=>/^(يلزم|يجب|يوصى|ينبغي)/.test(x));
+        if(req.length) return req.map(esc).join("<br>");
+        const cus=[], std=[]; el.crit.forEach((c,ci)=>{ const v=it.c[ci]; if(!(v&&v.s==="n")) return; if(v.t) cus.push(esc(v.t)); else std.push(esc(c)); });
+        return [...cus, ...(std.length?["معالجة ما يخص: "+std.join("، ")]:[])].join("<br>"); };
+      const groups=[["b","stp","قبل الافتتاح (بنود مانعة)"],["u","clk","عاجل بعد الافتتاح"],["l","wrn","تحسينات لاحقة"]];
+      const head=`<tr><th style="width:40px">#</th><th style="width:300px">العنصر</th><th>الإجراء الموصى به</th></tr>`;
+      const rows=[]; let n=0;
+      groups.forEach(([g,ic,lbl])=>{ const fs=findings.filter(f=>(f.s.sev||"none")===g); if(!fs.length) return;
+        rows.push(`<tr class="rc-g"><td colspan="3"><img src="${IC[ic]}">${lbl} <b>(${fs.length})</b></td></tr>`);
+        fs.forEach(({el})=>{ const it=peek(el.k); rows.push(`<tr><td class="no">${++n}</td><td class="nm">${esc(el.name)}<small>${esc(el.main)} › ${esc(el.title)}</small></td><td>${act(el,it)}</td></tr>`); }); });
+      host.innerHTML=`<div class="sl-measure" style="width:1152px"><table class="at">${head}${rows.join("")}</table></div>`;
+      const trs=[...host.querySelectorAll("tr")], hh=trs[0].getBoundingClientRect().height, hs=trs.slice(1).map(t=>t.getBoundingClientRect().height);
+      const pages=[]; let cur=[], h=hh;
+      rows.forEach((r,i)=>{ const isG=r.startsWith('<tr class="rc-g"'); const need=hs[i]+(isG&&i+1<rows.length?hs[i+1]:0);
+        if(h+need>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=hh; } cur.push(r); h+=hs[i]; });
+      if(cur.length) pages.push(cur);
+      pages.forEach((pg,pi)=>S.push(slSlide(`خطة المعالجة حسب الأولوية${pages.length>1?` (${pi+1}/${pages.length})`:""}`, `<table class="at">${head}${pg.join("")}</table>`)));
+    }
+  }
   S.push(divider(nn(), "الملاحظات<br>والبنود غير الجاهزة", BR.or, dvp[0]||""));
   /* findings: one list, each element with its status */
   const tblRows=(head, rows, title)=>{
@@ -1778,7 +1823,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118094720";
+const BUILD_ID = "20261118125403";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
