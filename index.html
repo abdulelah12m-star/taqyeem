@@ -424,6 +424,68 @@ table.at{width:100%;border-collapse:collapse;font-size:15px}
 /* end */
 .sle{background:#0F0F0F}
 .sle img{position:absolute;top:50%;left:50%;width:260px;transform:translate(-50%,-50%)}
+
+/* ===== guide style (دليل مساجد الأمير متعب) ===== */
+.sl{color:#1E1E1E}
+.sl-st{display:none}
+.sl-hd{top:40px;right:72px;left:72px;display:block}
+.sl-hd .t{font-size:34px;font-weight:600;line-height:1.25}
+.sl-hd .s{display:inline-block;margin-top:8px;background:#F5A06E;color:#1E1E1E;font-size:14px;font-weight:500;padding:0 12px;line-height:1.8}
+.sl-bd{top:150px;left:72px;right:72px;bottom:64px}
+.sl-pn{left:72px;bottom:24px;font-size:12px;color:#1E1E1E}
+.sl-og{right:72px;bottom:24px;font-size:12px;color:#1E1E1E}
+.gbar{background:linear-gradient(270deg,#F5A06E 0%,#F8BE9A 55%,#FDE6D8 100%)}
+.gbar2{background:#EEEEEE}
+/* icon band */
+.ib{display:flex;align-items:stretch;padding:14px 10px}
+.ib > div{flex:1;text-align:center;padding:0 6px}
+.ib img{width:38px;height:38px;display:block;margin:0 auto 6px}
+.ib .l{font-size:13.5px;line-height:1.45;color:#1E1E1E}
+.ib .v{font-size:16px;font-weight:600;color:#E0703A;line-height:1.5;margin-top:2px}
+.ib-v{display:flex;flex-direction:column;gap:14px}
+/* guide cover */
+.gc-or{position:absolute;top:0;bottom:0;right:0;width:700px;background:#F5A06E}
+.gc-ph{position:absolute;top:0;bottom:0;left:0;width:580px;background-size:cover;background-position:center;background-color:#FDE6D8}
+.gc-k{position:absolute;top:92px;right:80px;font-size:18px;font-weight:500}
+.gc-t{position:absolute;top:134px;right:80px;width:560px;font-size:52px;font-weight:600;line-height:1.3}
+.gc-p{position:absolute;top:322px;right:80px;display:inline-block;background:#1E1E1E;color:#fff;font-size:18px;padding:2px 16px}
+.gc-c{position:absolute;top:376px;right:80px;border:1.5px solid #1E1E1E;font-size:17px;font-weight:600;padding:0 14px;direction:ltr}
+.gc-d{position:absolute;top:470px;right:80px;width:560px;display:flex;gap:28px;border-top:1.5px solid #1E1E1E;padding-top:14px}
+.gc-d > div{flex:1}
+.gc-d span{display:block;font-size:13px}
+.gc-d b{display:block;font-size:17px;font-weight:600;line-height:1.5}
+.gc-logo{position:absolute;right:80px;bottom:56px}
+.gc-logo img{height:62px}
+/* guide info */
+.gi-num{position:absolute;top:44px;right:64px}
+.gi-num img{height:120px}
+.gi-name{position:absolute;top:176px;right:72px;width:300px;font-size:30px;font-weight:600;line-height:1.3}
+.gi-tag{position:absolute;top:276px;right:72px;max-width:300px;background:#F5A06E;font-size:17px;font-weight:500;padding:0 12px;line-height:1.8}
+.gi-two{position:absolute;top:350px;right:72px;width:300px;display:flex;gap:18px}
+.gi-two > div{text-align:center;flex:1}
+.gi-two img{width:54px;height:54px;display:block;margin:0 auto 6px}
+.gi-two .l{font-size:13px}.gi-two .v{font-size:15px;font-weight:600;color:#E0703A}
+.gi-dec{position:absolute;top:500px;right:72px;width:300px;text-align:center;font-size:18px;font-weight:600;padding:12px}
+.gi-main{position:absolute;top:150px;left:64px;right:420px}
+.gi-qr{position:absolute;left:64px;bottom:70px;display:flex;align-items:center;gap:14px}
+.gi-qr img{width:86px;height:86px;image-rendering:pixelated}
+.gi-qr b{display:block;font-size:13px}.gi-qr span{font-size:11.5px;color:#555}
+/* guide divider */
+.gd-ph{position:absolute;top:0;bottom:0;left:0;width:760px;background-size:cover;background-position:center}
+.gd-p{position:absolute;top:0;bottom:0;right:0;width:520px}
+.gd-t{position:absolute;top:120px;right:70px;width:390px;font-size:44px;font-weight:600;line-height:1.35}
+.gd-n{position:absolute;right:56px;bottom:60px}
+.gd-n img{height:230px}
+/* tables in guide style */
+.ct th,.at th{background:#FDE6D8 !important;color:#1E1E1E !important;font-weight:600}
+.ct tr:first-child th:first-child,.at tr:first-child th:first-child{background:#F5A06E !important}
+.ct tr:nth-child(even) td,.at tr:nth-child(even) td{background:#FAFAFA}
+.ct td,.at td{border-bottom:1px solid #EAEAEA}
+.ct tr.tot td{background:#FDE6D8}
+.at .no{color:#E0703A}
+.pbar{background:linear-gradient(270deg,#F5A06E 0%,#F8BE9A 55%,#FDE6D8 100%) !important;color:#1E1E1E !important;font-weight:600}
+.p4 .cap{background:#fff;border-bottom:1.5px solid #F5A06E}
+.dec-big{text-align:center}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1411,6 +1473,17 @@ const ICONS = {
   cal: svgI('<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M8.5 13.5v3M12 13.5v3M15.5 13.5v3"/>'),
   ppl: svgI('<circle cx="9" cy="8" r="3.4"/><path d="M2.8 20c.6-3.6 3.2-5.6 6.2-5.6s5.6 2 6.2 5.6z"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.3M17.4 14.6c2.2.5 3.6 2.4 3.9 5.4h-3.2"/>'),
   bld: svgI('<path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9.5 21v-5h5v5M9 11.5h1.5M13.5 11.5H15"/>'),
+  msq: svgI('<path d="M4 21h16M5 21v-8h14v8M7 13c0-3 2.2-5 5-6.5 2.8 1.5 5 3.5 5 6.5"/><path d="M12 6.5V3.5M10.5 21v-4a1.5 1.5 0 0 1 3 0v4M7.5 16v2M16.5 16v2"/>'),
+  usr: svgI('<circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c.8-4 3.8-6.2 7.5-6.2s6.7 2.2 7.5 6.2"/>'),
+  hat: svgI('<path d="M3 17.5h18M4.5 17.5a7.5 7.5 0 0 1 15 0"/><path d="M10 10.5V6.5h4v4M8 11l-1-3M16 11l1-3"/>'),
+  clp: svgI('<rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3h6v1.5M8.5 10h7M8.5 13.5h7M8.5 17h4"/>'),
+  tag: svgI('<path d="M3.5 12.5V4.5h8l9 9-8 8z"/><circle cx="8" cy="9" r="1.4"/>'),
+  map: svgI('<path d="M3 6.5l6-2.5 6 2.5 6-2.5v13.5l-6 2.5-6-2.5-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/>'),
+  gau: svgI('<path d="M3.5 16a8.5 8.5 0 1 1 17 0"/><path d="M12 16l4-5M6 16h1.5M16.5 16H18M12 7.5V9"/>'),
+  chk: svgI('<circle cx="12" cy="12" r="8.5"/><path d="M8 12.3l2.7 2.7L16.2 9.5"/>'),
+  stp: svgI('<path d="M8.2 3.5h7.6l5.4 5.4v7.6l-5.4 5.4H8.2l-5.4-5.4V8.9z"/><path d="M8.5 12h7"/>'),
+  clk: svgI('<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.4 2"/>'),
+  wrn: svgI('<path d="M14.5 6.5a4 4 0 0 0-5 5L4 17l3 3 5.5-5.5a4 4 0 0 0 5-5L15 12l-3-3z"/>'),
 };
 async function tintImg(src,color){
   return new Promise(res=>{ const im=new Image(); im.onload=()=>{ const c=document.createElement("canvas"); c.width=im.naturalWidth; c.height=im.naturalHeight; const g=c.getContext("2d"); g.drawImage(im,0,0);
@@ -1423,7 +1496,16 @@ async function rasterIcons(){
   ICON_PNG=out;
 }
 let LOGO_OR="";
-async function prepBrand(){ if(!LOGO_BK) LOGO_BK=await tintImg(LOGO,"#000"); if(!LOGO_OR) LOGO_OR=await tintImg(LOGO,"#FFA369"); await rasterIcons(); }
+const ONUM={};
+function outlineNum(txt,color){ const k=txt+color; if(ONUM[k]) return ONUM[k];
+  const c=document.createElement("canvas"), fs=300; c.width=fs*0.62*txt.length+40; c.height=fs*0.86; const g=c.getContext("2d");
+  g.font=`300 ${fs}px "IBM Plex Sans", Arial, sans-serif`; g.textBaseline="alphabetic"; g.lineWidth=3.2; g.strokeStyle=color; g.lineJoin="round";
+  const w=g.measureText(txt).width; c.width=Math.ceil(w)+20; g.font=`300 ${fs}px "IBM Plex Sans", Arial, sans-serif`; g.lineWidth=3.2; g.strokeStyle=color;
+  g.strokeText(txt,10,fs*0.76); return ONUM[k]=c.toDataURL("image/png"); }
+const PH_LAND=new Map();
+async function photoDims(){ const all=[]; Object.values(state.items||{}).forEach(it=>{ if(it&&it.ph) it.ph.forEach(p=>all.push(p)); });
+  await Promise.all(all.filter(p=>!PH_LAND.has(p)).map(p=>new Promise(res=>{ const im=new Image(); im.onload=()=>{ PH_LAND.set(p, im.naturalWidth>im.naturalHeight*1.2); res(); }; im.onerror=()=>{ PH_LAND.set(p,false); res(); }; im.src=p; }))); }
+async function prepBrand(){ await photoDims(); try{ await document.fonts.load('300 100px "IBM Plex Sans"'); }catch(e){} if(!LOGO_BK) LOGO_BK=await tintImg(LOGO,"#000"); if(!LOGO_OR) LOGO_OR=await tintImg(LOGO,"#FFA369"); await rasterIcons(); }
 function greg(d){ if(!d) return ""; try{ return new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-latn",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"}).format(new Date(d+"T00:00:00Z")).replace(/\s*م$/,"")+"م"; }catch(e){ return d; } }
 function crOf(el){ const it=peek(el.k)||{c:{}}; return el.crit.map((c,i)=>(it.c&&it.c[i]&&it.c[i].t)||c); }
 function photoSlides(list, title){
@@ -1451,6 +1533,8 @@ function paginateKeep(blocks, hs){
   return pages;
 }
 function divider(num, title, color, photo){
+  const dk=color===BR.or?"#F5A06E":color;
+  return { raw:`<div class="sl">${photo?`<div class="gd-ph" style="background-image:url('${photo}')"></div>`:`<div class="gd-ph" style="background:#FDE6D8"></div>`}<div class="gd-p" style="background:${dk}"></div><div class="gd-t">${title}</div><div class="gd-n"><img src="${outlineNum(num,"#1E1E1E")}"></div></div>` };
   return { raw:`<div class="sl" style="background:${color}"><div class="dv-r"></div><div class="dv-n">${num}</div><div class="dv-t">${title}</div>${photo?`<div class="dv-ph" style="background-image:url('${photo}')"></div>`:""}<div class="sl-st" style="background:#1E1E1E;opacity:.15"></div></div>` };
 }
 function buildSlides(host){
@@ -1458,34 +1542,41 @@ function buildSlides(host){
   const S=[]; const decCls=d.value?DECISIONS[d.value].cls:"d-none", decTxt=d.value?DECISIONS[d.value].label:"لم يُعتمد القرار بعد (مسودة)";
   const qr=qrData(mapLink());
   const phs=[]; STEPS.forEach(st=>{ if(st.type!=="page") return; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>phs.push({p,el,it})); }); });
-  const cp=m.coverPhoto || (phs[0]&&phs[0].p) || "";
+  const land=phs.filter(x=>PH_LAND.get(x.p)).map(x=>x.p);
+  const cp=m.coverPhoto || land[0] || (phs[0]&&phs[0].p) || "";
+  const dvp=[...land.filter(p=>p!==cp), ...phs.map(x=>x.p).filter(p=>p!==cp&&!land.includes(p))];
   const _city=(info.city||"").trim(); let _dist=String(m.district||"").trim();
   if(_city){ _dist=_dist.split(/\s*[\/\-–—،,]\s*/).filter(x=>x&&x!==_city).join(" "); }
   const place=[_dist, _city].filter(Boolean).join(" - ");
-  /* cover */
-  S.push({ raw:`<div class="sl"><div class="fv-band"></div><div class="fv-lbl">تقرير تقييم ميداني</div>
-    ${cp?`<div class="fv-ph" style="background-image:url('${cp}')"></div>`:""}
-    <div class="fv-card" style="${cp?"":"left:64px"}"><div class="k">تقرير تقييم جاهزية المسجد</div><div class="t">${esc(info.name)}</div>
-      <div class="s">مساجد الأمير متعب بن عبدالعزيز -رحمه الله-${place?"<br>"+esc(place):""}</div>${mosqueCode()?`<div class="c">${esc(mosqueCode())}</div>`:""}</div>
-    <div class="fv-teal" style="${cp?"":"left:64px"}"><div><span>تاريخ التقييم</span><b>${esc(hijri(m.date))}</b></div><div><span>الموافق</span><b>${esc(greg(m.date))}</b></div><div><span>المقيّم</span><b>${esc(m.evaluator)}</b></div><div><span>نسبة الجاهزية</span><b>${tot.readiness==null?"—":tot.readiness+"%"}</b></div></div>
-    <div class="fv-logo" style="${cp?"":"left:64px"}"><img src="${LOGO_OR}"></div><div class="sl-st"></div></div>` });
-  /* basic information */
+  /* cover (guide style) */
+  S.push({ raw:`<div class="sl"><div class="gc-ph" style="${cp?`background-image:url('${cp}')`:""}"></div><div class="gc-or"></div>
+    <div class="gc-k">تقرير تقييم جاهزية المسجد للافتتاح</div><div class="gc-t">${esc(info.name)}</div>
+    ${place?`<div class="gc-p">${esc(place)}</div>`:""}${mosqueCode()?`<div class="gc-c" style="${place?"":"top:322px"}">${esc(mosqueCode())}</div>`:""}
+    <div class="gc-d"><div><span>تاريخ التقييم</span><b>${esc(hijri(m.date))}</b></div><div><span>الموافق</span><b>${esc(greg(m.date))}</b></div><div><span>المقيّم</span><b>${esc(m.evaluator||"—")}</b></div></div>
+    <div class="gc-logo"><img src="${LOGO_BK}"></div></div>` });
+  /* basic information (guide style) */
   const IC=ICON_PNG.pin?ICON_PNG:ICONS;
-  const tiles=[[BR.or,IC.pin,"الموقع",esc(place||"—")],[BR.ye,IC.cal,"تاريخ التقييم",`${esc(m.date)} م<br>${esc(hijri(m.date))}`],[BR.te,IC.ppl,"المقيّم",esc(m.evaluator||"—")],[BR.gl,IC.bld,"المقاول المنفّذ",esc(m.contractor||"—")]];
-  const kv=[["المسجد",info.name],["رمز المسجد",mosqueCode()],["المنطقة",[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" – ")],["جهة المقيّم",m.evaluatorOrg],["الاستشاري / المشرف",m.supervisor]].filter(x=>x[1]);
-  S.push({ title:"", body:"", raw2:`<div class="in-wrap"><div class="in-side"><div class="h">المعلومات<br>الأساسية</div><div class="s">${esc(info.name)}</div>
-      <div class="in-dec ${decCls}">${decTxt}</div>
-      ${qr?`<div class="in-qr"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الباركود لفتح الموقع على خرائط Google</span></div></div>`:""}</div>
-    <div class="in-main"><div class="in-tiles">${tiles.map(([c,ic,l,v])=>`<div><div class="ic" style="background:${c}"><img src="${ic}"></div><div class="l">${l}</div><div class="v">${v}</div><div class="u" style="background:${c}"></div></div>`).join("")}</div>
-      <table class="kv">${kv.map(([k,v])=>`<tr><td class="k">${k}</td><td>${esc(v)}</td></tr>`).join("")}</table></div></div>` });
+  const band=(cls,arr)=>`<div class="ib ${cls}">${arr.map(([ic,l,v])=>`<div><img src="${IC[ic]}"><div class="l">${l}</div><div class="v">${v}</div></div>`).join("")}</div>`;
+  const regionTxt=[info.city,REGION_NAMES[info.region]].filter(Boolean).join(" – ");
+  S.push({ raw:`<div class="sl"><div class="gi-num"><img src="${outlineNum(String(m.mosque&&m.mosque!=="new"?m.mosque:"00").padStart(2,"0"),"#1E1E1E")}"></div>
+    <div class="gi-name">${esc(info.name)}</div>${place?`<div class="gi-tag">${esc(place)}</div>`:""}
+    <div class="gi-two"><div><img src="${IC.msq}"><div class="l">رمز المسجد</div><div class="v" style="direction:ltr">${esc(mosqueCode()||"—")}</div></div><div><img src="${IC.cal}"><div class="l">تاريخ التقييم</div><div class="v">${esc(hijri(m.date))}</div></div></div>
+    <div class="gi-dec ${decCls}">${decTxt}</div>
+    <div class="gi-main"><div class="ib-v">
+      ${band("gbar2",[["map","المنطقة",esc(regionTxt||"—")],["pin","الحي",esc(_dist||"—")],["cal","التاريخ الميلادي",esc(greg(m.date))],["usr","المقيّم",esc(m.evaluator||"—")]])}
+      ${band("gbar",[["bld","جهة المقيّم",esc(m.evaluatorOrg||"—")],["hat","المقاول المنفّذ",esc(m.contractor||"—")],["clp","الاستشاري / المشرف",esc(m.supervisor||"—")]])}
+      ${band("gbar",[["gau","نسبة الجاهزية",tot.readiness==null?"—":tot.readiness+"%"],["chk","اكتمال التقييم",(tot.completion||0)+"%"],["stp","بنود تمنع الافتتاح",tot.b],["clk","عاجل بعد الافتتاح",tot.u],["wrn","تحسين لاحق",tot.l]])}
+    </div></div>
+    ${qr?`<div class="gi-qr"><img src="${qr}"><div><b>موقع المسجد</b><span>امسح الرمز لفتح الموقع على خرائط Google</span></div></div>`:""}
+    <div class="sl-pn">2</div><div class="sl-og">${ORG}</div></div>` });
   /* summary */
-  S.push(slSlide("ملخص النتائج", `<div class="tiles">${[[BR.te,tot.readiness==null?"—":tot.readiness+"%","نسبة الجاهزية"],[BR.or,(tot.completion||0)+"%",`اكتمال التقييم (${tot.done}/${tot.total})`],[BR.bk,tot.b,"بنود تمنع الافتتاح"],[BR.ye,tot.u,"عاجل بعد الافتتاح"],[BR.gl,tot.l,"تحسين لاحق"]].map(([c,n,l],i)=>`<div><div class="n" style="background:${c};${i===4?"color:"+BR.od:i===3?"color:#1E1E1E":""}">${n}</div><div class="l">${l}</div></div>`).join("")}</div>
+  S.push(slSlide("ملخص النتائج", `${band("gbar",[["gau","نسبة الجاهزية",tot.readiness==null?"—":tot.readiness+"%"],["chk",`اكتمال التقييم (${tot.done}/${tot.total})`,(tot.completion||0)+"%"],["stp","بنود تمنع الافتتاح",tot.b],["clk","عاجل بعد الافتتاح",tot.u],["wrn","تحسين لاحق",tot.l]])}
     <table class="ct"><tr><th style="background:${BR.or}">القسم</th><th class="g">المُقيَّم</th><th class="g">غير جاهز</th><th class="g">يمنع الافتتاح</th><th style="background:${BR.ye};color:#1E1E1E;width:250px">نسبة الجاهزية</th></tr>
       ${per.map(p=>`<tr><td>${esc(p.main)}</td><td>${p.done} / ${p.total}</td><td>${p.n}</td><td style="${p.b?"font-weight:700":""}">${p.b}</td><td><div class="cbar"><span><i style="width:${p.readiness||0}%;background:${brBar(p.readiness)}"></i></span><b>${p.readiness==null?"—":p.readiness+"%"}</b></div></td></tr>`).join("")}
       <tr class="tot"><td>الإجمالي</td><td>${tot.done} / ${tot.total}</td><td>${tot.n}</td><td>${tot.b}</td><td>${tot.readiness==null?"—":tot.readiness+"%"}</td></tr></table>`));
   let secN=0; const nn=()=>String(++secN).padStart(2,"0");
   /* findings */
-  S.push(divider(nn(), "الملاحظات<br>والبنود غير الجاهزة", BR.or, phs[1]?phs[1].p:(phs[0]?phs[0].p:"")));
+  S.push(divider(nn(), "الملاحظات<br>والبنود غير الجاهزة", BR.or, dvp[0]||""));
   /* findings: one list, each element with its status */
   const tblRows=(head, rows, title)=>{
     host.innerHTML=`<div class="sl-measure" style="width:1152px"><table class="at">${head}${rows.join("")}</table></div>`;
@@ -1515,7 +1606,7 @@ function buildSlides(host){
     ${d.reason?`<div class="cream"><b>المبررات والاشتراطات:</b> ${esc(d.reason)}</div>`:""}
     <table class="kv"><tr><td class="k">المعتمد</td><td>${esc(d.signer||m.evaluator)}</td></tr><tr><td class="k">الصفة</td><td>${esc(d.signerTitle)}</td></tr><tr><td class="k">التاريخ</td><td>${esc(dateBoth(m.date))}</td></tr><tr><td class="k">التوقيع</td><td style="height:60px"></td></tr></table>`));
   /* appendix */
-  S.push(divider(nn(), "الملحق<br>التقييم التفصيلي والشواهد", BR.te, phs[3]?phs[3].p:""));
+  S.push(divider(nn(), "الملحق<br>التقييم التفصيلي والشواهد", BR.te, dvp[dvp.length>2?2:1]||dvp[0]||""));
   let phN=0;
   STEPS.forEach(st=>{ if(st.type!=="page") return;
     const rows=st.els.map(el=>{ const it=peek(el.k);
@@ -1687,7 +1778,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261115120654";
+const BUILD_ID = "20261118094720";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
