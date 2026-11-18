@@ -495,6 +495,8 @@ table.at{width:100%;border-collapse:collapse;font-size:15px}
 .rc-gen p{margin:0;flex:1}
 .at tr.rc-g td{background:linear-gradient(270deg,#F5A06E 0%,#F8BE9A 55%,#FDE6D8 100%) !important;font-weight:600;font-size:16px;padding:7px 12px}
 .at tr.rc-g img{width:24px;height:24px;vertical-align:middle;margin-left:10px}
+.pl-m{font-size:12.5px;font-weight:400;color:#555;margin-top:3px}.pl-m span{color:#E0703A;font-weight:600}
+.pl-g{float:left;font-size:13px;font-weight:500}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1469,7 +1471,7 @@ function coverHTML(){
     </div><div class="rp-foot"><span>${ORG}</span><span>وفق عناصر برنامج طومان للمسجد · رقم التقييم ${esc(state.id)}</span></div></div>`;
 }
 /* ---------------- SLIDES (PDF 16:9 + PowerPoint) — brand × committee report ---------------- */
-const SLW=1280, SLH=720, SL_BODY=720-118-62-8;
+const SLW=1280, SLH=720, SL_BODY=720-150-64-6;
 const BR={ or:"#FFA369", gl:"#FEE7D9", bk:"#1E1E1E", ye:"#FDB940", gr:"#69BE5C", te:"#33B28A", od:"#E0703A" };
 const SIMP={ b:{bg:"#1E1E1E",fg:"#FFFFFF"}, u:{bg:"#FFA369",fg:"#FFFFFF"}, l:{bg:"#FDB940",fg:"#1E1E1E"}, none:{bg:"#BDBDBD",fg:"#1E1E1E"} };
 const SIMPC={ b:"#1E1E1E", u:"#E0703A", l:"#C98A0B", none:"#888" };
@@ -1585,6 +1587,14 @@ function buildSlides(host){
       <tr class="tot"><td>الإجمالي</td><td>${tot.done} / ${tot.total}</td><td>${tot.n}</td><td>${tot.b}</td><td>${tot.readiness==null?"—":tot.readiness+"%"}</td></tr></table>`));
   let secN=0; const nn=()=>String(++secN).padStart(2,"0");
   /* findings */
+  const reqLines=it=>String(it.note||"").split(/\n+/).map(x=>x.replace(/^\s*\d+[\.\-)]\s*/,"").trim()).filter(x=>/^(يلزم|يجب|يوصى|ينبغي)/.test(x));
+  const WHEN={ b:"قبل افتتاح المسجد", u:"خلال مدة يحددها مشرف المساجد بعد الافتتاح", l:"ضمن خطة الصيانة والتشغيل", none:"—" };
+  const planCell=(el,it,g)=>{ const acts=[...el.crit.map((c,ci)=>it.c[ci]&&it.c[ci].s==="n"&&it.c[ci].t?esc(it.c[ci].t):"").filter(Boolean), ...reqLines(it).map(esc)];
+    return `${acts.length?acts.map(a=>`<div>${a}</div>`).join(""):`<div>معالجة البنود المذكورة</div>`}`; };
+  const recAct=(el,it)=>{ const req=String(it.note||"").split(/\n+/).map(x=>x.replace(/^\s*\d+[\.\-)]\s*/,"").trim()).filter(x=>/^(يلزم|يجب|يوصى|ينبغي)/.test(x));
+        if(req.length) return req.map(esc).join("<br>");
+        const cus=[], std=[]; el.crit.forEach((c,ci)=>{ const v=it.c[ci]; if(!(v&&v.s==="n")) return; if(v.t) cus.push(esc(v.t)); else std.push(esc(c)); });
+        return [...cus, ...(std.length?["معالجة ما يخص: "+std.join("، ")]:[])].join("<br>"); };
   /* ===== final recommendations ===== */
   { const dv=d.value || (tot.b>0?"not":tot.u>0?"cond":(tot.readiness!=null?"ready":""));
     const lead={ ready:"يوصى بافتتاح المسجد للمصلين، مع متابعة التحسينات اللاحقة ضمن أعمال الصيانة الدورية.",
@@ -1604,30 +1614,11 @@ function buildSlides(host){
     S.push(slSlide("التوصيات النهائية", `<div class="rc-lead ${dcls}"><span>${d.value?"التوصية العامة":"التوصية العامة (مبدئية حسب النتائج)"}</span>${lead}</div>
       ${band("gbar",[["stp","تُعالج قبل الافتتاح",tot.b],["clk","عاجلة بعد الافتتاح",tot.u],["wrn","تحسينات لاحقة",tot.l],["chk","نسبة الجاهزية الحالية",tot.readiness==null?"—":tot.readiness+"%"]])}
       <div class="rc-gen">${gen.map((g,i)=>`<div><i>${i+1}</i><p>${g}</p></div>`).join("")}</div>`));
-    if(findings.length){
-      const act=(el,it)=>{ const req=String(it.note||"").split(/\n+/).map(x=>x.replace(/^\s*\d+[\.\-)]\s*/,"").trim()).filter(x=>/^(يلزم|يجب|يوصى|ينبغي)/.test(x));
-        if(req.length) return req.map(esc).join("<br>");
-        const cus=[], std=[]; el.crit.forEach((c,ci)=>{ const v=it.c[ci]; if(!(v&&v.s==="n")) return; if(v.t) cus.push(esc(v.t)); else std.push(esc(c)); });
-        return [...cus, ...(std.length?["معالجة ما يخص: "+std.join("، ")]:[])].join("<br>"); };
-      const groups=[["b","stp","قبل الافتتاح (بنود مانعة)"],["u","clk","عاجل بعد الافتتاح"],["l","wrn","تحسينات لاحقة"]];
-      const head=`<tr><th style="width:40px">#</th><th style="width:300px">العنصر</th><th>الإجراء الموصى به</th></tr>`;
-      const rows=[]; let n=0;
-      groups.forEach(([g,ic,lbl])=>{ const fs=findings.filter(f=>(f.s.sev||"none")===g); if(!fs.length) return;
-        rows.push(`<tr class="rc-g"><td colspan="3"><img src="${IC[ic]}">${lbl} <b>(${fs.length})</b></td></tr>`);
-        fs.forEach(({el})=>{ const it=peek(el.k); rows.push(`<tr><td class="no">${++n}</td><td class="nm">${esc(el.name)}<small>${esc(el.main)} › ${esc(el.title)}</small></td><td>${act(el,it)}</td></tr>`); }); });
-      host.innerHTML=`<div class="sl-measure" style="width:1152px"><table class="at">${head}${rows.join("")}</table></div>`;
-      const trs=[...host.querySelectorAll("tr")], hh=trs[0].getBoundingClientRect().height, hs=trs.slice(1).map(t=>t.getBoundingClientRect().height);
-      const pages=[]; let cur=[], h=hh;
-      rows.forEach((r,i)=>{ const isG=r.startsWith('<tr class="rc-g"'); const need=hs[i]+(isG&&i+1<rows.length?hs[i+1]:0);
-        if(h+need>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=hh; } cur.push(r); h+=hs[i]; });
-      if(cur.length) pages.push(cur);
-      pages.forEach((pg,pi)=>S.push(slSlide(`خطة المعالجة حسب الأولوية${pages.length>1?` (${pi+1}/${pages.length})`:""}`, `<table class="at">${head}${pg.join("")}</table>`)));
-    }
   }
-  S.push(divider(nn(), "الملاحظات<br>والبنود غير الجاهزة", BR.or, dvp[0]||""));
+  S.push(divider(nn(), "الملاحظات<br>وخطة المعالجة", BR.or, dvp[0]||""));
   /* findings: one list, each element with its status */
   const tblRows=(head, rows, title)=>{
-    host.innerHTML=`<div class="sl-measure" style="width:1152px"><table class="at">${head}${rows.join("")}</table></div>`;
+    host.innerHTML=`<div class="sl" style="height:auto;margin:0"><div class="sl-bd" style="position:static;width:1136px"><table class="at">${head}${rows.join("")}</table></div></div>`;
     const trs=[...host.querySelectorAll("tr")], hh=trs[0].getBoundingClientRect().height, hs=trs.slice(1).map(t=>t.getBoundingClientRect().height);
     const pages=[]; let cur=[], h=hh;
     rows.forEach((r,i)=>{ if(h+hs[i]>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=hh; } cur.push(r); h+=hs[i]; });
@@ -1635,12 +1626,22 @@ function buildSlides(host){
     pages.forEach((pg,pi)=>S.push(slSlide(`${title}${pages.length>1?` (${pi+1}/${pages.length})`:""}`, `<table class="at">${head}${pg.join("")}</table>`)));
   };
   if(findings.length){
-    const head=`<tr><th style="background:${BR.or};width:40px">#</th><th style="background:${BR.or}">العنصر</th><th class="g">البنود غير الجاهزة والملاحظة</th><th style="background:${BR.ye};color:#1E1E1E;width:150px">الحالة</th></tr>`;
-    const rows=findings.map(({el,s},i)=>{ const it=peek(el.k), g=s.sev;
-      const bad=crOf(el).map((c,ci)=>{ const v=it.c[ci]; return v&&v.s==="n" ? `<div>— ${esc(c)}${(v.i||"none")!==g?` <span style="color:${SIMPC[v.i||"none"]};font-weight:600">(${IMPACT[v.i||"none"].short})</span>`:""}</div>` : ""; }).join("");
-      const sp=specs(it);
-      return `<tr><td class="no">${i+1}</td><td class="nm">${esc(el.name)}<small>${esc(el.main)} › ${esc(el.title)}</small></td><td>${bad}${it.note?`<div class="fnote">${esc(it.note)}</div>`:""}${sp?`<div style="font-size:13px;color:${BR.od};font-weight:500">${sp}</div>`:""}</td><td><span class="tg2" style="background:${SIMP[g].bg};color:${SIMP[g].fg}">${g==="b"?"يمنع الافتتاح":IMPACT[g].label}</span></td></tr>`; });
-    tblRows(head, rows, `الملاحظات والبنود غير الجاهزة (${findings.length})`);
+    const head=`<tr><th style="width:40px">#</th><th style="width:250px">العنصر</th><th>البنود غير الجاهزة والملاحظة</th><th style="width:330px">الإجراء الموصى به</th></tr>`;
+    const groups=[["b","stp","قبل الافتتاح (بنود مانعة)"],["u","clk","عاجل بعد الافتتاح"],["l","wrn","تحسينات لاحقة"]];
+    const rows=[]; let n=0;
+    groups.forEach(([g,ic,lbl])=>{ const fs=findings.filter(f=>(f.s.sev||"none")===g); if(!fs.length) return;
+      rows.push(`<tr class="rc-g"><td colspan="4"><img src="${IC[ic]}">${lbl} <b>(${fs.length})</b><span class="pl-g">التوقيت: ${WHEN[g]} · المسؤول: ${esc(m.contractor||"المقاول المنفّذ")}</span></td></tr>`);
+      fs.forEach(({el})=>{ const it=peek(el.k);
+        const bad=crOf(el).map((c,ci)=>{ const v=it.c[ci]; return v&&v.s==="n" ? `<div>— ${esc(c)}${(v.i||"none")!==g?` <span style="color:${SIMPC[v.i||"none"]};font-weight:600">(${IMPACT[v.i||"none"].short})</span>`:""}</div>` : ""; }).join("");
+        const sp=specs(it);
+        rows.push(`<tr><td class="no">${++n}</td><td class="nm">${esc(el.name)}<small>${esc(el.main)} › ${esc(el.title)}</small>${sp?`<small style="color:${BR.od};font-weight:500">${sp}</small>`:""}</td><td>${bad}${(()=>{ const rq=reqLines(it); const rest=String(it.note||"").split(/\n+/).map(x=>x.trim()).filter(x=>x&&!rq.includes(x.replace(/^\s*\d+[\.\-)]\s*/,"").trim())); return rest.length?`<div class="fnote">${rest.map(esc).join("<br>")}</div>`:""; })()}</td><td style="font-weight:500">${planCell(el,it,g)}</td></tr>`); }); });
+    host.innerHTML=`<div class="sl" style="height:auto;margin:0"><div class="sl-bd" style="position:static;width:1136px"><table class="at">${head}${rows.join("")}</table></div></div>`;
+    const trs=[...host.querySelectorAll("tr")], hh=trs[0].getBoundingClientRect().height, hs=trs.slice(1).map(t=>t.getBoundingClientRect().height);
+    const pages=[]; let cur=[], h=hh;
+    rows.forEach((r,i)=>{ const isG=r.startsWith('<tr class="rc-g"'); const need=hs[i]+(isG&&i+1<rows.length?hs[i+1]:0);
+      if(h+need>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=hh; } cur.push(r); h+=hs[i]; });
+    if(cur.length) pages.push(cur);
+    pages.forEach((pg,pi)=>S.push(slSlide(`الملاحظات وخطة المعالجة (${findings.length})${pages.length>1?` (${pi+1}/${pages.length})`:""}`, `<table class="at">${head}${pg.join("")}</table>`)));
   } else S.push(slSlide("الملاحظات", `<div class="cream">لم تُرصد بنود غير جاهزة في هذا التقييم.</div>`));
   /* absent elements */
   const absent=ELS.filter(el=>{ const it=peek(el.k); return it&&it.a; });
@@ -1662,7 +1663,7 @@ function buildSlides(host){
     const rows=pres.map(el=>{ const it=peek(el.k);
       return `<tr><td class="no">${esc(el.no)}</td><td class="nm">${esc(el.name)}${it&&!it.a&&(it.q||it.ty||it.br)?`<small style="color:${BR.od};font-weight:500">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</td><td><div class="cr">${rpChips(el)}</div></td></tr>`; });
     const head=`<tr><th style="background:${BR.or};width:40px">#</th><th style="background:${BR.or}">العنصر</th><th class="g">بنود التقييم</th></tr>`;
-    host.innerHTML=`<div class="sl-measure" style="width:1152px"><table class="at">${head}${rows.join("")}</table></div>`;
+    host.innerHTML=`<div class="sl" style="height:auto;margin:0"><div class="sl-bd" style="position:static;width:1136px"><table class="at">${head}${rows.join("")}</table></div></div>`;
     const trs=[...host.querySelectorAll("tr")], hh=trs[0].getBoundingClientRect().height, hs=trs.slice(1).map(t=>t.getBoundingClientRect().height);
     const pages=[]; let cur=[], h=hh;
     rows.forEach((r,i)=>{ if(h+hs[i]>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=hh; } cur.push(r); h+=hs[i]; });
@@ -1828,7 +1829,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118170950";
+const BUILD_ID = "20261118171959";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
