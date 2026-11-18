@@ -501,6 +501,8 @@ table.at{width:100%;border-collapse:collapse;font-size:15px}
 .at tr.ap-s span{float:left;font-size:12.5px;font-weight:500;color:#E8794A}
 .acode{display:block;direction:ltr;text-align:right;font-family:'IBM Plex Sans',monospace;font-size:11.5px;font-weight:500;color:#0D0D0D;background:#F2F2F2;padding:0 6px;margin:2px 0;width:max-content;max-width:100%}
 .gc-d b{white-space:nowrap;font-size:16px}.gc-d{gap:22px}.gi-two .v{white-space:nowrap}
+.sl-st{display:block !important;height:5px;background:#F89B6C}
+.gd-ph,.gd-p{bottom:0}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1908,7 +1910,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118194849";
+const BUILD_ID = "20261118195257";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
