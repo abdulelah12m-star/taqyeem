@@ -1637,7 +1637,7 @@ function buildSlides(host){
   if(_city){ _dist=_dist.split(/\s*[\/\-–—،,]\s*/).filter(x=>x&&x!==_city).join(" "); }
   const place=[_dist, _city].filter(Boolean).join(" - ");
   /* cover (guide style) */
-  S.push({ raw:`<div class="sl"><div class="gc-ph" style="background-image:url('${ILL.cover||cp}')"></div><div class="gc-or"></div>
+  S.push({ raw:`<div class="sl"><div class="gc-or" style="width:auto;left:0"></div>
     <div class="gc-k">تقرير تقييم جاهزية المسجد للافتتاح</div><div class="gc-t">${esc(info.name)}</div>
     ${place?`<div class="gc-p">${esc(place)}</div>`:""}${mosqueCode()?`<div class="gc-c" style="${place?"":"top:322px"}">${esc(mosqueCode())}</div>`:""}
     <div class="gc-d"><div><span>تاريخ التقييم</span><b>${esc(hijri(m.date))}</b></div><div><span>الموافق</span><b>${esc(greg(m.date))}</b></div><div><span>المقيّم</span><b>${esc(m.evaluator||"—")}</b></div></div>
@@ -1907,7 +1907,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118190804";
+const BUILD_ID = "20261118191127";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
