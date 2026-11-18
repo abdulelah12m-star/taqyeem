@@ -543,6 +543,11 @@ table.at{width:100%;border-collapse:collapse;font-size:15px}
 .ct th,.at th{background:#F9DDCE !important;color:#0D0D0D !important}
 .ct tr:first-child th:first-child,.at tr:first-child th:first-child{background:#339680 !important;color:#fff !important}
 .ct tr:first-child th:nth-child(2),.at tr:first-child th:nth-child(2){background:#F89B6C !important;color:#fff !important}
+.rc-sp{display:flex;gap:10px;margin-top:14px}
+.rc-sp > div{flex:1;background:#FEF7F0;border-top:4px solid #339680;padding:8px 12px;text-align:center}
+.rc-sp > div.sv{flex:1.8;border-top-color:#F89B6C}
+.rc-sp small{display:block;font-size:12.5px;color:#555}.rc-sp b{display:block;font-size:19px;font-weight:600;direction:rtl}
+.rc-sp .sv b{font-size:14.5px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.rc-sp .sv span{color:#339680}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -653,6 +658,7 @@ const IMPACT = {
   l:{ label:"تحسين لاحق", short:"لاحق", rank:1, color:"#E6A817" },
   none:{ label:"أثر غير محدد", short:"غير محدد", rank:0, color:"#8A8F91" },
 };
+const SERVICES = ["الكهرباء","المياه","الصرف الصحي"];
 const DECISIONS = {
   ready:{ label:"جاهز للافتتاح", cls:"d-ready" },
   cond:{ label:"جاهز للافتتاح بملاحظات", cls:"d-cond" },
@@ -1067,6 +1073,10 @@ function infoHTML(){
     <div class="grid2">
       <div class="field"><label>الحي / الموقع</label><input data-m="district" value="${esc(m.district)}" placeholder="${m.mosque==="new"?"مثال: حي الملز":"يُعبّأ تلقائيًا من اسم المسجد"}"></div>
       <div class="field" style="grid-column:1/-1"><label>رابط الموقع (Google Maps)</label><div class="geo"><input data-m="mapUrl" value="${esc(mapLink())}" placeholder="الصق رابط الموقع من خرائط Google" dir="ltr" inputmode="url"><button data-act="geo">📍 موقعي</button></div>${mapLink()?`<p class="indicator" style="margin-top:4px">يظهر في التقرير كباركود (QR) يفتح الموقع مباشرة.</p>`:""}</div>
+      <div class="field"><label>مساحة المسجد الإجمالية (م²)</label><input data-m="areaTotal" value="${esc(m.areaTotal||"")}" inputmode="decimal" placeholder="مثال: 380"></div>
+      <div class="field"><label>مساحة مصلى الرجال (م²)</label><input data-m="areaMen" value="${esc(m.areaMen||"")}" inputmode="decimal" placeholder="مثال: 240"></div>
+      <div class="field"><label>مساحة مصلى النساء (م²)</label><input data-m="areaWomen" value="${esc(m.areaWomen||"")}" inputmode="decimal" placeholder="مثال: 140"></div>
+      <div class="field" style="grid-column:1/-1"><label>الخدمات المتوفرة</label><div style="display:flex;gap:18px;flex-wrap:wrap;padding-top:4px">${SERVICES.map(x=>`<label style="display:flex;align-items:center;gap:6px;font-weight:500"><input type="checkbox" data-svc="${x}" ${(m.services||[]).includes(x)?"checked":""}> ${x}</label>`).join("")}</div></div>
     </div>
     <div class="field" style="margin-top:6px"><label>صورة المسجد (تظهر في غلاف العرض)</label>
       <div class="photos" style="margin-top:0">${m.coverPhoto?`<div class="ph" style="width:140px;height:92px;background-image:url('${m.coverPhoto}')"><button data-act="delcover" aria-label="حذف الصورة">✕</button></div>`:`<label class="addph">🕌 إضافة صورة المسجد<input type="file" accept="image/*" data-cover></label>`}</div></div>
@@ -1268,6 +1278,7 @@ document.addEventListener("click", async e=>{
 document.addEventListener("change", async e=>{
   const t=e.target;
   if(t.matches("[data-nav]")) go(+t.value);
+  else if(t.dataset.svc){ const v=t.dataset.svc; let a=(state.meta.services||[]).filter(x=>x!==v); if(t.checked) a.push(v); state.meta.services=SERVICES.filter(x=>a.includes(x)); save(); }
   else if(t.dataset.absent){ const k=t.dataset.absent; item(k).a=t.checked; openState[k]=!t.checked; save(); rerenderCard(k); }
   else if(t.dataset.m==="mosque" || t.dataset.m==="region"){
     state.meta[t.dataset.m]=t.value;
@@ -1402,6 +1413,7 @@ function exportXLSX(){
   const { per, tot, findings } = computeAll(), m=state.meta, info=mosqueInfo(), d=state.decision;
   const s1=[["تقرير تقييم جاهزية المسجد"],[ORG],[],
     ["المسجد",info.name],["رمز المسجد",mosqueCode()],["المدينة",info.city||""],["المنطقة",REGION_NAMES[info.region]||""],["الحي / الموقع",m.district],
+    ["مساحة المسجد الإجمالية (م²)",m.areaTotal||""],["مساحة مصلى الرجال (م²)",m.areaMen||""],["مساحة مصلى النساء (م²)",m.areaWomen||""],["الخدمات المتوفرة",(m.services||[]).join("، ")],
     ["رابط الموقع",mapLink()],["الإحداثيات",m.lat&&m.lng?m.lat+", "+m.lng:""],["تاريخ التقييم (ميلادي)",m.date],["تاريخ التقييم (هجري)",hijri(m.date)],["المقيّم",m.evaluator],["جهة المقيّم",m.evaluatorOrg],
     ["المقاول المنفّذ",m.contractor],["الاستشاري / المشرف",m.supervisor],[],
     ["نسبة الجاهزية %",tot.readiness==null?"":tot.readiness],["اكتمال التقييم %",tot.completion||0],["البنود المُقيَّمة",tot.done+" من "+tot.total],
@@ -1698,6 +1710,7 @@ function buildSlides(host){
     <div style="flex:1;min-width:0">
       <div class="rc-h">بيانات المسجد</div>
       <div class="rc-cards">${card("map","#339680","المنطقة",esc(regionTxt||"—"))}${card("pin","#6DBE80","الحي",esc(_dist||"—"))}${card("cal","#F89B6C","تاريخ التقييم",`${esc(hijri(m.date))}<br><span style="font-weight:500;font-size:13px">${esc(greg(m.date))}</span>`)}${card("usr","#E8794A","المقيّم",esc(m.evaluator||"—"))}</div>
+      ${(m.areaTotal||m.areaMen||m.areaWomen||(m.services||[]).length)?`<div class="rc-sp">${[["المساحة الإجمالية",m.areaTotal],["مصلى الرجال",m.areaMen],["مصلى النساء",m.areaWomen]].filter(x=>x[1]).map(([l,v])=>`<div><small>${l}</small><b>${esc(v)} م²</b></div>`).join("")}${(m.services||[]).length?`<div class="sv"><small>الخدمات المتوفرة</small><b>${m.services.map(x=>`<span>✓ ${esc(x)}</span>`).join("")}</b></div>`:""}</div>`:""}
       <div class="rc-h" style="margin-top:22px">مؤشرات التقييم</div>
       <div class="rc-kpi">${kpi("#FABA42",tot.readiness==null?"—":tot.readiness+"%","نسبة الجاهزية",1)}${kpi("#F89B6C",(tot.completion||0)+"%","اكتمال التقييم")}${kpi("#0D0D0D",tot.b,"بنود تمنع الافتتاح")}${kpi("#F7856E",tot.u,"عاجل بعد الافتتاح")}${kpi("#F9DDCE",tot.l,"تحسين لاحق",1)}</div>
     </div>
@@ -1959,7 +1972,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118200747";
+const BUILD_ID = "20261118203803";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
