@@ -1731,7 +1731,9 @@ function buildSlides(host){
   /* findings */
   const reqLines=it=>String(it.note||"").split(/\n+/).map(x=>x.replace(/^\s*\d+[\.\-)]\s*/,"").trim()).filter(x=>/^(يلزم|يجب|يوصى|ينبغي)/.test(x));
   const WHEN={ b:"قبل افتتاح المسجد", u:"خلال مدة يحددها مشرف المساجد بعد الافتتاح", l:"ضمن خطة الصيانة والتشغيل", none:"—" };
-  const planCell=(el,it,g)=>{ const acts=[...el.crit.map((c,ci)=>it.c[ci]&&it.c[ci].s==="n"&&it.c[ci].t?esc(it.c[ci].t):"").filter(Boolean), ...reqLines(it).map(esc)];
+  const nz=x=>String(x||"").replace(/^\s*\d+[\.\-)]\s*/,"").replace(/^(يلزم|يجب|يوصى|ينبغي)\s+/,"").replace(/[\s\.\u060C،:()\-]+/g,"");
+  const shownCrit=(el,it)=>crOf(el).filter((_,ci)=>it.c[ci]&&it.c[ci].s==="n").map(nz);
+  const planCell=(el,it,g)=>{ const sc=shownCrit(el,it); const seen=new Set(); const acts=reqLines(it).filter(x=>{ const k=nz(x); if(!k||sc.includes(k)||seen.has(k)) return false; seen.add(k); return true; }).map(esc);
     return `${acts.length?acts.map(a=>`<div>${a}</div>`).join(""):`<div>معالجة البنود المذكورة</div>`}`; };
   const recAct=(el,it)=>{ const req=String(it.note||"").split(/\n+/).map(x=>x.replace(/^\s*\d+[\.\-)]\s*/,"").trim()).filter(x=>/^(يلزم|يجب|يوصى|ينبغي)/.test(x));
         if(req.length) return req.map(esc).join("<br>");
@@ -1773,7 +1775,7 @@ function buildSlides(host){
       fs.forEach(({el})=>{ const it=peek(el.k);
         const bad=crOf(el).map((c,ci)=>{ const v=it.c[ci]; return v&&v.s==="n" ? `<div>— ${esc(c)}${(v.i||"none")!==g?` <span style="color:${SIMPC[v.i||"none"]};font-weight:600">(${IMPACT[v.i||"none"].short})</span>`:""}</div>` : ""; }).join("");
         const sp=specs(it);
-        rows.push(`<tr><td class="no">${++n}</td><td class="nm">${esc(el.name)}<small>${esc(el.main)} › ${esc(el.title)}</small>${sp?`<small style="color:${BR.od};font-weight:500">${sp}</small>`:""}</td><td>${bad}${(()=>{ const rq=reqLines(it); const rest=String(it.note||"").split(/\n+/).map(x=>x.trim()).filter(x=>x&&!rq.includes(x.replace(/^\s*\d+[\.\-)]\s*/,"").trim())); return rest.length?`<div class="fnote">${rest.map(esc).join("<br>")}</div>`:""; })()}</td><td style="font-weight:500">${planCell(el,it,g)}</td></tr>`); }); });
+        rows.push(`<tr><td class="no">${++n}</td><td class="nm">${esc(el.name)}<small>${esc(el.main)} › ${esc(el.title)}</small>${sp?`<small style="color:${BR.od};font-weight:500">${sp}</small>`:""}</td><td>${bad}${(()=>{ const rq=reqLines(it), sc=shownCrit(el,it); const rest=String(it.note||"").split(/\n+/).map(x=>x.trim()).filter(x=>x&&!rq.includes(x.replace(/^\s*\d+[\.\-)]\s*/,"").trim())&&!sc.includes(nz(x))); return rest.length?`<div class="fnote">${rest.map(esc).join("<br>")}</div>`:""; })()}</td><td style="font-weight:500">${planCell(el,it,g)}</td></tr>`); }); });
     host.innerHTML=`<div class="sl" style="height:auto;margin:0"><div class="sl-bd" style="position:static;width:1136px"><table class="at">${head}${rows.join("")}</table></div></div>`;
     const trs=[...host.querySelectorAll("tr")], hh=trs[0].getBoundingClientRect().height, hs=trs.slice(1).map(t=>t.getBoundingClientRect().height);
     const pages=[]; let cur=[], h=hh;
@@ -1803,7 +1805,7 @@ function buildSlides(host){
       if(st.title!==mn) rows.push(`<tr class="ap-s"><td colspan="3">${esc(st.title)}<span>${a.readiness==null?"":`الجاهزية ${a.readiness}%`}</span></td></tr>`);
       pres.forEach(el=>{ const it=peek(el.k);
         if(it&&it.ph) it.ph.forEach(p=>secPh.push({p,el,it,n:++phN}));
-        rows.push(`<tr><td class="no">${esc(el.no)}</td><td class="nm">${esc(el.name)}${ACODE[el.k]?`<span class="acode">${ACODE[el.k].map(esc).join("<br>")}</span>`:""}${it&&(it.q||it.ty||it.br)?`<small style="color:${BR.od};font-weight:500">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</td><td><div class="cr">${rpChips(el)}</div></td></tr>`); });
+        rows.push(`<tr><td class="no">${esc(el.no)}</td><td class="nm">${esc(el.name)}${ACODE[el.k]?`<span class="acode">${ACODE[el.k].map(esc).join("<br>")}</span>`:""}${it&&(it.q||it.ty||it.br)?`<small style="color:${BR.od};font-weight:500">${specs(it)}</small>`:""}${(()=>{ if(!(it&&it.note)) return ""; const sc=shownCrit(el,it); const ln=String(it.note).split(/\n+/).map(x=>x.trim()).filter(x=>x&&!sc.includes(nz(x))); return ln.length?`<small>ملاحظة: ${ln.map(esc).join(" ")}</small>`:""; })()}</td><td><div class="cr">${rpChips(el)}</div></td></tr>`); });
     });
     if(!rows.length) return;
     host.innerHTML=`<div class="sl" style="height:auto;margin:0"><div class="sl-bd" style="position:static;width:1136px"><table class="at">${head}${rows.join("")}</table></div></div>`;
@@ -1972,7 +1974,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118204225";
+const BUILD_ID = "20261118204815";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
