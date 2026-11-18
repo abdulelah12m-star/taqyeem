@@ -1655,9 +1655,6 @@ function buildSlides(host){
     if(tot.b) gen.push(`معالجة البنود المانعة للافتتاح (${tot.b}) قبل أي افتتاح، وإعادة التقييم بعد إغلاقها.`);
     if(tot.u) gen.push(`إغلاق البنود العاجلة بعد الافتتاح (${tot.u}) خلال مدة يحددها مشرف المساجد.`);
     if(tot.l) gen.push(`إدراج التحسينات اللاحقة (${tot.l}) ضمن خطة الصيانة والتشغيل.`);
-    ELS.forEach(el=>{ const it=peek(el.k); if(!(it&&it.a&&it.note)) return;
-      String(it.note).split(/\n+/).map(x=>x.replace(/^\s*\d+[\.\-)]\s*/,"").trim()).filter(x=>/^(يلزم|يجب|يوصى|ينبغي)/.test(x))
-        .forEach(x=>gen.push(`${esc(x)} <small style="color:#777">(${esc(el.name)} — غير موجود حاليًا)</small>`)); });
     gen.push("إجراء زيارة تحقق ميدانية لتوثيق إغلاق الملاحظات بالصور قبل الاستلام النهائي.");
     if(d.reason) gen.push(`اشتراطات المقيّم: ${esc(d.reason)}`);
     const dcls=dv?DECISIONS[dv].cls:"d-none";
@@ -1699,7 +1696,7 @@ function buildSlides(host){
     S.push(divider(nn(), "العناصر غير الموجودة<br>في المسجد", BR.ye, ILL.absent||dvp[1]||dvp[0]||""));
     const head=`<tr><th style="background:${BR.or};width:230px">القسم</th><th class="g">العناصر غير الموجودة</th></tr>`;
     const grp=[]; absent.forEach(el=>{ let g=grp.find(x=>x.m===el.main); if(!g) grp.push(g={m:el.main,l:[]}); g.l.push(el); });
-    tblRows(head, grp.map(g=>`<tr><td class="nm">${esc(g.m)}<small>${g.l.length} عنصر</small></td><td><div class="cr">${g.l.map(el=>`<span class="ck x">${esc(el.no)}. ${esc(el.name)}</span>`).join("")}</div></td></tr>`), `العناصر غير الموجودة في المسجد (${absent.length})`);
+    tblRows(head, grp.map(g=>`<tr><td class="nm">${esc(g.m)}<small>${g.l.length} عنصر</small></td><td><div class="cr">${g.l.map(el=>{ const nt=String((peek(el.k)||{}).note||"").trim(); return `<span class="ck x">${esc(el.no)}. ${esc(el.name)}</span>${nt?`<span class="ck n" style="font-weight:500">ملاحظة: ${esc(nt)}</span>`:""}`; }).join("")}</div></td></tr>`), `العناصر غير الموجودة في المسجد (${absent.length})`);
   }
   /* appendix */
   S.push(divider(nn(), "الملحق<br>التقييم التفصيلي والشواهد", BR.te, ILL.appx||dvp[dvp.length>2?2:1]||dvp[0]||""));
@@ -1883,7 +1880,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118185753";
+const BUILD_ID = "20261118190050";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
