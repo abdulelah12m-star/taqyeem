@@ -497,6 +497,9 @@ table.at{width:100%;border-collapse:collapse;font-size:15px}
 .at tr.rc-g img{width:24px;height:24px;vertical-align:middle;margin-left:10px}
 .pl-m{font-size:12.5px;font-weight:400;color:#555;margin-top:3px}.pl-m span{color:#E0703A;font-weight:600}
 .pl-g{float:left;font-size:13px;font-weight:500}
+.at tr.ap-s td{background:#F2F2F2 !important;font-weight:600;font-size:15px;padding:6px 12px;border-right:4px solid #F5A06E}
+.at tr.ap-s span{float:left;font-size:12.5px;font-weight:500;color:#E0703A}
+.sl .ck small{font-size:11.5px;opacity:.8}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1657,21 +1660,32 @@ function buildSlides(host){
   /* appendix */
   S.push(divider(nn(), "الملحق<br>التقييم التفصيلي والشواهد", BR.te, dvp[dvp.length>2?2:1]||dvp[0]||""));
   let phN=0;
-  STEPS.forEach(st=>{ if(st.type!=="page") return;
-    const pres=st.els.filter(el=>{ const it=peek(el.k); return !(it&&it.a); });
-    if(!pres.length) return;
-    const rows=pres.map(el=>{ const it=peek(el.k);
-      return `<tr><td class="no">${esc(el.no)}</td><td class="nm">${esc(el.name)}${it&&!it.a&&(it.q||it.ty||it.br)?`<small style="color:${BR.od};font-weight:500">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</td><td><div class="cr">${rpChips(el)}</div></td></tr>`; });
-    const head=`<tr><th style="background:${BR.or};width:40px">#</th><th style="background:${BR.or}">العنصر</th><th class="g">بنود التقييم</th></tr>`;
+  const head=`<tr><th style="width:40px">#</th><th style="width:300px">العنصر</th><th>بنود التقييم</th></tr>`;
+  const mains=[...new Set(STEPS.filter(st=>st.type==="page").map(st=>st.main))];
+  mains.forEach(mn=>{ const sts=STEPS.filter(st=>st.type==="page"&&st.main===mn);
+    const rows=[], secPh=[];
+    sts.forEach(st=>{ const pres=st.els.filter(el=>{ const it=peek(el.k); return !(it&&it.a); }); if(!pres.length) return;
+      const full=[], okc=[];
+      pres.forEach(el=>{ const it=peek(el.k)||{c:{}};
+        const allOk=el.crit.every((_,i)=>it.c[i]&&(it.c[i].s==="r"||it.c[i].s==="x")) && el.crit.some((_,i)=>it.c[i]&&it.c[i].s==="r");
+        if(allOk && !String(it.note||"").trim()) okc.push(el); else full.push(el);
+        if(it.ph) it.ph.forEach(p=>secPh.push({p,el,it,n:++phN})); });
+      const a=agg(st.els);
+      if(st.title!==mn) rows.push(`<tr class="ap-s"><td colspan="3">${esc(st.title)}<span>${a.readiness==null?"":`الجاهزية ${a.readiness}%`}</span></td></tr>`);
+      full.forEach(el=>{ const it=peek(el.k);
+        rows.push(`<tr><td class="no">${esc(el.no)}</td><td class="nm">${esc(el.name)}${it&&(it.q||it.ty||it.br)?`<small style="color:${BR.od};font-weight:500">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</td><td><div class="cr">${rpChips(el)}</div></td></tr>`); });
+      if(okc.length) rows.push(`<tr><td class="no">✓</td><td class="nm">جاهزة بالكامل<small>${okc.length} عنصر</small></td><td><div class="cr">${okc.map(el=>{ const it=peek(el.k)||{}; const ex=[it.q?esc(it.q):"", it.br?esc(it.br):""].filter(Boolean).join(" · "); return `<span class="ck r">${esc(el.no)}. ${esc(el.name)}${ex?` <small>(${ex})</small>`:""}</span>`; }).join("")}</div></td></tr>`);
+    });
+    if(!rows.length) return;
     host.innerHTML=`<div class="sl" style="height:auto;margin:0"><div class="sl-bd" style="position:static;width:1136px"><table class="at">${head}${rows.join("")}</table></div></div>`;
     const trs=[...host.querySelectorAll("tr")], hh=trs[0].getBoundingClientRect().height, hs=trs.slice(1).map(t=>t.getBoundingClientRect().height);
     const pages=[]; let cur=[], h=hh;
-    rows.forEach((r,i)=>{ if(h+hs[i]>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=hh; } cur.push(r); h+=hs[i]; });
+    rows.forEach((r,i)=>{ const isS=r.startsWith('<tr class="ap-s"'); const need=hs[i]+(isS&&i+1<rows.length?hs[i+1]:0);
+      if(h+need>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=hh; } cur.push(r); h+=hs[i]; });
     if(cur.length) pages.push(cur);
-    const a=agg(st.els), ttl=`${esc(st.main)}${st.main!==st.title?" · "+esc(st.title):""}`;
-    const secPh=[]; st.els.forEach(el=>{ const it=peek(el.k); if(it&&it.ph&&!it.a) it.ph.forEach(p=>secPh.push({p,el,it,n:++phN})); });
-    pages.forEach((pg,pi)=>S.push(slSlide(`${ttl}${pages.length>1?` (${pi+1}/${pages.length})`:""} <span class="badge">${a.absent===a.els?"غير موجود":a.readiness==null?"":`الجاهزية ${a.readiness}%`}${a.n?` · غير جاهز ${a.n}`:""}</span>`, `<table class="at">${head}${pg.join("")}</table>`)));
-    photoSlides(secPh, ttl).forEach(x=>S.push(x));
+    const A=agg(sts.flatMap(st=>st.els));
+    pages.forEach((pg,pi)=>S.push(slSlide(`${esc(mn)}${pages.length>1?` (${pi+1}/${pages.length})`:""} <span class="badge">${A.readiness==null?"":`الجاهزية ${A.readiness}%`}${A.n?` · غير جاهز ${A.n}`:""}</span>`, `<table class="at">${head}${pg.join("")}</table>`)));
+    photoSlides(secPh, esc(mn)).forEach(x=>S.push(x));
   });
   /* end */
   S.push({ raw:`<div class="sl sle"><img src="${LOGO}"></div>` });
@@ -1829,7 +1843,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118171959";
+const BUILD_ID = "20261118172447";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
