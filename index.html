@@ -1654,7 +1654,9 @@ function buildSlides(host){
   S.push(divider(nn(), "الملحق<br>التقييم التفصيلي والشواهد", BR.te, dvp[dvp.length>2?2:1]||dvp[0]||""));
   let phN=0;
   STEPS.forEach(st=>{ if(st.type!=="page") return;
-    const rows=st.els.map(el=>{ const it=peek(el.k);
+    const pres=st.els.filter(el=>{ const it=peek(el.k); return !(it&&it.a); });
+    if(!pres.length) return;
+    const rows=pres.map(el=>{ const it=peek(el.k);
       return `<tr><td class="no">${esc(el.no)}</td><td class="nm">${esc(el.name)}${it&&!it.a&&(it.q||it.ty||it.br)?`<small style="color:${BR.od};font-weight:500">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</td><td><div class="cr">${rpChips(el)}</div></td></tr>`; });
     const head=`<tr><th style="background:${BR.or};width:40px">#</th><th style="background:${BR.or}">العنصر</th><th class="g">بنود التقييم</th></tr>`;
     host.innerHTML=`<div class="sl-measure" style="width:1152px"><table class="at">${head}${rows.join("")}</table></div>`;
@@ -1823,7 +1825,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118125403";
+const BUILD_ID = "20261118125902";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
