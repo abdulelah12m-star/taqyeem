@@ -1242,7 +1242,7 @@ document.addEventListener("change", async e=>{
     if(fresh.length && autoSaveOn()) saveToDevice(fresh);
   }
   else if(t.matches("[data-import]")) importBackup(t.files[0]);
-  else if(t.matches("[data-cover]")){ const f=t.files[0]; if(f){ try{ state.meta.coverPhoto=await compressImage(f,1920,0.85); save(); render(); toast("أُضيفت صورة المسجد ✓"); }catch(e){ toast("تعذّرت قراءة الصورة", true); } } }
+  else if(t.matches("[data-cover]")){ const f=t.files[0]; if(f){ try{ state.meta.coverPhoto=await compressImage(f,2560,0.92); save(); render(); toast("أُضيفت صورة المسجد ✓"); }catch(e){ toast("تعذّرت قراءة الصورة", true); } } }
   else if(t.matches("[data-autosave]")){ try{ localStorage.setItem(AUTOSAVE_KEY, t.checked?"1":"0"); }catch(_){} toast(t.checked?"حفظ الصور في الجوال: مفعّل":"حفظ الصور في الجوال: متوقف"); }
 });
 document.addEventListener("input", e=>{
@@ -1306,7 +1306,7 @@ async function downloadAllPhotos(){
     deliver(blob, root+".zip", `ملف الصور (${list.length} صورة)`);
   }catch(e){ busy(false); toast("تعذّر تجهيز الصور", true); }
 }
-function compressImage(file, max=1600, q=0.82){
+function compressImage(file, max=2400, q=0.92){
   return new Promise((res,rej)=>{
     const url=URL.createObjectURL(file), img=new Image();
     img.onload=()=>{ let w=img.naturalWidth,h=img.naturalHeight; const s=Math.min(1,max/Math.max(w,h)); w=Math.round(w*s); h=Math.round(h*s);
@@ -1772,9 +1772,9 @@ async function exportPDF(){
     for(let i=0;i<els.length;i++){
       busy(true, `جاري إنشاء الشريحة ${i+1} من ${els.length}…`);
       await new Promise(r=>setTimeout(r,20));
-      const cv=await html2canvas(els[i], { scale:2.5, useCORS:true, backgroundColor:"#ffffff", logging:false, scrollX:0, scrollY:0, windowWidth:1400 });
+      const cv=await html2canvas(els[i], { scale:3, useCORS:true, backgroundColor:"#ffffff", logging:false, scrollX:0, scrollY:0, windowWidth:1400 });
       if(i) pdf.addPage([338.67,190.5],"l");
-      pdf.addImage(cv.toDataURL("image/jpeg",0.95), "JPEG", 0, 0, 338.67, 190.5, undefined, "MEDIUM");
+      pdf.addImage(cv.toDataURL("image/jpeg",0.97), "JPEG", 0, 0, 338.67, 190.5, undefined, "NONE");
     }
     const blob=pdf.output("blob");
     host.innerHTML=""; host.style.width=""; busy(false);
@@ -1907,7 +1907,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118191758";
+const BUILD_ID = "20261118192040";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
