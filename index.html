@@ -499,6 +499,7 @@ table.at{width:100%;border-collapse:collapse;font-size:15px}
 .pl-g{float:left;font-size:13px;font-weight:500}
 .at tr.ap-s td{background:#F2F2F2 !important;font-weight:600;font-size:15px;padding:6px 12px;border-right:4px solid #F5A06E}
 .at tr.ap-s span{float:left;font-size:12.5px;font-weight:500;color:#E0703A}
+.acode{display:block;direction:ltr;text-align:right;font-family:'IBM Plex Sans',monospace;font-size:11.5px;font-weight:500;color:#1E1E1E;background:#F2F2F2;padding:0 6px;margin:2px 0;width:max-content;max-width:100%}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1540,6 +1541,32 @@ async function photoDims(){ const all=[]; Object.values(state.items||{}).forEach
   await Promise.all(all.filter(p=>!PH_LAND.has(p)).map(p=>new Promise(res=>{ const im=new Image(); im.onload=()=>{ PH_LAND.set(p, im.naturalWidth>im.naturalHeight*1.2); res(); }; im.onerror=()=>{ PH_LAND.set(p,false); res(); }; im.src=p; }))); }
 async function prepBrand(){ await photoDims(); await prepIll(); try{ await document.fonts.load('300 100px "IBM Plex Sans"'); }catch(e){} if(!LOGO_BK) LOGO_BK=await tintImg(LOGO,"#000"); if(!LOGO_OR) LOGO_OR=await tintImg(LOGO,"#FFA369"); await rasterIcons(); }
 function greg(d){ if(!d) return ""; try{ return new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-latn",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"}).format(new Date(d+"T00:00:00Z")).replace(/\s*م$/,"")+"م"; }catch(e){ return d; } }
+/* ===== asset coding (دليل نظام الترميز المحدّث) ===== */
+const ASSET_MAP={
+  "R:1":"EL-MP","R:2":"MT-EL","R:3":"GN-01","R:4":"MT-WT","R:6":"SF-EX","R:7":"SF-EM","R:8":"SF-AL","R:14":"SG",
+  "H:8":"FR-SB*","H:14":"FAC05","H:20":"FR-CP*","H:21":"FR-LC*","H:22":"FR-LC*","H:23":"FR-CH*","H:26":"FR-CB*","H:27":"FR-SH*","H:28":"FR-SH*","H:29":"FR-CB*","H:31":"FR-CB*","H:34":"FR-SH*","H:35":"FR-CT*","H:36":"FR-CT*",
+  "H:46":"AP-CL","H:50":"AC","H:52":"AP-FN","H:55":"EL-W1","H:56":"EL-WA","H:57":"SF-CM","H:59":"AP-PJ","H:60":"SF-SD","H:61":"AP-CL","H:62":"SP-DS","H:63":"AP-VC","H:65":"SP-IN","H:66":"SP-MC","H:68":"SP-AM","H:71":"SF-EL","H:73":"LT-IN",
+  "A:75":"FAC09",
+  "T:80":"LT","T:81":"PL-EF","T:84":"PL-HD","T:95":"PL-TU","T:97":"PL-IK","T:98":"PL-HT","T:100":"PL-PT",
+  "B:107":"FAC13,FAC14","B:127":"FAC08","B:108":"FAC09","B:109":"FAC21","B:110":"FAC16","B:111":"FAC23","B:112":"FAC18","B:114":"FAC04",
+  "X:117":"FAC10","X:118":"PL-TD","X:119":"PL-TG"
+};
+function assetCodes(){
+  const mc=mosqueCode(); const out={}, seq={}; if(!mc) return out;
+  ELS.forEach(el=>{ const it=peek(el.k); if(!it||it.a) return;
+    const [pre,num]=el.k.split(":"); const g=pre==="M"?"H":pre==="W"?"H":(pre==="MW"||pre==="WW")?"T":pre;
+    let c=ASSET_MAP[g+":"+num]; if(!c) return;
+    if(c.startsWith("FAC")){ out[el.k]=c.split(",").map(x=>`${mc}-${x}`); return; }
+    const ty=String(it.ty||"");
+    if(c==="AC") c="AC-"+(/مركز/.test(ty)?"CN":/شباك/.test(ty)?"WN":/دولاب/.test(ty)?"CB":"SP");
+    if(c==="LT") c="LT-"+(/داون/.test(ty)?"DL":/سبوت/.test(ty)?"SL":/لطش/.test(ty)?"LS":"IN");
+    if(c.endsWith("*")) c=c.slice(0,-1)+(pre==="W"?"W":"M");
+    const n=Math.max(1,parseInt(it.q,10)||1), st=(seq[c]||0)+1; seq[c]=st+n-1;
+    const p2=x=>String(x).padStart(2,"0"), base=`${mc}-${c}`, sub=c.includes("-")?c.split("-")[1]:c;
+    out[el.k]=[n>1?`${base}${p2(st)} – ${sub}${p2(st+n-1)}`:`${base}${p2(st)}`];
+  });
+  return out;
+}
 function crOf(el){ const it=peek(el.k)||{c:{}}; return el.crit.map((c,i)=>(it.c&&it.c[i]&&it.c[i].t)||c); }
 function photoSlides(list, title){
   const out=[];
@@ -1677,6 +1704,7 @@ function buildSlides(host){
   S.push(divider(nn(), "الملحق<br>التقييم التفصيلي والشواهد", BR.te, ILL.appx||dvp[dvp.length>2?2:1]||dvp[0]||""));
   let phN=0;
   const head=`<tr><th style="width:40px">#</th><th style="width:300px">العنصر</th><th>بنود التقييم</th></tr>`;
+  const ACODE=assetCodes();
   const mains=[...new Set(STEPS.filter(st=>st.type==="page").map(st=>st.main))];
   mains.forEach(mn=>{ const sts=STEPS.filter(st=>st.type==="page"&&st.main===mn);
     const rows=[], secPh=[];
@@ -1685,7 +1713,7 @@ function buildSlides(host){
       if(st.title!==mn) rows.push(`<tr class="ap-s"><td colspan="3">${esc(st.title)}<span>${a.readiness==null?"":`الجاهزية ${a.readiness}%`}</span></td></tr>`);
       pres.forEach(el=>{ const it=peek(el.k);
         if(it&&it.ph) it.ph.forEach(p=>secPh.push({p,el,it,n:++phN}));
-        rows.push(`<tr><td class="no">${esc(el.no)}</td><td class="nm">${esc(el.name)}${it&&(it.q||it.ty||it.br)?`<small style="color:${BR.od};font-weight:500">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</td><td><div class="cr">${rpChips(el)}</div></td></tr>`); });
+        rows.push(`<tr><td class="no">${esc(el.no)}</td><td class="nm">${esc(el.name)}${ACODE[el.k]?`<span class="acode">${ACODE[el.k].map(esc).join("<br>")}</span>`:""}${it&&(it.q||it.ty||it.br)?`<small style="color:${BR.od};font-weight:500">${specs(it)}</small>`:""}${it&&it.note?`<small>ملاحظة: ${esc(it.note)}</small>`:""}</td><td><div class="cr">${rpChips(el)}</div></td></tr>`); });
     });
     if(!rows.length) return;
     host.innerHTML=`<div class="sl" style="height:auto;margin:0"><div class="sl-bd" style="position:static;width:1136px"><table class="at">${head}${rows.join("")}</table></div></div>`;
@@ -1854,7 +1882,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118181908";
+const BUILD_ID = "20261118184738";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
