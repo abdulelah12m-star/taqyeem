@@ -548,6 +548,11 @@ table.at{width:100%;border-collapse:collapse;font-size:15px}
 .rc-sp > div.sv{flex:1.8;border-top-color:#F89B6C}
 .rc-sp small{display:block;font-size:12.5px;color:#555}.rc-sp b{display:block;font-size:19px;font-weight:600;direction:rtl}
 .rc-sp .sv b{font-size:14.5px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.rc-sp .sv span{color:#339680}
+.sl .ck.nd{background:#F89B6C;color:#fff;font-weight:600}
+.sl .ck.nt{background:#fff;border:1px dashed #B9B9B9;color:#555;font-weight:500}
+.lgd{display:flex;gap:26px;margin-top:10px;font-size:13.5px;color:#333}.lgd i{display:inline-block;width:16px;height:16px;vertical-align:-3px;margin-left:7px}
+.rc-cv .tl{display:flex;align-items:center;justify-content:center}.rc-cv .tl b{font-size:60px;letter-spacing:0;direction:rtl;text-align:center;white-space:nowrap}
+.rc-cv .tl b.yr2{display:flex;flex-direction:row;direction:ltr;gap:18px;align-items:baseline;font-size:60px}.rc-cv .tl b.yr2 em{font-style:normal;display:inline-block}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1141,7 +1146,7 @@ function cardHTML(el){
     </button>
     <div class="el-body">
       <div class="el-tools">
-        <label class="sw"><input type="checkbox" data-absent="${el.k}" ${it.a?"checked":""}> غير موجود في المسجد</label>
+        <label class="sw"><input type="checkbox" data-absent="${el.k}" ${it.a?"checked":""}> غير موجود في المسجد</label>${it.a?`<label class="sw" style="margin-inline-start:12px"><input type="checkbox" data-need="${el.k}" ${it.nd?"checked":""}> احتياج فعلي</label>`:""}
         ${!it.a?`<button class="okall" data-act="allok" data-k="${el.k}">✓ الكل جاهز</button>`:""}
       </div>
       ${crits}
@@ -1280,6 +1285,7 @@ document.addEventListener("change", async e=>{
   const t=e.target;
   if(t.matches("[data-nav]")) go(+t.value);
   else if(t.dataset.svc){ const v=t.dataset.svc; let a=(state.meta.services||[]).filter(x=>x!==v); if(t.checked) a.push(v); state.meta.services=SERVICES.filter(x=>a.includes(x)); save(); }
+  else if(t.dataset.need){ item(t.dataset.need).nd=t.checked; save(); }
   else if(t.dataset.absent){ const k=t.dataset.absent; item(k).a=t.checked; openState[k]=!t.checked; save(); rerenderCard(k); }
   else if(t.dataset.m==="mosque" || t.dataset.m==="region"){
     state.meta[t.dataset.m]=t.value;
@@ -1696,9 +1702,9 @@ function buildSlides(host){
   /* cover (reference style) */
   { const hy=(hijri(m.date).match(/(\d{4})/)||[])[1]||"";
   S.push({ raw:`<div class="sl rc-cv"><div class="pk"></div><div class="ph" style="${cp?`background-image:url('${cp}')`:""}"></div>
-    <div class="tl"><span>تقرير تقييم جاهزية المسجد للافتتاح</span><b>${hy}</b></div>
+    <div class="tl"><b class="yr2"><em dir="rtl">${hy} هـ</em><em>/</em><em dir="rtl">${(m.date||"").slice(0,4)} م</em></b></div>
     <div class="lg"><img src="${LOGO_OR||LOGO_BK}"></div>
-    <div class="tx"><div class="k">تقرير تقييم ميداني</div><div class="t">${esc(info.name)}</div>
+    <div class="tx"><div class="k">تقرير تقييم جاهزية المسجد للافتتاح</div><div class="t">${esc(info.name)}</div>
       ${place?`<div class="p">${esc(place)}</div>`:""}${mosqueCode()?`<div class="c"><span style="font-weight:500">كود المسجد</span> <span dir="ltr">${esc(mosqueCode())}</span></div>`:""}
       <div class="d"><div><span>تاريخ التقييم</span><b>${esc(hijri(m.date))}</b></div><div><span>الموافق</span><b>${esc(greg(m.date))}</b></div><div><span>المقيّم</span><b>${esc(m.evaluator||"—")}</b></div></div></div></div>` }); }
   /* basic information (guide style) */
@@ -1759,13 +1765,14 @@ function buildSlides(host){
   }
   S.push(divider(nn(), "الملاحظات<br>وخطة المعالجة", BR.or, ILL.find||dvp[0]||""));
   /* findings: one list, each element with its status */
-  const tblRows=(head, rows, title)=>{
+  const tblRows=(head, rows, title, foot="")=>{
     host.innerHTML=`<div class="sl" style="height:auto;margin:0"><div class="sl-bd" style="position:static;width:1136px"><table class="at">${head}${rows.join("")}</table></div></div>`;
     const trs=[...host.querySelectorAll("tr")], hh=trs[0].getBoundingClientRect().height, hs=trs.slice(1).map(t=>t.getBoundingClientRect().height);
     const pages=[]; let cur=[], h=hh;
-    rows.forEach((r,i)=>{ if(h+hs[i]>SL_BODY && cur.length){ pages.push(cur); cur=[]; h=hh; } cur.push(r); h+=hs[i]; });
+    const lim=SL_BODY-(foot?40:0);
+    rows.forEach((r,i)=>{ if(h+hs[i]>lim && cur.length){ pages.push(cur); cur=[]; h=hh; } cur.push(r); h+=hs[i]; });
     if(cur.length) pages.push(cur);
-    pages.forEach((pg,pi)=>S.push(slSlide(`${title}${pages.length>1?` (${pi+1}/${pages.length})`:""}`, `<table class="at">${head}${pg.join("")}</table>`)));
+    pages.forEach((pg,pi)=>S.push(slSlide(`${title}${pages.length>1?` (${pi+1}/${pages.length})`:""}`, `<table class="at">${head}${pg.join("")}</table>${foot}`)));
   };
   if(findings.length){
     const head=`<tr><th style="width:40px">#</th><th style="width:250px">العنصر</th><th>البنود غير الجاهزة والملاحظة</th><th style="width:330px">الإجراء الموصى به</th></tr>`;
@@ -1791,7 +1798,7 @@ function buildSlides(host){
     S.push(divider(nn(), "العناصر غير الموجودة<br>في المسجد", BR.ye, ILL.absent||dvp[1]||dvp[0]||""));
     const head=`<tr><th style="background:${BR.or};width:230px">القسم</th><th class="g">العناصر غير الموجودة</th></tr>`;
     const grp=[]; absent.forEach(el=>{ let g=grp.find(x=>x.m===el.main); if(!g) grp.push(g={m:el.main,l:[]}); g.l.push(el); });
-    tblRows(head, grp.map(g=>`<tr><td class="nm">${esc(g.m)}<small>${g.l.length} عنصر</small></td><td><div class="cr">${g.l.map(el=>{ const nt=String((peek(el.k)||{}).note||"").trim(); return `<span class="ck x">${esc(el.no)}. ${esc(el.name)}</span>${nt?`<span class="ck n" style="font-weight:500">ملاحظة: ${esc(nt)}</span>`:""}`; }).join("")}</div></td></tr>`), `العناصر غير الموجودة في المسجد (${absent.length})`);
+    tblRows(head, grp.map(g=>`<tr><td class="nm">${esc(g.m)}<small>${g.l.length} عنصر</small></td><td><div class="cr">${g.l.map(el=>{ const nt=String((peek(el.k)||{}).note||"").trim(); const nd=(peek(el.k)||{}).nd; return `<span class="ck ${nd?"nd":"x"}">${esc(el.no)}. ${esc(el.name)}</span>${nt?`<span class="ck nt">ملاحظة: ${esc(nt)}</span>`:""}`; }).join("")}</div></td></tr>`), `العناصر غير الموجودة في المسجد (${absent.length})`, `<div class="lgd"><span><i style="background:#EEEEEE"></i>الرمادي: غير موجود</span><span><i style="background:#F89B6C"></i>البرتقالي: احتياج فعلي (${absent.filter(el=>(peek(el.k)||{}).nd).length})</span></div>`);
   }
   /* appendix */
   S.push(divider(nn(), "الملحق<br>التقييم التفصيلي والشواهد", BR.te, ILL.appx||dvp[dvp.length>2?2:1]||dvp[0]||""));
@@ -1975,7 +1982,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261119054428";
+const BUILD_ID = "20261119061913";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
