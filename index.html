@@ -773,6 +773,7 @@ const HALL_PAGES = [
     [66,"لواقط صوت","جودة العمل، سلامتها، حسن التوزيع","الصوتيات"],
     [67,"حاملات لواقط صوت","جودة العمل، سلامتها، حسن التوزيع","الصوتيات"],
     [68,"جهاز تضخيم الصوت (Amplifier)","جودة العمل، سلامته، جودة التهوية","الصوتيات"],
+    [129,"جهاز مكسر صوت (Mixer)","جودة العمل، سلامته، جودة التهوية","الصوتيات"],
   ]},
   { t:"الإضاءة والنوافذ", items:[
     [69,"إضاءة طبيعية – نوافذ ثابتة","النظافة، السلامة من التكسر، جودة الإغلاق","الإضاءة والنوافذ"],
@@ -873,7 +874,7 @@ function mkPage(main, page, prefix, note){
 STEPS.push({ type:"info", main:"البداية", title:"بيانات المسجد والتقييم" });
 REQ_PAGES.forEach(p=>mkPage("متطلبات الافتتاح", p, "R", "متطلبات أساسية لقرار الافتتاح — أي بند فيها غير جاهز يُنصح بتصنيف أثره بدقة."));
 /* عناصر مصلى الرجال غير المطبّقة على مصلى النساء */
-const WOMEN_EXCLUDE = new Set([10,11,12,13,14,15,16,17,18,19,24,25,48,49,66,67,68]);
+const WOMEN_EXCLUDE = new Set([10,11,12,13,14,15,16,17,18,19,24,25,48,49,66,67,68,129]);
 [["M","مصلى الرجال"],["W","مصلى النساء"]].forEach(([pf,main])=>HALL_PAGES.forEach(p=>{
   const pg = pf==="W" ? { t:p.t, items:p.items.filter(x=>!WOMEN_EXCLUDE.has(x[0])) } : p;
   if(pg.items.length) mkPage(main, pg, pf, pf==="W" ? "يُقيَّم مصلى النساء مستقلًا. أي عنصر غير موجود فيه حدّده بـ «غير موجود في المسجد»." : "");
@@ -1628,7 +1629,7 @@ function greg(d){ if(!d) return ""; try{ return new Intl.DateTimeFormat("ar-SA-u
 const ASSET_MAP={
   "R:1":"EL-MP","R:2":"MT-EL","R:3":"GN-01","R:4":"MT-WT","R:6":"SF-EX","R:7":"SF-EM","R:8":"SF-AL","R:14":"SG",
   "H:8":"FR-SB*","H:14":"FAC05","H:20":"FR-CP*","H:21":"FR-LC*","H:22":"FR-LC*","H:23":"FR-CH*","H:26":"FR-CB*","H:27":"FR-SH*","H:28":"FR-SH*","H:29":"FR-CB*","H:31":"FR-CB*","H:34":"FR-SH*","H:35":"FR-CT*","H:36":"FR-CT*",
-  "H:46":"AP-CL","H:50":"AC","H:52":"AP-FN","H:55":"EL-W1","H:56":"EL-WA","H:57":"SF-CM","H:59":"AP-PJ","H:60":"SF-SD","H:61":"AP-CL","H:62":"SP-DS","H:63":"AP-VC","H:65":"SP-IN","H:66":"SP-MC","H:68":"SP-AM","H:71":"SF-EL","H:73":"LT-IN",
+  "H:46":"AP-CL","H:50":"AC","H:52":"AP-FN","H:55":"EL-W1","H:56":"EL-WA","H:57":"SF-CM","H:59":"AP-PJ","H:60":"SF-SD","H:61":"AP-CL","H:62":"SP-DS","H:63":"AP-VC","H:65":"SP-IN","H:66":"SP-MC","H:68":"SP-AM","H:129":"SP-MX","H:71":"SF-EL","H:73":"LT-IN",
   "A:75":"FAC09",
   "T:80":"LT","T:81":"PL-EF","T:84":"PL-HD","T:95":"PL-TU","T:97":"PL-IK","T:98":"PL-HT","T:100":"PL-PT",
   "B:107":"FAC13,FAC14","B:127":"FAC08","B:108":"FAC09","B:109":"FAC21","B:110":"FAC16","B:111":"FAC23","B:112":"FAC18","B:114":"FAC04",
@@ -1974,7 +1975,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261118204815";
+const BUILD_ID = "20261119054428";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
