@@ -1662,7 +1662,7 @@ function photoSlides(list, title){
   const out=[];
   for(let i=0;i<list.length;i+=3){
     const grp=list.slice(i,i+3), pg=list.length>3?` (${Math.floor(i/3)+1}/${Math.ceil(list.length/3)})`:"";
-    out.push({ raw3:`<div class="pbar">الشواهد المصوّرة: ${title}${pg}</div><div class="p4">${grp.map(x=>`<div><div class="im" style="background-image:url('${x.p}')"></div><div class="cap"><b>صورة (${x.n})</b>${esc(x.el.no)}. ${esc(x.el.name)}${x.it.note?` — ${esc(x.it.note)}`:""}</div></div>`).join("")}</div>` });
+    out.push({ raw3:`<div class="pbar">الشواهد المصوّرة: ${title}${pg}</div><div class="p4">${grp.map(x=>`<div><div class="im" style="background-image:url('${x.p}')"></div><div class="cap"><b>صورة (${x.n})</b>${esc(x.el.no)}. ${esc(x.el.name)}${(x.it.pc&&x.it.pc[x.i]!=null)?` — ${esc(x.it.pc[x.i])}`:x.it.note?` — ${esc(x.it.note)}`:""}</div></div>`).join("")}</div>` });
   }
   return out;
 }
@@ -1756,6 +1756,8 @@ function buildSlides(host){
     if(tot.b) gen.push(`معالجة البنود المانعة للافتتاح (${tot.b}) قبل أي افتتاح، وإعادة التقييم بعد إغلاقها.`);
     if(tot.u) gen.push(`إغلاق البنود العاجلة بعد الافتتاح (${tot.u}) خلال مدة يحددها مشرف المساجد.`);
     if(tot.l) gen.push(`إدراج التحسينات اللاحقة (${tot.l}) ضمن خطة الصيانة والتشغيل.`);
+    { const need=ELS.filter(el=>{ const it=peek(el.k); return it&&it.a&&it.nd; }).length;
+      if(need) gen.push(`توفير العناصر غير الموجودة في المسجد والمصنّفة احتياجًا فعليًا (${need} عنصرًا) وفق قائمة العناصر غير الموجودة، وإدراجها ضمن خطة التجهيز قبل الاستلام النهائي.`); }
     gen.push("إجراء زيارة تحقق ميدانية لتوثيق إغلاق الملاحظات بالصور قبل الاستلام النهائي.");
     if(d.reason) gen.push(`اشتراطات المقيّم: ${esc(d.reason)}`);
     const dcls=dv?DECISIONS[dv].cls:"d-none";
@@ -1812,7 +1814,7 @@ function buildSlides(host){
       const a=agg(st.els);
       if(st.title!==mn) rows.push(`<tr class="ap-s"><td colspan="3">${esc(st.title)}<span>${a.readiness==null?"":`الجاهزية ${a.readiness}%`}</span></td></tr>`);
       pres.forEach(el=>{ const it=peek(el.k);
-        if(it&&it.ph) it.ph.forEach(p=>secPh.push({p,el,it,n:++phN}));
+        if(it&&it.ph) it.ph.forEach((p,i)=>secPh.push({p,el,it,i,n:++phN}));
         rows.push(`<tr><td class="no">${esc(el.no)}</td><td class="nm">${esc(el.name)}${ACODE[el.k]?`<span class="acode">${ACODE[el.k].map(esc).join("<br>")}</span>`:""}${it&&(it.q||it.ty||it.br)?`<small style="color:${BR.od};font-weight:500">${specs(it)}</small>`:""}${(()=>{ if(!(it&&it.note)) return ""; const sc=shownCrit(el,it); const ln=String(it.note).split(/\n+/).map(x=>x.trim()).filter(x=>x&&!sc.includes(nz(x))); return ln.length?`<small>ملاحظة: ${ln.map(esc).join(" ")}</small>`:""; })()}</td><td><div class="cr">${rpChips(el)}</div></td></tr>`); });
     });
     if(!rows.length) return;
@@ -1982,7 +1984,7 @@ async function exportPPTX(){
 render();
 loadSaved().then(()=>{ if(restored) render(); });
 /* تحديث تلقائي عند نشر نسخة جديدة (يتجاوز النسخة القديمة المخزّنة في المتصفح) */
-const BUILD_ID = "20261119061913";
+const BUILD_ID = "20261119070108";
 (function checkUpdate(){
   if(location.protocol==="file:") return;
   try{
